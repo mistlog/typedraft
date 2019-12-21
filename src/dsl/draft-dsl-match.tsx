@@ -6,7 +6,7 @@ export class PatternMatch
 
 }
 
-<PatternMatch /> + function Transpile(block: Array<ExpressionStatement>): [IfStatement]
+<PatternMatch /> + function Transcribe(block: Array<ExpressionStatement>): [IfStatement]
 {
     let tail: IfStatement = null;
     let head: IfStatement = null;
@@ -21,7 +21,7 @@ export class PatternMatch
 
 
     /**
-     * transpiled is the "head"(first) of if statement
+     * transcribed is the "head"(first) of if statement
      */
     return [head];
 }

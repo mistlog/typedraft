@@ -180,14 +180,14 @@ describe("plugin.dsl",()=>{
         //
         class Foo implements IDSL
         {
-            Transpile(block: Array<Statement>): Array<Statement>
+            Transcribe(block: Array<Statement>): Array<Statement>
             {
 
-                const transpiled = ToAst(`
+                const transcribed = ToAst(`
                     console.log("current");
                 `);
 
-                return [transpiled as Statement];
+                return [transcribed as Statement];
             }
         }
 

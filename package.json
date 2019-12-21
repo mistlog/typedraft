@@ -23,7 +23,7 @@
         "test": "npm run transcribe && jest --coverage && npm run clean",
         "test:watch": "jest --watch",
         "build": "npm run transcribe && tsc && npm run clean && ts-node ./script/build.ts && npm run doc",
-        "dev": "concurrently \"npm run transcribe:watch\" \"npm run doc:watch\" \"npm run test:watch\"   ",
+        "dev": "concurrently \"npm run transcribe:watch\" \"npm run doc:watch\"",
         "doc": "sv ./src",
         "doc:watch": "sv ./src -w",
         "transcribe": "td ./src",

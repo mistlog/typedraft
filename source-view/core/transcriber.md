@@ -1,9 +1,15 @@
+# Transcriber
+
+We always write code in one language and translate(compile) it to another, however, in both language, the code we write directly represent the execution flow.
+
+When we write draft, we don't expect it executes as is, instead, it's designed to be transformed, not execute. Code is only meaningful within its' context. That's why we choose another word to differentiate it from compiler.
+
 ```typescript
 export class Transcriber {
     //
     m_Module: ModuleCode;
 
-    //
+    // the 3 types of code we will transform
     m_ClassMap: Map<string, ExportClassCode>;
     m_MethodMap: Map<string, Array<ClassMethod>>;
     m_ContextMap: Map<string, LocalContext>;
@@ -22,48 +28,25 @@ export class Transcriber {
 }
 ```
 
-# Interface of Transcriber
-
-```typescript
-export interface ITranscriber {
-    //
-    Preprocess: () => void;
-
-    //
-    GetDSL: (name: string) => IDSL;
-    PrepareDSLs: () => void;
-
-    //
-    PreparePlugins: () => void;
-
-    //
-    GetClass: (name: string) => ExportClassCode;
-    GetLocalContext: (name: string) => LocalContext;
-
-    //
-    TraverseLocalContext: (callback: ITraverseLocalContextCallback) => void;
-    TraverseMethod: (callback: ITraverseMethodCallback) => void;
-    m_Code: Array<Statement>;
-}
-```
-
-```typescript
-export type ITraverseLocalContextCallback = (context: LocalContext, name: string) => void;
-```
-
-```typescript
-export type ITraverseMethodCallback = (methods: Array<ClassMethod>, class_name: string) => void;
-```
-
-# Core
+A transcriber just likes a container, it's a collection of plugins. For example, to transform local context, we have ```draft-plugin-local-context```, to add class method to class, we have ```draft-plugin-class```, and ```draft-plugin-dsl``` for DSL extension support.
 
 ```typescript
 <Transcriber /> +
     function Transcribe(this: Transcriber) {
         this.m_Plugins.forEach(plugin => plugin.Transcribe());
-        return ToString(this.m_Module.m_File);
+        return ToString(this.m_Module.m_File, { comments: false });
     };
 ```
+
+# Preprocess
+
+```typescript
+export interface ITranscriber {
+    Preprocess: () => void;
+}
+```
+
+When we init a transcriber, we will preprocess code to build some maps for lookup purpose.
 
 ```typescript
 <Transcriber /> +
@@ -87,47 +70,68 @@ export type ITraverseMethodCallback = (methods: Array<ClassMethod>, class_name: 
     };
 ```
 
-# Class
+# Utility
 
-```typescript
-<Transcriber /> +
-    function GetClass(this: Transcriber, name: string) {
-        return this.m_ClassMap.get(name);
-    };
-```
+Other methods are just utility.
 
-# Local Context
-
-```typescript
-<Transcriber /> +
-    function GetLocalContext(this: Transcriber, name: string) {
-        return this.m_ContextMap.get(name);
-    };
-```
-
-```typescript
-<Transcriber /> +
-    function TraverseLocalContext(this: Transcriber, callback: ITraverseLocalContextCallback) {
-        this.m_ContextMap.forEach((context, name) => callback(context, name));
-    };
-```
-
-# Method
-
-```typescript
-<Transcriber /> +
-    function TraverseMethod(this: Transcriber, callback: ITraverseMethodCallback) {
-        this.m_MethodMap.forEach((methods, class_name) => callback(methods, class_name));
-    };
-```
-
-# DSL
+## DSL
 
 ```typescript
 export interface IDSL {
-    Transpile(block: Array<Statement>): Array<Statement>;
+    Transcribe(block: Array<Statement>): Array<Statement>;
 }
 ```
+
+```typescript
+export interface ITranscriber {
+    GetDSL: (name: string) => IDSL;
+    PrepareDSLs: () => void;
+}
+```
+
+## Plugin
+
+```typescript
+export interface IPlugin {
+    Transcribe(): void;
+}
+```
+
+```typescript
+export interface ITranscriber {
+    PreparePlugins: () => void;
+}
+```
+
+## Local Context
+
+```typescript
+export interface ITranscriber {
+    TraverseLocalContext: (callback: ITraverseLocalContextCallback) => void;
+    GetLocalContext: (name: string) => LocalContext;
+}
+```
+
+```typescript
+export type ITraverseLocalContextCallback = (context: LocalContext, name: string) => void;
+```
+
+## Class
+
+```typescript
+export interface ITranscriber {
+    GetClass: (name: string) => ExportClassCode;
+    TraverseMethod: (callback: ITraverseMethodCallback) => void;
+}
+```
+
+```typescript
+export type ITraverseMethodCallback = (methods: Array<ClassMethod>, class_name: string) => void;
+```
+
+# Implementation
+
+##  DSL
 
 ```typescript
 <Transcriber /> +
@@ -150,17 +154,18 @@ export interface IDSL {
     };
 ```
 
-# Plugin
-
-```typescript
-export interface IPlugin {
-    Transcribe(): void;
-}
-```
+##  Plugin
 
 ```typescript
 <Transcriber /> +
     function PreparePlugins(this: Transcriber & ITranscriber) {
+        /**
+         * pay attention to the default order of plugins
+         * 1. resolve DSL first
+         * 2. then context
+         * 3. add methods to class
+         * 4. remove redundant code
+         */
         this.m_Plugins = [new DSLPlugin(this), new LocalContextPlugin(this), new ClassPlugin(this), new FilterPlugin(this)];
     };
 ```
@@ -172,7 +177,45 @@ export interface IPlugin {
     };
 ```
 
-# Appendix
+##  Local Context
+
+```typescript
+<Transcriber /> +
+    function GetLocalContext(this: Transcriber, name: string) {
+        return this.m_ContextMap.get(name);
+    };
+```
+
+```typescript
+<Transcriber /> +
+    function TraverseLocalContext(this: Transcriber, callback: ITraverseLocalContextCallback) {
+        this.m_ContextMap.forEach((context, name) => callback(context, name));
+    };
+```
+
+##  Class
+
+```typescript
+<Transcriber /> +
+    function GetClass(this: Transcriber, name: string) {
+        return this.m_ClassMap.get(name);
+    };
+```
+
+```typescript
+<Transcriber /> +
+    function TraverseMethod(this: Transcriber, callback: ITraverseMethodCallback) {
+        this.m_MethodMap.forEach((methods, class_name) => callback(methods, class_name));
+    };
+```
+
+# Trivial
+
+```typescript
+export interface ITranscriber {
+    m_Code: Array<Statement>;
+}
+```
 
 ```typescript
 <Transcriber /> +

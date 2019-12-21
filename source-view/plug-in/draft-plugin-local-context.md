@@ -1,6 +1,4 @@
-```typescript
-import toposort = require("toposort");
-```
+# Local Context Plugin
 
 ```typescript
 export class LocalContextPlugin {
@@ -8,19 +6,28 @@ export class LocalContextPlugin {
 }
 ```
 
-```typescript
-export class ILocalContextPlugin implements IPlugin {
-    Transcribe: () => void;
-    GetContextList: () => Array<string>;
-}
-```
+As context can be nested, we will translate them in order. Then find references of a context and replace them with "real" statements;
 
 ```typescript
 <LocalContextPlugin /> +
-    function constructor(this: LocalContextPlugin, transcriber: ITranscriber) {
-        this.m_Transcriber = transcriber;
+    function Transcribe(this: LocalContextPlugin & ILocalContextPlugin) {
+        // the order we translate all context
+        const to_transcribe = this.GetContextList();
+
+        // find and replace
+        to_transcribe.forEach(name => {
+            const context = this.m_Transcriber.GetLocalContext(name);
+            context.m_Refs.forEach(path => {
+                const parent = path.findParent(path => path.isExpressionStatement());
+                parent.replaceWithMultiple(context.ToStatements());
+            });
+        });
     };
 ```
+
+## Algorithm
+
+Topological sort is used to find the deps relation of context.
 
 ```typescript
 <LocalContextPlugin /> +
@@ -43,21 +50,25 @@ export class ILocalContextPlugin implements IPlugin {
                 }
             });
         });
+
+        // filter the result, because the name can be the function that uses context, instead of context itself.
         const context_list = toposort(graph).filter(name => this.m_Transcriber.GetLocalContext(name));
         return context_list;
     };
 ```
 
+# Trivial
+
+```typescript
+export class ILocalContextPlugin implements IPlugin {
+    Transcribe: () => void;
+    GetContextList: () => Array<string>;
+}
+```
+
 ```typescript
 <LocalContextPlugin /> +
-    function Transcribe(this: LocalContextPlugin & ILocalContextPlugin) {
-        const to_transcribe = this.GetContextList();
-        to_transcribe.forEach(name => {
-            const context = this.m_Transcriber.GetLocalContext(name);
-            context.m_Refs.forEach(path => {
-                const parent = path.findParent(path => path.isExpressionStatement());
-                parent.replaceWithMultiple(context.ToStatements());
-            });
-        });
+    function constructor(this: LocalContextPlugin, transcriber: ITranscriber) {
+        this.m_Transcriber = transcriber;
     };
 ```

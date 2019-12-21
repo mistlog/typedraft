@@ -4,7 +4,7 @@ export class PatternMatch {}
 
 ```typescript
 <PatternMatch /> +
-    function Transpile(block: Array<ExpressionStatement>): [IfStatement] {
+    function Transcribe(block: Array<ExpressionStatement>): [IfStatement] {
         let tail: IfStatement = null;
         let head: IfStatement = null;
         block.forEach(each => {
@@ -13,7 +13,7 @@ export class PatternMatch {}
         });
 
         /**
-         * transpiled is the "head"(first) of if statement
+         * transcribed is the "head"(first) of if statement
          */
         return [head];
     };
