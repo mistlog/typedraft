@@ -19,6 +19,11 @@
     "files": [
         "dist"
     ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mistlog/typedraft"
+      },
+      "homepage": "https://github.com/mistlog/typedraft/wiki",
     "scripts": {
         "test": "npm run transcribe && jest --coverage && npm run clean",
         "test:watch": "jest --watch",
