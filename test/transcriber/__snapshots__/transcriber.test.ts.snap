@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`transcriber transcriber.transcribe 1`] = `
+"export class Foo {
+  static foo: number;
+
+  Test(a: number, b: string) {
+    return a.toString() + b;
+  }
+
+  Test2(a: number, b: string) {
+    return a.toString() + b;
+  }
+
+}"
+`;
