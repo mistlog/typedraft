@@ -26,7 +26,8 @@ else
     {
 
         //
-        const project_package = readJsonSync(join(working_directory, "package.json")) || { devDependencies: {} };
+        const project_package = readJsonSync(join(working_directory, "package.json"), { throws: false }) || { devDependencies: {} };
+
         const dsl_names = Object.keys(project_package.devDependencies).filter(key => key.startsWith("draft-dsl"));
         const dsls = dsl_names.map(name => require(`${join(working_directory, "node_modules", name)}`).dsl);
         config.dsls = dsls;
