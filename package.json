@@ -22,8 +22,8 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/mistlog/typedraft"
-      },
-      "homepage": "https://github.com/mistlog/typedraft/wiki",
+    },
+    "homepage": "https://github.com/mistlog/typedraft/wiki",
     "scripts": {
         "test": "npm run transcribe && jest --coverage && npm run clean",
         "test:watch": "jest --watch",
@@ -53,7 +53,7 @@
         "@types/toposort": "2.0.3",
         "concurrently": "^5.0.2",
         "jest": "^24.9.0",
-        "source-view": "0.0.2",
+        "source-view": "0.0.3",
         "ts-jest": "^24.0.2",
         "ts-node": "^8.3.0",
         "typedraft": "latest",
