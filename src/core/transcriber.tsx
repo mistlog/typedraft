@@ -9,6 +9,7 @@ import { LocalContext } from "../code-object/local-context";
 import { PatternMatch } from "../dsl/draft-dsl-match";
 import { DSLPlugin } from "../plug-in/draft-plugin-dsl";
 import { ToString } from "../common/utility";
+import { NodePath, Node } from "@babel/traverse";
 
 /*
 # Transcriber
@@ -98,7 +99,7 @@ Other methods are just utility.
 */
 export interface IDSL
 {
-    Transcribe(block: Array<Statement>): Array<Statement>;
+    Transcribe(block: Array<Statement>, path?: NodePath<Node>): Array<Statement>;
 };
 
 export interface ITranscriber

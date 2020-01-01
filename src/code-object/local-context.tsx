@@ -25,7 +25,7 @@ The context itself does nothing but expresses our intention. If it's used with a
 {
     // because we don't need "use ..." after resolved
     this.m_Code.body.directives = [];
-    this.m_Code.body.body = dsl.Transcribe(this.ToStatements());
+    this.m_Code.body.body = dsl.Transcribe(this.ToStatements(), this.m_Path);
 };
 
 /*
