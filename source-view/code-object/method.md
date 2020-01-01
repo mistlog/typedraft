@@ -5,6 +5,7 @@ As we want to rearrange code in literate programming, we will seperate class met
 ```typescript
 export class MethodCode {
     m_Code: ExpressionStatement;
+    m_Path: NodePath<ExpressionStatement>;
     get m_Left() {
         return this.m_Expression.left as JSXElement;
     }
@@ -73,7 +74,8 @@ export interface IClassMethod {
 
 ```typescript
 <MethodCode /> +
-    function constructor(node: ExpressionStatement) {
+    function constructor(this: MethodCode, node: ExpressionStatement, path?: NodePath<ExpressionStatement>) {
         this.m_Code = node;
+        this.m_Path = path;
     };
 ```

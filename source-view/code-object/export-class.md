@@ -5,6 +5,7 @@ All exported class would be recorded as ```ExportClassCode```,
 ```typescript
 export class ExportClassCode {
     m_Code: ExportNamedDeclaration;
+    m_Path: NodePath<ExportNamedDeclaration>;
     get m_Class() {
         return this.m_Code.declaration as ClassDeclaration;
     }
@@ -30,7 +31,8 @@ Then, we will restore class methods and add them to class. See document of metho
 
 ```typescript
 <ExportClassCode /> +
-    function constructor(this: ExportClassCode, node: ExportNamedDeclaration) {
+    function constructor(this: ExportClassCode, node: ExportNamedDeclaration, path?: NodePath<ExportNamedDeclaration>) {
         this.m_Code = node;
+        this.m_Path = path;
     };
 ```

@@ -4,7 +4,7 @@ import { MethodCode } from "./method";
 import { LocalContext } from "./local-context";
 import { Visitor } from "@babel/core";
 import { ToFile } from "../common/utility";
-import traverse, { NodePath } from "@babel/traverse";
+import traverse, { NodePath, Node } from "@babel/traverse";
 
 /*
 # Draft
@@ -73,44 +73,43 @@ As we are only interested in the draft part of a module, then we need a way to r
 */
 <ModuleCode /> + function ToDraft(this: ModuleCode)
 {
-    //@ts-ignore
-    <CreateDraftAndReturn />;
-};
-
-/*
-## Record references to local context
-*/
-
-function CreateDraftAndReturn(this: ModuleCode)
-{
     let draft: Draft = [];
 
     const visitor: Visitor = {
         Program(path)
         {
-            const statments = path.get("body");
-            statments.forEach(path =>
+            path.get("body").forEach(path =>
             {
-                if (path.isExportNamedDeclaration())
-                {
-                    draft.push(new ExportClassCode(path.node, path));
-                }
-                else if (path.isExpressionStatement())
-                {
-                    draft.push(new MethodCode(path.node, path));
-                }
-                else if (path.isFunctionDeclaration())
-                {
-                    const name = path.node.id.name;
-                    const binding = path.scope.parent.getBinding(name);
-                    draft.push(new LocalContext(path.node, binding, path));
-                }
+                //@ts-ignore
+                <CreateDraft/>;
             })
         }
     }
 
     traverse(this.m_File, visitor);
     return draft;
+};
+
+/*
+## Create draft
+*/
+
+function CreateDraft(path: NodePath<Node>, draft: Draft)
+{
+    if (path.isExportNamedDeclaration())
+    {
+        draft.push(new ExportClassCode(path.node, path));
+    }
+    else if (path.isExpressionStatement())
+    {
+        draft.push(new MethodCode(path.node, path));
+    }
+    else if (path.isFunctionDeclaration())
+    {
+        const name = path.node.id.name;
+        const binding = path.scope.parent.getBinding(name);
+        draft.push(new LocalContext(path.node, binding, path));
+    }
 }
 /*
 You may want to refer to the usage of [babel](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#toc-bindings).
