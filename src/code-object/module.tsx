@@ -1,10 +1,10 @@
-import { isExportNamedDeclaration, isExpressionStatement, isFunctionDeclaration, File, Statement } from "@babel/types";
+import { Program, File, Statement } from "@babel/types";
 import { ExportClassCode } from "./export-class";
 import { MethodCode } from "./method";
 import { LocalContext } from "./local-context";
 import { Visitor } from "@babel/core";
 import { ToFile } from "../common/utility";
-import traverse, { Binding } from "@babel/traverse";
+import traverse, { NodePath } from "@babel/traverse";
 
 /*
 # Draft
@@ -17,6 +17,7 @@ export type Draft = Array<ExportClassCode | MethodCode | LocalContext>;
 export class ModuleCode
 {
     m_File: File;
+    m_Path: NodePath<Program>;
 
     get m_Code() { return this.m_File.program.body; }
     set m_Code(code: Array<Statement>) { this.m_File.program.body = code; }
@@ -72,34 +73,44 @@ As we are only interested in the draft part of a module, then we need a way to r
 */
 <ModuleCode /> + function ToDraft(this: ModuleCode)
 {
-    <SetupLocalContextBindingMap />;
     //@ts-ignore
-    <CreateDraftAndReturn/>;
+    <CreateDraftAndReturn />;
 };
 
 /*
 ## Record references to local context
 */
 
-function SetupLocalContextBindingMap(this: ModuleCode)
+function CreateDraftAndReturn(this: ModuleCode)
 {
-    const binding_map = new Map<string, Binding>();
+    let draft: Draft = [];
+
     const visitor: Visitor = {
         Program(path)
         {
-            Object.entries(path.scope.bindings).forEach(([name, binding]) =>
+            const statments = path.get("body");
+            statments.forEach(path =>
             {
-                /**
-                 * we treat function declaration as local context, thus we record bindings of it
-                 */
-                if (isFunctionDeclaration(binding.path.node))
+                if (path.isExportNamedDeclaration())
                 {
-                    binding_map.set(name, binding);
+                    draft.push(new ExportClassCode(path.node, path));
+                }
+                else if (path.isExpressionStatement())
+                {
+                    draft.push(new MethodCode(path.node, path));
+                }
+                else if (path.isFunctionDeclaration())
+                {
+                    const name = path.node.id.name;
+                    const binding = path.scope.parent.getBinding(name);
+                    draft.push(new LocalContext(path.node, binding, path));
                 }
             })
         }
     }
+
     traverse(this.m_File, visitor);
+    return draft;
 }
 /*
 You may want to refer to the usage of [babel](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#toc-bindings).
@@ -108,30 +119,6 @@ You may want to refer to the usage of [babel](https://github.com/jamiebuilds/bab
 /*
 ## Create draft
 */
-
-function CreateDraftAndReturn(this: ModuleCode, binding_map: Map<string, Binding>)
-{
-    const draft: Draft = this.m_Code.reduce((collection: Draft, node) =>
-    {
-        if (isExportNamedDeclaration(node))
-        {
-            collection.push(new ExportClassCode(node));
-        }
-        else if (isExpressionStatement(node))
-        {
-            collection.push(new MethodCode(node));
-        }
-        else if (isFunctionDeclaration(node))
-        {
-            // the binding map we build previously is used here to create local context
-            collection.push(new LocalContext(node, binding_map.get(node.id.name)));
-        }
-
-        return collection;
-    }, [])
-
-    return draft;
-}
 
 /*
 # Trivial
