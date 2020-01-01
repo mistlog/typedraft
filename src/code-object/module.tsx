@@ -116,10 +116,6 @@ You may want to refer to the usage of [babel](https://github.com/jamiebuilds/bab
 */
 
 /*
-## Create draft
-*/
-
-/*
 # Trivial
 */
 <ModuleCode /> + function constructor(this: ModuleCode, code: string)
