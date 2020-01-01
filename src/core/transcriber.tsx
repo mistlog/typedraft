@@ -1,7 +1,7 @@
 import { ModuleCode } from "../code-object/module";
 import { ExportClassCode } from "../code-object/export-class";
 import { MethodCode } from "../code-object/method";
-import { ClassMethod, Statement } from "@babel/types";
+import { ClassMethod, Statement, FunctionDeclaration } from "@babel/types";
 import { ClassPlugin } from "../plug-in/draft-plugin-class";
 import { FilterPlugin } from "../plug-in/draft-plugin-filter";
 import { LocalContextPlugin } from "../plug-in/draft-plugin-local-context";
@@ -9,7 +9,7 @@ import { LocalContext } from "../code-object/local-context";
 import { PatternMatch } from "../dsl/draft-dsl-match";
 import { DSLPlugin } from "../plug-in/draft-plugin-dsl";
 import { ToString } from "../common/utility";
-import { NodePath, Node } from "@babel/traverse";
+import { NodePath } from "@babel/traverse";
 
 /*
 # Transcriber
@@ -99,7 +99,7 @@ Other methods are just utility.
 */
 export interface IDSL
 {
-    Transcribe(block: Array<Statement>, path?: NodePath<Node>): Array<Statement>;
+    Transcribe(block: Array<Statement>, path?: NodePath<FunctionDeclaration>): Array<Statement>;
 };
 
 export interface ITranscriber

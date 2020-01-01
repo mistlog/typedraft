@@ -3,7 +3,8 @@ import { Transcriber, IDSL } from "../../src/core/transcriber";
 import { LocalContextPlugin } from "../../src/plug-in/draft-plugin-local-context";
 import { ToAst, ToString } from "../../src/common/utility";
 import { FilterPlugin } from "../../src/plug-in/draft-plugin-filter";
-import { Statement } from "@babel/types";
+import { Statement, FunctionDeclaration } from "@babel/types";
+import { NodePath } from "@babel/traverse";
 
 describe("plugin.local-context", () =>
 {
@@ -27,7 +28,7 @@ describe("plugin.local-context", () =>
         transcriber.m_Plugins.pop();
         const plugin = transcriber.m_Plugins.find(plugin => plugin instanceof LocalContextPlugin);
         Reflect.set(plugin, "GetContextList", () => ["Snippet"]);
-        
+
         const result = transcriber.Transcribe();
         expect(result).toMatchSnapshot();
     })
@@ -54,12 +55,12 @@ describe("plugin.local-context", () =>
         transcriber.m_Plugins.pop();
         const plugin = transcriber.m_Plugins.find(plugin => plugin instanceof LocalContextPlugin);
         Reflect.set(plugin, "GetContextList", () => ["SnippetNested", "Snippet"]);
-        
+
         const result = transcriber.Transcribe();;
         expect(result).toMatchSnapshot();
     })
 
-    
+
     test("transcribe.integrated.export-function", () =>
     {
         //
@@ -174,7 +175,8 @@ describe("plugin.local-context", () =>
     })
 })
 
-describe("plugin.dsl",()=>{
+describe("plugin.dsl", () =>
+{
     test("dsl.log", () =>
     {
         //
@@ -208,6 +210,53 @@ describe("plugin.dsl",()=>{
         const expected = ToAst(`
             function Test(){
                 console.log("current");
+            }
+        `);
+
+        expect(ToAst(result)).toEqual(expected);
+    })
+
+    test("dsl.rename.test-use-path", () =>
+    {
+        //
+        class Foo implements IDSL
+        {
+            Transcribe(block: Array<Statement>, path: NodePath<FunctionDeclaration>): Array<Statement>
+            {
+
+                path.traverse({
+                    Identifier(path)
+                    {
+                        if (path.node.name === "x")
+                        {
+                            path.node.name = "y";
+                        }
+                    }
+                })
+
+                return block;
+            }
+        }
+
+        //
+        const code = `
+            function Test(){
+                'use foo';
+                const x = 1;
+                console.log(x + 1);
+            }
+        `;
+
+        const transcriber = new Transcriber(code);
+        transcriber.m_Plugins.pop();
+        transcriber.AddDSL("foo", new Foo());
+        const result = transcriber.Transcribe();
+
+        //
+        const expected = ToAst(`
+            function Test(){
+                const y = 1;
+                console.log(y + 1);
             }
         `);
 
