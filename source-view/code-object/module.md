@@ -9,6 +9,7 @@ export type Draft = Array<ExportClassCode | MethodCode | LocalContext>;
 ```typescript
 export class ModuleCode {
     m_File: File;
+    m_Path: NodePath<Program>;
     get m_Code() {
         return this.m_File.program.body;
     }
@@ -65,52 +66,36 @@ As we are only interested in the draft part of a module, then we need a way to r
 ```typescript
 <ModuleCode /> +
     function ToDraft(this: ModuleCode) {
-        <SetupLocalContextBindingMap />;
-        <CreateDraftAndReturn />;
+        let draft: Draft = [];
+        const visitor: Visitor = {
+            Program(path) {
+                path.get("body").forEach(path => {
+                    <CreateDraft />;
+                });
+            }
+        };
+        traverse(this.m_File, visitor);
+        return draft;
     };
 ```
-
-## Record references to local context
-
-```typescript
-function SetupLocalContextBindingMap(this: ModuleCode) {
-    const binding_map = new Map();
-    const visitor: Visitor = {
-        Program(path) {
-            Object.entries(path.scope.bindings).forEach(([name, binding]) => {
-                /**
-                 * we treat function declaration as local context, thus we record bindings of it
-                 */
-                if (isFunctionDeclaration(binding.path.node)) {
-                    binding_map.set(name, binding);
-                }
-            });
-        }
-    };
-    traverse(this.m_File, visitor);
-}
-```
-
-You may want to refer to the usage of [babel](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#toc-bindings).
 
 ## Create draft
 
 ```typescript
-function CreateDraftAndReturn(this: ModuleCode, binding_map: Map<string, Binding>) {
-    const draft: Draft = this.m_Code.reduce((collection: Draft, node) => {
-        if (isExportNamedDeclaration(node)) {
-            collection.push(new ExportClassCode(node));
-        } else if (isExpressionStatement(node)) {
-            collection.push(new MethodCode(node));
-        } else if (isFunctionDeclaration(node)) {
-            // the binding map we build previously is used here to create local context
-            collection.push(new LocalContext(node, binding_map.get(node.id.name)));
-        }
-        return collection;
-    }, []);
-    return draft;
+function CreateDraft(path: NodePath<Node>, draft: Draft) {
+    if (path.isExportNamedDeclaration()) {
+        draft.push(new ExportClassCode(path.node, path));
+    } else if (path.isExpressionStatement()) {
+        draft.push(new MethodCode(path.node, path));
+    } else if (path.isFunctionDeclaration()) {
+        const name = path.node.id.name;
+        const binding = path.scope.parent.getBinding(name);
+        draft.push(new LocalContext(path.node, binding, path));
+    }
 }
 ```
+
+You may want to refer to the usage of [babel](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#toc-bindings).
 
 # Trivial
 

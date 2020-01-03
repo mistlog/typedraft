@@ -1,13 +1,12 @@
 #!/usr/bin/env node
 import * as program from "commander";
-//@ts-ignore
-import * as package_json from "../../package.json";
 import { ComposeFile, ComposeDirectory, InspectDirectory, InspectFile } from "./literator";
 import { resolve, join } from "path";
 import { lstatSync } from "fs";
-import { readJsonSync } from "fs-extra";
+import { readJsonSync, readJSONSync } from "fs-extra";
 import { config } from "./config.js";
 
+const package_json = readJSONSync(resolve(__dirname, "../../package.json"));
 program.version(package_json.version)
 program.option("-w, --watch", "compose file or files in directory in watch mode");
 program.parse(process.argv);
