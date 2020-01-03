@@ -6,6 +6,7 @@ The concept of local context is essential in typedraft, any function declaration
 export class LocalContext {
     m_Code: FunctionDeclaration;
     m_Binding: Binding | null;
+    m_Path: NodePath<FunctionDeclaration>;
     get m_Refs() {
         return this.m_Binding.referencePaths;
     }
@@ -22,7 +23,7 @@ The context itself does nothing but expresses our intention. If it's used with a
     function Resolve(this: LocalContext & ILocalContext, dsl: IDSL) {
         // because we don't need "use ..." after resolved
         this.m_Code.body.directives = [];
-        this.m_Code.body.body = dsl.Transcribe(this.ToStatements());
+        this.m_Code.body.body = dsl.Transcribe(this.ToStatements(), this.m_Path);
     };
 ```
 
@@ -134,11 +135,12 @@ We don't use any DSL, then we just use the "host" language and the output(statem
 
 ```typescript
 <LocalContext /> +
-    function constructor(this: LocalContext, node: FunctionDeclaration, binding?: Binding) {
+    function constructor(this: LocalContext, node: FunctionDeclaration, binding?: Binding, path?: NodePath<FunctionDeclaration>) {
         this.m_Code = node;
 
         // binding is used to find all references to this context, thus we can replace them with resolved statements
         this.m_Binding = binding || null;
+        this.m_Path = path;
     };
 ```
 

@@ -78,7 +78,7 @@ Other methods are just utility.
 
 ```typescript
 export interface IDSL {
-    Transcribe(block: Array<Statement>): Array<Statement>;
+    Transcribe(block: Array<Statement>, path?: NodePath<FunctionDeclaration>): Array<Statement>;
 }
 ```
 

@@ -1,4 +1,5 @@
 import { ExpressionStatement, BinaryExpression, JSXElement, FunctionExpression, JSXIdentifier, isIdentifier, classMethod, ClassMethod } from "@babel/types";
+import { NodePath } from "@babel/traverse";
 
 /*
 # Class Method
@@ -8,11 +9,12 @@ As we want to rearrange code in literate programming, we will seperate class met
 export class MethodCode
 {
     m_Code: ExpressionStatement;
+    m_Path: NodePath<ExpressionStatement>;
 
     get m_Left() { return this.m_Expression.left as JSXElement; }
     get m_Right() { return this.m_Expression.right as FunctionExpression; }
     get m_Expression() { return this.m_Code.expression as BinaryExpression; }
-    get m_ClassName () { return (this.m_Left.openingElement.name as JSXIdentifier).name; }
+    get m_ClassName() { return (this.m_Left.openingElement.name as JSXIdentifier).name; }
 }
 
 /*
@@ -76,7 +78,8 @@ export interface IClassMethod
     method: ClassMethod;
 };
 
-<MethodCode /> + function constructor(node: ExpressionStatement)
+<MethodCode /> + function constructor(this: MethodCode, node: ExpressionStatement, path?: NodePath<ExpressionStatement>)
 {
     this.m_Code = node;
+    this.m_Path = path;
 };

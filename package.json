@@ -1,6 +1,6 @@
 {
     "name": "typedraft",
-    "version": "0.0.3",
+    "version": "0.1.0",
     "description": "TypeDraft is a superset of typescript with built-in support for DSL extension and literate programming.",
     "keywords": [
         "literate programming",
@@ -22,12 +22,12 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/mistlog/typedraft"
-      },
-      "homepage": "https://github.com/mistlog/typedraft/wiki",
+    },
+    "homepage": "https://github.com/mistlog/typedraft/wiki",
     "scripts": {
         "test": "npm run transcribe && jest --coverage && npm run clean",
         "test:watch": "jest --watch",
-        "build": "npm run transcribe && tsc && npm run clean && ts-node ./script/build.ts && npm run doc",
+        "build": "npm run transcribe && tsc && npm run clean && npm run doc",
         "dev": "concurrently \"npm run transcribe:watch\" \"npm run doc:watch\"",
         "doc": "sv ./src",
         "doc:watch": "sv ./src -w",
@@ -40,11 +40,12 @@
     "license": "MIT",
     "dependencies": {
         "@babel/core": "7.6.2",
-        "toposort": "2.0.2",
         "commander": "^4.0.1",
         "filewalker": "^0.1.3",
         "fs-extra": "^8.1.0",
-        "node-watch": "^0.6.3"
+        "node-watch": "^0.6.3",
+        "prettier": "^1.19.1",
+        "toposort": "2.0.2"
     },
     "devDependencies": {
         "@types/fs-extra": "^8.0.1",
@@ -53,7 +54,7 @@
         "@types/toposort": "2.0.3",
         "concurrently": "^5.0.2",
         "jest": "^24.9.0",
-        "source-view": "0.0.2",
+        "source-view": "0.0.3",
         "ts-jest": "^24.0.2",
         "ts-node": "^8.3.0",
         "typedraft": "latest",

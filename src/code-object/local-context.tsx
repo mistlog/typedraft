@@ -1,6 +1,7 @@
 import { FunctionDeclaration, Statement } from "@babel/types";
 import { Binding } from "@babel/traverse";
 import { IDSL } from "../core/transcriber";
+import { NodePath } from "@babel/traverse";
 
 /*
 # Local Context
@@ -11,6 +12,7 @@ export class LocalContext
 {
     m_Code: FunctionDeclaration;
     m_Binding: Binding | null;
+    m_Path: NodePath<FunctionDeclaration>;
 
     get m_Refs() { return this.m_Binding.referencePaths; }
     get m_Name() { return this.m_Code.id.name; }
@@ -23,7 +25,7 @@ The context itself does nothing but expresses our intention. If it's used with a
 {
     // because we don't need "use ..." after resolved
     this.m_Code.body.directives = [];
-    this.m_Code.body.body = dsl.Transcribe(this.ToStatements());
+    this.m_Code.body.body = dsl.Transcribe(this.ToStatements(), this.m_Path);
 };
 
 /*
@@ -137,12 +139,14 @@ We don't use any DSL, then we just use the "host" language and the output(statem
 /*
 # Trivial
 */
-<LocalContext /> + function constructor(this: LocalContext, node: FunctionDeclaration, binding?: Binding)
+<LocalContext /> + function constructor(this: LocalContext, node: FunctionDeclaration, binding?: Binding, path?: NodePath<FunctionDeclaration>)
 {
     this.m_Code = node;
 
     // binding is used to find all references to this context, thus we can replace them with resolved statements
     this.m_Binding = binding || null;
+
+    this.m_Path = path;
 };
 
 export interface ILocalContext

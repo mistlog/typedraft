@@ -52,4 +52,21 @@ describe("transcriber", () =>
         const result = transcriber.m_ClassMap.get("Foo").m_Code;
         expect(ToString(result)).toMatchSnapshot();
     })
+
+    test("transcriber.interface-no-parse-error", () =>
+    {
+        //
+        const code = `
+            interface IFoo {
+
+                // ; is not required after interface and before tag
+            }
+
+            <Foo/> + function Test(this: Foo, a: number, b: string){
+                return a.toString()+b;
+            }
+        `;
+
+        expect(() => new Transcriber(code)).not.toThrow();
+    })
 })
