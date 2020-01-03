@@ -1,6 +1,6 @@
 {
     "name": "typedraft",
-    "version": "0.0.3",
+    "version": "0.1.0",
     "description": "TypeDraft is a superset of typescript with built-in support for DSL extension and literate programming.",
     "keywords": [
         "literate programming",
@@ -27,7 +27,7 @@
     "scripts": {
         "test": "npm run transcribe && jest --coverage && npm run clean",
         "test:watch": "jest --watch",
-        "build": "npm run transcribe && tsc && npm run clean && ts-node ./script/build.ts && npm run doc",
+        "build": "npm run transcribe && tsc && npm run clean && npm run doc",
         "dev": "concurrently \"npm run transcribe:watch\" \"npm run doc:watch\"",
         "doc": "sv ./src",
         "doc:watch": "sv ./src -w",
