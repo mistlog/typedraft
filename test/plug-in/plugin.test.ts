@@ -277,6 +277,9 @@ describe("plugin.filter", () =>
         `;
 
         const transcriber = new Transcriber(code);
+        transcriber.m_Plugins.pop();
+        // test add plugin
+        transcriber.AddPlugin(new FilterPlugin(transcriber));
         const result = transcriber.Transcribe();
         expect(result).toMatchSnapshot();
     })

@@ -32,10 +32,6 @@ export class Transcriber
     //
     m_DSLMap: Map<string, IDSL>;
     m_Plugins: Array<IPlugin>;
-
-    //
-    get m_Code() { return this.m_Module.m_Code };
-    set m_Code(code: Array<Statement>) { this.m_Module.m_Code = code };
 }
 
 /*
@@ -217,11 +213,6 @@ export type ITraverseMethodCallback = (methods: Array<MethodCode>, class_name: s
 /*
 # Trivial
 */
-export interface ITranscriber
-{
-    m_Code: Array<Statement>;
-};
-
 < Transcriber /> + function constructor(this: Transcriber & ITranscriber, _module: ModuleCode | string)
 {
     //

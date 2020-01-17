@@ -18,9 +18,6 @@ export class ModuleCode
 {
     m_File: File;
     m_Path: NodePath<Program>;
-
-    get m_Code() { return this.m_File.program.body; }
-    set m_Code(code: Array<Statement>) { this.m_File.program.body = code; }
 }
 
 /*
