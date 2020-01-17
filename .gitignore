@@ -4,3 +4,7 @@ spike.ts
 build
 dist
 *.tgz
+src/code-object/*.ts
+src/core/*.ts
+src/dsl/*.ts
+src/plug-in/*.ts

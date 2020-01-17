@@ -19,7 +19,7 @@ export function ToFile(raw: string)
         plugins: [TypescriptParser]
     });
 
-    return parse(code, { sourceType: "module", plugins: ["typescript", "jsx"] });
+    return parse(code, { sourceType: "module", plugins: ["typescript", "jsx", "optionalChaining"] });
 }
 
 export function ToString(node: Node, options?: GeneratorOptions)

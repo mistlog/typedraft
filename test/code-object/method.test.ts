@@ -1,7 +1,6 @@
 import { MethodCode } from "../../src/code-object/method";
 import { ToAst, ToString } from "../../src/common/utility";
 import { ExpressionStatement } from "@babel/types";
-import { WriteOutput } from "../common/utility";
 
 describe("method", () =>
 {
@@ -15,8 +14,8 @@ describe("method", () =>
 
         const method = new MethodCode(ToAst(code) as ExpressionStatement);
         const class_method = method.ToClassMethod();
-        
-        expect(ToString(class_method.method)).toMatchSnapshot();
-        expect(class_method.class_name).toEqual("Foo");
+
+        expect(ToString(class_method)).toMatchSnapshot();
+        expect(method.m_ClassName).toEqual("Foo");
     })
 })

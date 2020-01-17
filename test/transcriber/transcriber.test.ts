@@ -27,7 +27,7 @@ describe("transcriber", () =>
 
         expect(transcriber.m_ClassMap.size).toEqual(1);
         expect(transcriber.m_MethodMap.size).toEqual(1);
-        expect(transcriber.m_ContextMap.size).toEqual(1);
+        expect(transcriber.m_ContextMap.size).toEqual(0);
     })
 
     test("transcriber.transcribe", () =>
