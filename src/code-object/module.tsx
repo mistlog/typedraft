@@ -1,4 +1,4 @@
-import { Program, File, Statement } from "@babel/types";
+import { Program, File, Statement, FunctionDeclaration } from "@babel/types";
 import { ExportClassCode } from "./export-class";
 import { MethodCode } from "./method";
 import { LocalContext } from "./local-context";
@@ -81,7 +81,7 @@ As we are only interested in the draft part of a module, then we need a way to r
             path.get("body").forEach(path =>
             {
                 //@ts-ignore
-                <CreateDraft/>;
+                <CreateDraft />;
             })
         }
     }
@@ -106,10 +106,27 @@ function CreateDraft(path: NodePath<Node>, draft: Draft)
     }
     else if (path.isFunctionDeclaration())
     {
-        const name = path.node.id.name;
-        const binding = path.scope.parent.getBinding(name);
-        draft.push(new LocalContext(path.node, binding, path));
+        const is_local_context = IsLocalContext(path);
+        if (is_local_context)
+        {
+            const name = path.node.id.name;
+            const binding = path.scope.parent.getBinding(name);
+            draft.push(new LocalContext(path.node, binding, path));
+        }
     }
+}
+
+
+export function IsLocalContext(path: NodePath<FunctionDeclaration>)
+{
+    const name = path.node.id.name;
+    const binding = path.scope.parent.getBinding(name);
+    const is_local_context = binding.referencePaths.some(path => {
+        const used_as_jsx = path.parentPath?.parentPath?.isJSXElement();
+        const used_as_statement = path.parentPath?.parentPath?.parentPath?.isExpressionStatement();
+        return used_as_jsx && used_as_statement;
+    });
+    return is_local_context;
 }
 /*
 You may want to refer to the usage of [babel](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#toc-bindings).

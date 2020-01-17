@@ -31,4 +31,28 @@ describe("module", () =>
         expect(method instanceof MethodCode).toEqual(true);
         expect(local_context instanceof LocalContext).toEqual(true);
     })
+
+    test("normal function is not local context", () =>
+    {
+        //
+        const code = `
+            export class Foo{
+                static foo: number;
+            }
+
+            <Foo/> + function Test(this: Foo, a: number, b: string){
+                Bar();
+                return a.toString()+b;
+            };
+
+            function Bar(this: Foo, a: number, b: string){
+                a += this.foo;
+                return a.toString()+b;
+            }
+        `;
+
+        const _module = new ModuleCode(code);
+        const draft = _module.ToDraft();
+        expect(draft.length).toEqual(2);
+    })
 })
