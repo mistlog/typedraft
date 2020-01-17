@@ -26,16 +26,12 @@ export class Transcriber
 
     // the 3 types of code we will transform
     m_ClassMap: Map<string, ExportClassCode>;
-    m_MethodMap: Map<string, Array<ClassMethod>>;
+    m_MethodMap: Map<string, Array<MethodCode>>;
     m_ContextMap: Map<string, LocalContext>;
 
     //
     m_DSLMap: Map<string, IDSL>;
     m_Plugins: Array<IPlugin>;
-
-    //
-    get m_Code() { return this.m_Module.m_Code };
-    set m_Code(code: Array<Statement>) { this.m_Module.m_Code = code };
 }
 
 /*
@@ -70,16 +66,9 @@ When we init a transcriber, we will preprocess code to build some maps for looku
         }
         else if (each instanceof MethodCode)
         {
-            const { class_name, method } = each.ToClassMethod();
+            const class_name = each.m_ClassName;
             const methods = this.m_MethodMap.get(class_name);
-            if (!methods)
-            {
-                this.m_MethodMap.set(class_name, [method]);
-            }
-            else
-            {
-                methods.push(method);
-            }
+            methods ? methods.push(each) : this.m_MethodMap.set(class_name, [each]);
         }
         else if (each instanceof LocalContext)
         {
@@ -125,7 +114,8 @@ export interface ITranscriber
 /*
 ## Local Context
 */
-export interface ITranscriber{
+export interface ITranscriber
+{
     TraverseLocalContext: (callback: ITraverseLocalContextCallback) => void;
     GetLocalContext: (name: string) => LocalContext;
 }
@@ -143,7 +133,7 @@ export interface ITranscriber
 };
 
 
-export type ITraverseMethodCallback = (methods: Array<ClassMethod>, class_name: string) => void;
+export type ITraverseMethodCallback = (methods: Array<MethodCode>, class_name: string) => void;
 
 /*
 # Implementation
@@ -223,10 +213,6 @@ export type ITraverseMethodCallback = (methods: Array<ClassMethod>, class_name: 
 /*
 # Trivial
 */
-export interface ITranscriber{
-    m_Code: Array<Statement>;
-};
-
 < Transcriber /> + function constructor(this: Transcriber & ITranscriber, _module: ModuleCode | string)
 {
     //
@@ -234,7 +220,7 @@ export interface ITranscriber{
 
     //
     this.m_ClassMap = new Map<string, ExportClassCode>();
-    this.m_MethodMap = new Map<string, Array<ClassMethod>>();
+    this.m_MethodMap = new Map<string, Array<MethodCode>>();
     this.m_ContextMap = new Map<string, LocalContext>();
     this.m_DSLMap = new Map<string, IDSL>();
 

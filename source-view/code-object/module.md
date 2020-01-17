@@ -10,12 +10,6 @@ export type Draft = Array<ExportClassCode | MethodCode | LocalContext>;
 export class ModuleCode {
     m_File: File;
     m_Path: NodePath<Program>;
-    get m_Code() {
-        return this.m_File.program.body;
-    }
-    set m_Code(code: Array<Statement>) {
-        this.m_File.program.body = code;
-    }
 }
 ```
 
@@ -88,10 +82,26 @@ function CreateDraft(path: NodePath<Node>, draft: Draft) {
     } else if (path.isExpressionStatement()) {
         draft.push(new MethodCode(path.node, path));
     } else if (path.isFunctionDeclaration()) {
-        const name = path.node.id.name;
-        const binding = path.scope.parent.getBinding(name);
-        draft.push(new LocalContext(path.node, binding, path));
+        const is_local_context = IsLocalContext(path);
+        if (is_local_context) {
+            const name = path.node.id.name;
+            const binding = path.scope.parent.getBinding(name);
+            draft.push(new LocalContext(path.node, binding, path));
+        }
     }
+}
+```
+
+```typescript
+export function IsLocalContext(path: NodePath<FunctionDeclaration>) {
+    const name = path.node.id.name;
+    const binding = path.scope.parent.getBinding(name);
+    const is_local_context = binding.referencePaths.some(path => {
+        const used_as_jsx = path.parentPath?.parentPath?.isJSXElement();
+        const used_as_statement = path.parentPath?.parentPath?.parentPath?.isExpressionStatement();
+        return used_as_jsx && used_as_statement;
+    });
+    return is_local_context;
 }
 ```
 

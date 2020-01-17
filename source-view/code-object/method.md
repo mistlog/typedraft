@@ -50,13 +50,13 @@ As described, "\<Foo/> + function Test" is an ```ExpressionStatement```, and we 
 
 ```typescript
 <MethodCode /> +
-    function ToClassMethod(this: MethodCode): IClassMethod {
+    function ToClassMethod(this: MethodCode): ClassMethod {
         const { id, params: raw_params, body } = this.m_Right;
 
         // remove "this" param
         const params = raw_params.filter(param => isIdentifier(param) && param.name !== "this");
         const kind = id.name === "constructor" ? "constructor" : "method";
-        const class_method = { class_name: this.m_ClassName, method: classMethod(kind, id, params, body) };
+        const class_method = classMethod(kind, id, params, body);
         return class_method;
     };
 ```
@@ -64,13 +64,6 @@ As described, "\<Foo/> + function Test" is an ```ExpressionStatement```, and we 
 We can get the "restored" class method now, but we have to find a way to insert it into class. See export-class.
 
 # Trivial
-
-```typescript
-export interface IClassMethod {
-    class_name: string;
-    method: ClassMethod;
-}
-```
 
 ```typescript
 <MethodCode /> +

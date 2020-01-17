@@ -28,7 +28,7 @@ describe("export class", () =>
         const class_method = method.ToClassMethod();
 
         //
-        export_class.AddMember(class_method.method);
+        export_class.AddMember(class_method);
         expect(ToString(export_class.m_Code)).toMatchSnapshot();
     })
 })

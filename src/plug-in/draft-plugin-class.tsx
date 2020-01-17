@@ -19,7 +19,7 @@ export class ClassPlugin
         const target_class = transcriber.GetClass(class_name);
         if (target_class)
         {
-            methods.forEach(method => target_class.AddMember(method));
+            methods.forEach(method => target_class.AddMember(method.ToClassMethod()));
         }
     })
 }

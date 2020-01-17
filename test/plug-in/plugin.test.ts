@@ -195,6 +195,10 @@ describe("plugin.dsl", () =>
 
         //
         const code = `
+            export function Main(){
+                <Test/>;
+            }
+
             function Test(){
                 'use foo';
                 console.log("previous");
@@ -202,18 +206,9 @@ describe("plugin.dsl", () =>
         `;
 
         const transcriber = new Transcriber(code);
-        transcriber.m_Plugins.pop();
         transcriber.AddDSL("foo", new Foo());
         const result = transcriber.Transcribe();
-
-        //
-        const expected = ToAst(`
-            function Test(){
-                console.log("current");
-            }
-        `);
-
-        expect(ToAst(result)).toEqual(expected);
+        expect(result).toMatchSnapshot();
     })
 
     test("dsl.rename.test-use-path", () =>
@@ -240,6 +235,10 @@ describe("plugin.dsl", () =>
 
         //
         const code = `
+            export function Main(){
+                <Test/>;
+            }
+
             function Test(){
                 'use foo';
                 const x = 1;
@@ -248,19 +247,9 @@ describe("plugin.dsl", () =>
         `;
 
         const transcriber = new Transcriber(code);
-        transcriber.m_Plugins.pop();
         transcriber.AddDSL("foo", new Foo());
         const result = transcriber.Transcribe();
-
-        //
-        const expected = ToAst(`
-            function Test(){
-                const y = 1;
-                console.log(y + 1);
-            }
-        `);
-
-        expect(ToAst(result)).toEqual(expected);
+        expect(result).toMatchSnapshot();
     })
 })
 
@@ -289,7 +278,39 @@ describe("plugin.filter", () =>
 
         const transcriber = new Transcriber(code);
         transcriber.m_Plugins.pop();
+        // test add plugin
         transcriber.AddPlugin(new FilterPlugin(transcriber));
+        const result = transcriber.Transcribe();
+        expect(result).toMatchSnapshot();
+    })
+
+    test("filter local context", () =>
+    {
+        //
+        const code = `
+            export interface IFoo{
+                foo: number;
+            }
+
+            export class Foo{
+
+            }
+
+            <Foo/> + function foo(){
+                <Snippet/>;
+            };
+
+            function Snippet(){
+                // removed from output
+                console.log("hi");
+            }
+
+            function Normal(){
+                // remain in output
+            }
+        `;
+
+        const transcriber = new Transcriber(code);
         const result = transcriber.Transcribe();
         expect(result).toMatchSnapshot();
     })
