@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`plugin.dsl dsl.log 1`] = `
+"export function Main() {
+  ;
+  console.log(\\"current\\");
+}"
+`;
+
+exports[`plugin.dsl dsl.rename.test-use-path 1`] = `
+"export function Main() {
+  ;
+  const y = 1;
+  console.log(y + 1);
+}"
+`;
+
 exports[`plugin.filter filter 1`] = `
 "export interface IFoo {
   foo: number;
@@ -12,6 +27,22 @@ export class Foo {
 
 }
 ;"
+`;
+
+exports[`plugin.filter filter local context 1`] = `
+"export interface IFoo {
+  foo: number;
+}
+export class Foo {
+  foo() {
+    ;
+    console.log(\\"hi\\");
+  }
+
+}
+;
+
+function Normal() {}"
 `;
 
 exports[`plugin.local-context integrated.method 1`] = `

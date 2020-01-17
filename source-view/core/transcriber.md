@@ -11,7 +11,7 @@ export class Transcriber {
 
     // the 3 types of code we will transform
     m_ClassMap: Map<string, ExportClassCode>;
-    m_MethodMap: Map<string, Array<ClassMethod>>;
+    m_MethodMap: Map<string, Array<MethodCode>>;
     m_ContextMap: Map<string, LocalContext>;
 
     //
@@ -56,13 +56,9 @@ When we init a transcriber, we will preprocess code to build some maps for looku
             if (each instanceof ExportClassCode) {
                 this.m_ClassMap.set(each.m_Name, each);
             } else if (each instanceof MethodCode) {
-                const { class_name, method } = each.ToClassMethod();
+                const class_name = each.m_ClassName;
                 const methods = this.m_MethodMap.get(class_name);
-                if (!methods) {
-                    this.m_MethodMap.set(class_name, [method]);
-                } else {
-                    methods.push(method);
-                }
+                methods ? methods.push(each) : this.m_MethodMap.set(class_name, [each]);
             } else if (each instanceof LocalContext) {
                 this.m_ContextMap.set(each.m_Name, each);
             }
@@ -126,7 +122,7 @@ export interface ITranscriber {
 ```
 
 ```typescript
-export type ITraverseMethodCallback = (methods: Array<ClassMethod>, class_name: string) => void;
+export type ITraverseMethodCallback = (methods: Array<MethodCode>, class_name: string) => void;
 ```
 
 # Implementation

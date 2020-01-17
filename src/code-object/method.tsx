@@ -49,7 +49,7 @@ As described, "\<Foo/> + function Test" is an ```ExpressionStatement```, and we 
 
 */
 
-<MethodCode /> + function ToClassMethod(this: MethodCode): IClassMethod
+<MethodCode /> + function ToClassMethod(this: MethodCode): ClassMethod
 {
     const { id, params: raw_params, body } = this.m_Right;
 
@@ -57,11 +57,7 @@ As described, "\<Foo/> + function Test" is an ```ExpressionStatement```, and we 
     const params = raw_params.filter(param => isIdentifier(param) && param.name !== "this");
     const kind = id.name === "constructor" ? "constructor" : "method";
 
-    const class_method = {
-        class_name: this.m_ClassName,
-        method: classMethod(kind, id, params, body)
-    }
-
+    const class_method = classMethod(kind, id, params, body);
     return class_method;
 };
 
@@ -72,12 +68,6 @@ We can get the "restored" class method now, but we have to find a way to insert 
 /*
 # Trivial
 */
-export interface IClassMethod
-{
-    class_name: string;
-    method: ClassMethod;
-};
-
 <MethodCode /> + function constructor(this: MethodCode, node: ExpressionStatement, path?: NodePath<ExpressionStatement>)
 {
     this.m_Code = node;
