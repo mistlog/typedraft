@@ -1,4 +1,4 @@
-import { Program, File, Statement, FunctionDeclaration } from "@babel/types";
+import { Program, File, ExpressionStatement, ExportNamedDeclaration, FunctionDeclaration } from "@babel/types";
 import { ExportClassCode } from "./export-class";
 import { MethodCode } from "./method";
 import { LocalContext } from "./local-context";
@@ -93,32 +93,62 @@ As we are only interested in the draft part of a module, then we need a way to r
 
 function CreateDraft(path: NodePath<Node>, draft: Draft)
 {
-    if (path.isExportNamedDeclaration())
+    if (IsExportClassCode(path))
     {
         draft.push(new ExportClassCode(path.node, path));
     }
-    else if (path.isExpressionStatement())
+    else if (IsMethodCode(path))
     {
         draft.push(new MethodCode(path.node, path));
     }
-    else if (path.isFunctionDeclaration())
+    else if (IsLocalContext(path))
     {
-        const is_local_context = IsLocalContext(path);
-        if (is_local_context)
-        {
-            const name = path.node.id.name;
-            const binding = path.scope.parent.getBinding(name);
-            draft.push(new LocalContext(path.node, binding, path));
-        }
+        const name = path.node.id.name;
+        const binding = path.scope.parent.getBinding(name);
+        draft.push(new LocalContext(path.node, binding, path));
     }
 }
 
-
-export function IsLocalContext(path: NodePath<FunctionDeclaration>)
+export function IsExportClassCode(path: NodePath<Node>): path is NodePath<ExportNamedDeclaration>
 {
+    if (!path.isExportNamedDeclaration())
+    {
+        return false;
+    }
+
+    const is_export_class = path.get("declaration").isClassDeclaration();
+    return is_export_class;
+}
+
+export function IsMethodCode(path: NodePath<Node>): path is NodePath<ExpressionStatement>
+{
+    if (!path.isExpressionStatement())
+    {
+        return false;
+    }
+
+    const expression = path.get("expression");
+    if (!expression.isBinaryExpression())
+    {
+        return false;
+    }
+
+    const left_is_jsx = expression.get("left").isJSXElement();
+    const right_is_function = expression.get("right").isFunctionExpression();
+    return left_is_jsx && right_is_function;
+}
+
+export function IsLocalContext(path: NodePath<Node>): path is NodePath<FunctionDeclaration>
+{
+    if (!path.isFunctionDeclaration())
+    {
+        return false;
+    }
+
     const name = path.node.id.name;
     const binding = path.scope.parent.getBinding(name);
-    const is_local_context = binding.referencePaths.some(path => {
+    const is_local_context = binding.referencePaths.some(path =>
+    {
         const used_as_jsx = path.parentPath?.parentPath?.isJSXElement();
         const used_as_statement = path.parentPath?.parentPath?.parentPath?.isExpressionStatement();
         return used_as_jsx && used_as_statement;
