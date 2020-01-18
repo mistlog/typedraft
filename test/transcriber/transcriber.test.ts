@@ -1,4 +1,3 @@
-import { ModuleCode } from "../../src/code-object/module";
 import { ToString } from "../../src/common/utility";
 import { Transcriber } from "../../src/core/transcriber";
 
@@ -64,6 +63,35 @@ describe("transcriber", () =>
 
             <Foo/> + function Test(this: Foo, a: number, b: string){
                 return a.toString()+b;
+            }
+        `;
+
+        expect(() => new Transcriber(code)).not.toThrow();
+    })
+
+
+
+
+})
+
+// ensure every valid ts file is also valid typedraft file
+
+describe("transcriber ts compatibility", () =>
+{
+    test("keep other expression statement as is", () =>
+    {
+        const code = `
+            console.log("hi");
+        `;
+
+        expect(() => new Transcriber(code)).not.toThrow();
+    })
+
+    test("keep other export named declaration as is", () =>
+    {
+        const code = `
+            export const foo = {
+                a:1
             }
         `;
 
