@@ -50,28 +50,38 @@ exports[`plugin.local-context integrated.method 1`] = `
 <Foo /> + function Test(this: Foo, a: number, b: string) {
   ;
   console.log(\\"hi\\");
+  ;
   console.log(\\"nested\\");
+  ;
   console.log(\\"deep\\");
+  ;
   console.log(\\"another\\");
+  ;
   console.log(\\"nested\\");
+  ;
   console.log(\\"deep\\");
   return a.toString() + b;
 };
 
 function Snippet() {
   console.log(\\"hi\\");
+  ;
   console.log(\\"nested\\");
+  ;
   console.log(\\"deep\\");
 }
 
 function AnotherSnippet() {
   console.log(\\"another\\");
+  ;
   console.log(\\"nested\\");
+  ;
   console.log(\\"deep\\");
 }
 
 function SnippetNested() {
   console.log(\\"nested\\");
+  ;
   console.log(\\"deep\\");
 }
 
@@ -86,6 +96,7 @@ exports[`plugin.local-context transcribe.integrated.export-function 1`] = `
   console.log(\\"export function\\");
   return a.toString() + b;
 }
+;
 
 function Snippet() {
   console.log(\\"export function\\");
@@ -97,12 +108,14 @@ exports[`plugin.local-context transcribe.nested 1`] = `
 <Foo /> + function Test(this: Foo, a: number, b: string) {
   ;
   console.log(\\"hi\\");
+  ;
   console.log(\\"nested\\");
   return a.toString() + b;
 };
 
 function Snippet() {
   console.log(\\"hi\\");
+  ;
   console.log(\\"nested\\");
 }
 
