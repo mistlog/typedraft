@@ -136,10 +136,7 @@ export type ITraverseMethodCallback = (methods: Array<MethodCode>, class_name: s
 ```
 
 ```typescript
-<Transcriber /> +
-    function PrepareDSLs(this: Transcriber) {
-        this.m_DSLMap.set("match", new PatternMatch());
-    };
+<Transcriber /> + function PrepareDSLs(this: Transcriber) {};
 ```
 
 ##  Plugin

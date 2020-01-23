@@ -10,6 +10,4 @@ export * from "./plug-in/draft-plugin-dsl";
 export * from "./plug-in/draft-plugin-filter";
 export * from "./plug-in/draft-plugin-local-context";
 
-export * from "./dsl/draft-dsl-match";
-
 export * from "./common/utility";
