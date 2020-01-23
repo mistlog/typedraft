@@ -6,7 +6,6 @@ import { ClassPlugin } from "../plug-in/draft-plugin-class";
 import { FilterPlugin } from "../plug-in/draft-plugin-filter";
 import { LocalContextPlugin } from "../plug-in/draft-plugin-local-context";
 import { LocalContext } from "../code-object/local-context";
-import { PatternMatch } from "../dsl/draft-dsl-match";
 import { DSLPlugin } from "../plug-in/draft-plugin-dsl";
 import { ToString } from "../common/utility";
 import { NodePath } from "@babel/traverse";
@@ -154,7 +153,6 @@ export type ITraverseMethodCallback = (methods: Array<MethodCode>, class_name: s
 
 <Transcriber /> + function PrepareDSLs(this: Transcriber)
 {
-    this.m_DSLMap.set("match", new PatternMatch());
 };
 
 /*
