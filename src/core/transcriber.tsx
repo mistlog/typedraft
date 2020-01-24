@@ -211,10 +211,10 @@ export type ITraverseMethodCallback = (methods: Array<MethodCode>, class_name: s
 /*
 # Trivial
 */
-< Transcriber /> + function constructor(this: Transcriber & ITranscriber, _module: ModuleCode | string)
+< Transcriber /> + function constructor(this: Transcriber & ITranscriber, _module: string)
 {
     //
-    this.m_Module = typeof _module === "string" ? new ModuleCode(_module) : _module;
+    this.m_Module = new ModuleCode(_module);
 
     //
     this.m_ClassMap = new Map<string, ExportClassCode>();

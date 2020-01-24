@@ -4,6 +4,10 @@ exports[`transcriber transcriber.transcribe 1`] = `
 "export class Foo {
   static foo: number;
 
+  constructor() {
+    console.log(\\"hi\\");
+  }
+
   Test(a: number, b: string) {
     return a.toString() + b;
   }

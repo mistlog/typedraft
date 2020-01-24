@@ -12,6 +12,7 @@ describe("transcriber", () =>
             }
 
             <Foo/> + function Test(this: Foo, a: number, b: string){
+                <Bar/>;
                 return a.toString()+b;
             }
 
@@ -19,6 +20,8 @@ describe("transcriber", () =>
                 a += this.foo;
                 return a.toString()+b;
             }
+
+            console.log("not draft, ignore this statement");
         `;
 
         const transcriber = new Transcriber(code);
@@ -26,7 +29,7 @@ describe("transcriber", () =>
 
         expect(transcriber.m_ClassMap.size).toEqual(1);
         expect(transcriber.m_MethodMap.size).toEqual(1);
-        expect(transcriber.m_ContextMap.size).toEqual(0);
+        expect(transcriber.m_ContextMap.size).toEqual(1);
     })
 
     test("transcriber.transcribe", () =>
@@ -36,6 +39,10 @@ describe("transcriber", () =>
             export class Foo{
                 static foo: number;
             }
+
+            <Foo/> + function constructor(){
+                console.log("hi");
+            };
 
             <Foo/> + function Test(this: Foo, a: number, b: string){
                 return a.toString()+b;
