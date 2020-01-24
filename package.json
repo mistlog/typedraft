@@ -27,7 +27,6 @@
     "scripts": {
         "pretest": "npm run transcribe",
         "test": "jest --coverage",
-        "posttest": " npm run clean:ts",
         "test:watch": "jest --watch",
         "prebuild":"npm run clean:dist",
         "build": "npm run transcribe && tsc",
