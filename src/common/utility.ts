@@ -12,7 +12,7 @@ export function ToFile(raw: string)
 {
     // babel bug: https://github.com/babel/babel/issues/8837
     // refert to test case "transcriber.interface-no-parse-error"
-    const code = raw.replace(new RegExp("\n[ ]*<","g"),"\n;<");
+    const code = raw.replace(new RegExp("^<","gm"),";<");
     return parse(code, { sourceType: "module", plugins: ["typescript", "jsx", "optionalChaining"] });
 }
 
