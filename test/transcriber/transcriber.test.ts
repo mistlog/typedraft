@@ -61,19 +61,43 @@ describe("transcriber", () =>
 
     test("transcriber.interface-no-parse-error", () =>
     {
-        //
+        // indent matters here, ; is added before < at the beginning of line
         const code = `
-            interface IFoo {
+interface IFoo {
 
-                // ; is not required after interface and before tag
-            }
+    // ; is not required after interface and before tag
+}
 
-            <Foo/> + function Test(this: Foo, a: number, b: string){
-                return a.toString()+b;
-            }
+// comment
+<Foo/> + function Test(this: Foo, a: number, b: string){
+    return a.toString()+b;
+}
         `;
 
         expect(() => new Transcriber(code)).not.toThrow();
+    })
+
+    test("transcriber.no-empty-statement", () =>
+    {
+        const code = `
+            export class Foo {
+                static foo: number;
+            }
+            
+            <Foo/> + function Test(this: Foo, a: number, b: string){
+                //@ts-ignore
+                <Bar/>;
+                return a.toString() + b;
+            };
+            
+            function Bar(this: Foo, a: number, b: string) {
+                a += Foo.foo;
+            }
+        `;
+
+        const transcriber = new Transcriber(code);
+        const result = transcriber.Transcribe();
+        expect(result).toMatchSnapshot();
     })
 
 
