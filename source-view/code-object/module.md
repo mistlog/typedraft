@@ -77,7 +77,10 @@ As we are only interested in the draft part of a module, then we need a way to r
 
 ```typescript
 function CreateDraft(path: NodePath<Node>, draft: Draft) {
-    if (IsExportClassCode(path)) {
+    if (path.isEmptyStatement()) {
+        // remove redundant ; before tag, see utility.ts
+        path.remove();
+    } else if (IsExportClassCode(path)) {
         draft.push(new ExportClassCode(path.node, path));
     } else if (IsMethodCode(path)) {
         draft.push(new MethodCode(path.node, path));
