@@ -72,9 +72,11 @@ As we are only interested in the draft part of a module, then we need a way to r
 {
     let draft: Draft = [];
 
+    const that = this;
     const visitor: Visitor = {
         Program(path)
         {
+            that.m_Path = path;
             path.get("body").forEach(path =>
             {
                 //@ts-ignore
