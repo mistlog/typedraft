@@ -35,7 +35,21 @@ A transcriber just likes a container, it's a collection of plugins. For example,
 ```typescript
 export interface ITranscriber {
     Preprocess: () => void;
+    RefreshDraft: () => void;
 }
+```
+
+```typescript
+<Transcriber /> +
+    function RefreshDraft(this: Transcriber & ITranscriber) {
+        //
+        this.m_ClassMap.clear();
+        this.m_MethodMap.clear();
+        this.m_ContextMap.clear();
+
+        //
+        this.Preprocess();
+    };
 ```
 
 When we init a transcriber, we will preprocess code to build some maps for lookup purpose.
@@ -95,13 +109,13 @@ export interface ITranscriber {
 
 ```typescript
 export interface ITranscriber {
-    TraverseLocalContext: (callback: ITraverseLocalContextCallback) => void;
+    TraverseLocalContext: (callback: TraverseLocalContextCallback) => void;
     GetLocalContext: (name: string) => LocalContext;
 }
 ```
 
 ```typescript
-export type ITraverseLocalContextCallback = (context: LocalContext, name: string) => void;
+export type TraverseLocalContextCallback = (context: LocalContext, name: string) => void;
 ```
 
 ## Class
@@ -109,12 +123,12 @@ export type ITraverseLocalContextCallback = (context: LocalContext, name: string
 ```typescript
 export interface ITranscriber {
     GetClass: (name: string) => ExportClassCode;
-    TraverseMethod: (callback: ITraverseMethodCallback) => void;
+    TraverseMethod: (callback: TraverseMethodCallback) => void;
 }
 ```
 
 ```typescript
-export type ITraverseMethodCallback = (methods: Array<MethodCode>, class_name: string) => void;
+export type TraverseMethodCallback = (methods: Array<MethodCode>, class_name: string) => void;
 ```
 
 # Implementation
@@ -151,7 +165,7 @@ export type ITraverseMethodCallback = (methods: Array<MethodCode>, class_name: s
          * 3. add methods to class
          * 4. remove redundant code
          */
-        this.m_Plugins = [new DSLPlugin(this), new LocalContextPlugin(this), new ClassPlugin(this), new FilterPlugin(this)];
+        this.m_Plugins = [new RefreshDraftPlugin(this), new DSLPlugin(this), new LocalContextPlugin(this), new ClassPlugin(this), new FilterPlugin(this)];
     };
 ```
 
@@ -173,7 +187,7 @@ export type ITraverseMethodCallback = (methods: Array<MethodCode>, class_name: s
 
 ```typescript
 <Transcriber /> +
-    function TraverseLocalContext(this: Transcriber, callback: ITraverseLocalContextCallback) {
+    function TraverseLocalContext(this: Transcriber, callback: TraverseLocalContextCallback) {
         this.m_ContextMap.forEach((context, name) => callback(context, name));
     };
 ```
@@ -189,7 +203,7 @@ export type ITraverseMethodCallback = (methods: Array<MethodCode>, class_name: s
 
 ```typescript
 <Transcriber /> +
-    function TraverseMethod(this: Transcriber, callback: ITraverseMethodCallback) {
+    function TraverseMethod(this: Transcriber, callback: TraverseMethodCallback) {
         this.m_MethodMap.forEach((methods, class_name) => callback(methods, class_name));
     };
 ```
@@ -211,8 +225,5 @@ export type ITraverseMethodCallback = (methods: Array<MethodCode>, class_name: s
         //
         this.PrepareDSLs();
         this.PreparePlugins();
-
-        //
-        this.Preprocess();
     };
 ```

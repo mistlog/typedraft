@@ -3,8 +3,9 @@ import { Transcriber, IDSL } from "../../src/core/transcriber";
 import { LocalContextPlugin } from "../../src/plug-in/draft-plugin-local-context";
 import { ToAst, ToString } from "../../src/common/utility";
 import { FilterPlugin } from "../../src/plug-in/draft-plugin-filter";
-import { Statement, FunctionDeclaration } from "@babel/types";
+import { Statement, FunctionDeclaration, labeledStatement, blockStatement, identifier } from "@babel/types";
 import { NodePath } from "@babel/traverse";
+import { PatternMatch } from "draft-dsl-match";
 
 describe("plugin.local-context", () =>
 {
@@ -132,6 +133,7 @@ describe("plugin.local-context", () =>
         `;
 
         const transcriber = new Transcriber(code);
+        transcriber.RefreshDraft();
         const plugin = transcriber.m_Plugins.find(plugin => plugin instanceof LocalContextPlugin) as LocalContextPlugin;
         const context_list = plugin.GetContextList();
         expect(context_list).toEqual(["Snippet"]);
@@ -168,7 +170,7 @@ describe("plugin.local-context", () =>
         `;
 
         const transcriber = new Transcriber(code);
-        transcriber.m_Plugins.pop();
+        transcriber.RefreshDraft();
         const plugin = transcriber.m_Plugins.find(plugin => plugin instanceof LocalContextPlugin) as LocalContextPlugin;
         const context_list = plugin.GetContextList();
         expect(context_list).toEqual(["DeepSnippet", "SnippetNested", "Snippet", "AnotherSnippet"]);
@@ -207,6 +209,47 @@ describe("plugin.dsl", () =>
 
         const transcriber = new Transcriber(code);
         transcriber.AddDSL("foo", new Foo());
+        const result = transcriber.Transcribe();
+        expect(result).toMatchSnapshot();
+    })
+
+    test("dsl.nested", () =>
+    {
+        //
+        class Watch implements IDSL
+        {
+            Transcribe(block: Array<Statement>): Array<Statement>
+            {
+                return [labeledStatement(identifier("$"), blockStatement(block))];
+            }
+        }
+
+        //
+        const code = `
+            export function Main(){
+                <Test/>;
+            }
+
+            function Test(value: number){
+                "use watch";
+
+                <Match/>;
+                b = value + 1;
+            }
+
+            function Match(value){
+                "use match";
+
+                (value: "a") =>
+                {
+                    console.log("value is a");
+                };
+            }
+        `;
+
+        const transcriber = new Transcriber(code);
+        transcriber.AddDSL("watch", new Watch());
+        transcriber.AddDSL("match", new PatternMatch());
         const result = transcriber.Transcribe();
         expect(result).toMatchSnapshot();
     })

@@ -9,6 +9,7 @@ import { LocalContext } from "../code-object/local-context";
 import { DSLPlugin } from "../plug-in/draft-plugin-dsl";
 import { ToString } from "../common/utility";
 import { NodePath } from "@babel/traverse";
+import { RefreshDraftPlugin } from "../plug-in/draft-plugin-refresh";
 
 /*
 # Transcriber
@@ -49,6 +50,18 @@ A transcriber just likes a container, it's a collection of plugins. For example,
 export interface ITranscriber
 {
     Preprocess: () => void;
+    RefreshDraft: () => void;
+};
+
+<Transcriber /> + function RefreshDraft(this: Transcriber & ITranscriber)
+{
+    //
+    this.m_ClassMap.clear();
+    this.m_MethodMap.clear();
+    this.m_ContextMap.clear();
+
+    //
+    this.Preprocess();
 };
 
 /*
@@ -115,11 +128,11 @@ export interface ITranscriber
 */
 export interface ITranscriber
 {
-    TraverseLocalContext: (callback: ITraverseLocalContextCallback) => void;
+    TraverseLocalContext: (callback: TraverseLocalContextCallback) => void;
     GetLocalContext: (name: string) => LocalContext;
 }
 
-export type ITraverseLocalContextCallback = (context: LocalContext, name: string) => void;
+export type TraverseLocalContextCallback = (context: LocalContext, name: string) => void;
 
 /*
 ## Class
@@ -128,11 +141,11 @@ export interface ITranscriber
 {
 
     GetClass: (name: string) => ExportClassCode;
-    TraverseMethod: (callback: ITraverseMethodCallback) => void;
+    TraverseMethod: (callback: TraverseMethodCallback) => void;
 };
 
 
-export type ITraverseMethodCallback = (methods: Array<MethodCode>, class_name: string) => void;
+export type TraverseMethodCallback = (methods: Array<MethodCode>, class_name: string) => void;
 
 /*
 # Implementation
@@ -169,6 +182,7 @@ export type ITraverseMethodCallback = (methods: Array<MethodCode>, class_name: s
      * 4. remove redundant code
      */
     this.m_Plugins = [
+        new RefreshDraftPlugin(this),
         new DSLPlugin(this),
         new LocalContextPlugin(this),
         new ClassPlugin(this),
@@ -189,7 +203,7 @@ export type ITraverseMethodCallback = (methods: Array<MethodCode>, class_name: s
     return this.m_ContextMap.get(name);
 };
 
-<Transcriber /> + function TraverseLocalContext(this: Transcriber, callback: ITraverseLocalContextCallback)
+<Transcriber /> + function TraverseLocalContext(this: Transcriber, callback: TraverseLocalContextCallback)
 {
     this.m_ContextMap.forEach((context, name) => callback(context, name));
 };
@@ -202,7 +216,7 @@ export type ITraverseMethodCallback = (methods: Array<MethodCode>, class_name: s
     return this.m_ClassMap.get(name);
 };
 
-<Transcriber /> + function TraverseMethod(this: Transcriber, callback: ITraverseMethodCallback)
+<Transcriber /> + function TraverseMethod(this: Transcriber, callback: TraverseMethodCallback)
 {
     this.m_MethodMap.forEach((methods, class_name) => callback(methods, class_name));
 };
@@ -225,8 +239,5 @@ export type ITraverseMethodCallback = (methods: Array<MethodCode>, class_name: s
     //
     this.PrepareDSLs();
     this.PreparePlugins();
-
-    //
-    this.Preprocess();
 };
 
