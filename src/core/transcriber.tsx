@@ -184,6 +184,7 @@ export type TraverseMethodCallback = (methods: Array<MethodCode>, class_name: st
     this.m_Plugins = [
         new RefreshDraftPlugin(this),
         new DSLPlugin(this),
+        new RefreshDraftPlugin(this),
         new LocalContextPlugin(this),
         new ClassPlugin(this),
         new FilterPlugin(this)

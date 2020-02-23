@@ -165,7 +165,7 @@ export type TraverseMethodCallback = (methods: Array<MethodCode>, class_name: st
          * 3. add methods to class
          * 4. remove redundant code
          */
-        this.m_Plugins = [new RefreshDraftPlugin(this), new DSLPlugin(this), new LocalContextPlugin(this), new ClassPlugin(this), new FilterPlugin(this)];
+        this.m_Plugins = [new RefreshDraftPlugin(this), new DSLPlugin(this), new RefreshDraftPlugin(this), new LocalContextPlugin(this), new ClassPlugin(this), new FilterPlugin(this)];
     };
 ```
 
