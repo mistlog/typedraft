@@ -5,6 +5,7 @@ import { LocalContext } from "./local-context";
 import { Visitor } from "@babel/core";
 import { ToFile } from "../common/utility";
 import traverse, { NodePath, Node } from "@babel/traverse";
+import { ToString } from "typedraft";
 
 /*
 # Draft
@@ -68,8 +69,12 @@ export class Foo {
 
 As we are only interested in the draft part of a module, then we need a way to return this "view" of module code.
 */
-<ModuleCode /> + function ToDraft(this: ModuleCode)
+< ModuleCode /> + function ToDraft(this: ModuleCode)
 {
+    // refresh and update bindings
+    this.m_File = ToFile(ToString(this.m_File));
+
+    //
     let draft: Draft = [];
 
     const that = this;
@@ -152,13 +157,16 @@ export function IsLocalContext(path: NodePath<Node>): path is NodePath<FunctionD
         return false;
     }
 
+    const [directive] = path.node.body.directives;
+    const has_context = Boolean(directive);
+
     const name = path.node.id.name;
     const binding = path.scope.parent.getBinding(name);
     const is_local_context = binding.referencePaths.some(path =>
     {
         const used_as_jsx = path.parentPath?.parentPath?.isJSXElement();
         const used_as_statement = path.parentPath?.parentPath?.parentPath?.isExpressionStatement();
-        return used_as_jsx && used_as_statement;
+        return (has_context && used_as_jsx) || (used_as_jsx && used_as_statement);
     });
     return is_local_context;
 }
