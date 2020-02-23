@@ -9,5 +9,6 @@ export * from "./plug-in/draft-plugin-class";
 export * from "./plug-in/draft-plugin-dsl";
 export * from "./plug-in/draft-plugin-filter";
 export * from "./plug-in/draft-plugin-local-context";
+export * from "./plug-in/draft-plugin-refresh";
 
 export * from "./common/utility";
