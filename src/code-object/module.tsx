@@ -5,6 +5,7 @@ import { LocalContext } from "./local-context";
 import { Visitor } from "@babel/core";
 import { ToFile } from "../common/utility";
 import traverse, { NodePath, Node } from "@babel/traverse";
+import { ToString } from "typedraft";
 
 /*
 # Draft
@@ -68,8 +69,12 @@ export class Foo {
 
 As we are only interested in the draft part of a module, then we need a way to return this "view" of module code.
 */
-<ModuleCode /> + function ToDraft(this: ModuleCode)
+< ModuleCode /> + function ToDraft(this: ModuleCode)
 {
+    // refresh and update bindings
+    this.m_File = ToFile(ToString(this.m_File));
+
+    //
     let draft: Draft = [];
 
     const that = this;

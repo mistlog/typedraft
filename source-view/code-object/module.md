@@ -60,6 +60,10 @@ As we are only interested in the draft part of a module, then we need a way to r
 ```typescript
 <ModuleCode /> +
     function ToDraft(this: ModuleCode) {
+        // refresh and update bindings
+        this.m_File = ToFile(ToString(this.m_File));
+
+        //
         let draft: Draft = [];
         const that = this;
         const visitor: Visitor = {
