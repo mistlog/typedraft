@@ -278,6 +278,39 @@ describe("plugin.dsl", () =>
         expect(result).toMatchSnapshot();
     })
 
+    test("dsl.nested.2", () =>
+    {
+        const code = `
+            export function Main(value: any)
+            {
+                <Match />;
+            }
+            
+            function Match(value: any)
+            {
+                "use match";
+            
+                (value: 1) => <HandleValueIsNumber />;
+            }
+            
+            function HandleValueIsNumber()
+            {
+                "use match";
+            
+                (value: 1) =>
+                {
+                    console.log("value is 1");
+                };
+            }
+        
+        `;
+
+        const transcriber = new Transcriber(code);
+        transcriber.AddDSL("match", new PatternMatch());
+        const result = transcriber.Transcribe();
+        expect(result).toMatchSnapshot();
+    })
+
     test("dsl.rename.test-use-path", () =>
     {
         //
