@@ -18,6 +18,16 @@ exports[`plugin.dsl dsl.nested 1`] = `
 }"
 `;
 
+exports[`plugin.dsl dsl.nested.2 1`] = `
+"export function Main(value: any) {
+  if (value === 1) {
+    if (value === 1) {
+      console.log(\\"value is 1\\");
+    }
+  }
+}"
+`;
+
 exports[`plugin.dsl dsl.refresh-draft 1`] = `
 "export function Main() {
   if (value === \\"a\\") {
