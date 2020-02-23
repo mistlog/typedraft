@@ -39,19 +39,6 @@ export interface ITranscriber {
 }
 ```
 
-```typescript
-<Transcriber /> +
-    function RefreshDraft(this: Transcriber & ITranscriber) {
-        //
-        this.m_ClassMap.clear();
-        this.m_MethodMap.clear();
-        this.m_ContextMap.clear();
-
-        //
-        this.Preprocess();
-    };
-```
-
 When we init a transcriber, we will preprocess code to build some maps for lookup purpose.
 
 ```typescript
@@ -69,6 +56,19 @@ When we init a transcriber, we will preprocess code to build some maps for looku
                 this.m_ContextMap.set(each.m_Name, each);
             }
         });
+    };
+```
+
+```typescript
+<Transcriber /> +
+    function RefreshDraft(this: Transcriber & ITranscriber) {
+        //
+        this.m_ClassMap.clear();
+        this.m_MethodMap.clear();
+        this.m_ContextMap.clear();
+
+        //
+        this.Preprocess();
     };
 ```
 

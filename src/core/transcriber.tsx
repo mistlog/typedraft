@@ -46,22 +46,10 @@ A transcriber just likes a container, it's a collection of plugins. For example,
 /*
 # Preprocess
 */
-
 export interface ITranscriber
 {
     Preprocess: () => void;
     RefreshDraft: () => void;
-};
-
-<Transcriber /> + function RefreshDraft(this: Transcriber & ITranscriber)
-{
-    //
-    this.m_ClassMap.clear();
-    this.m_MethodMap.clear();
-    this.m_ContextMap.clear();
-
-    //
-    this.Preprocess();
 };
 
 /*
@@ -89,6 +77,16 @@ When we init a transcriber, we will preprocess code to build some maps for looku
     })
 };
 
+<Transcriber /> + function RefreshDraft(this: Transcriber & ITranscriber)
+{
+    //
+    this.m_ClassMap.clear();
+    this.m_MethodMap.clear();
+    this.m_ContextMap.clear();
+
+    //
+    this.Preprocess();
+};
 /*
 # Utility
 

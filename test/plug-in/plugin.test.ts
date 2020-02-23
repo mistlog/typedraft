@@ -213,6 +213,30 @@ describe("plugin.dsl", () =>
         expect(result).toMatchSnapshot();
     })
 
+    test("dsl.refresh-draft", () =>
+    {
+        const code = `
+            export function Main(){
+                <TestMatch/>;
+            }
+
+            function TestMatch(value){
+                "use match";
+
+                (value: "a") => <TestLog/>;
+            }
+
+            function TestLog(){
+                console.log("value is a");
+            }
+        `;
+
+        const transcriber = new Transcriber(code);
+        transcriber.AddDSL("match", new PatternMatch());
+        const result = transcriber.Transcribe();
+        expect(result).toMatchSnapshot();
+    })
+
     test("dsl.nested", () =>
     {
         //
