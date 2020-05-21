@@ -1,0 +1,230 @@
+{
+    "src/code-object/export-class.tsx": {
+        "url": "src/code-object/export-class.html",
+        "dependencies": [
+            "src/code-object/@babel/types",
+            "src/code-object/@babel/core"
+        ]
+    },
+    "src/code-object/@babel/types": {
+        "dependencies": []
+    },
+    "src/code-object/@babel/core": {
+        "dependencies": []
+    },
+    "src/code-object/method.tsx": {
+        "url": "src/code-object/method.html",
+        "dependencies": [
+            "src/code-object/@babel/types",
+            "src/code-object/@babel/traverse"
+        ]
+    },
+    "src/code-object/@babel/traverse": {
+        "dependencies": []
+    },
+    "src/code-object/local-context.tsx": {
+        "url": "src/code-object/local-context.html",
+        "dependencies": [
+            "src/code-object/@babel/types",
+            "src/code-object/@babel/traverse",
+            "src/core/transcriber"
+        ]
+    },
+    "src/core/transcriber": {
+        "dependencies": []
+    },
+    "src/common/utility": {
+        "url": "src/common/utility.html",
+        "dependencies": [
+            "src/common/@babel/core",
+            "src/common/@babel/types",
+            "src/common/@babel/generator",
+            "src/common/@babel/parser"
+        ]
+    },
+    "src/common/@babel/core": {
+        "dependencies": []
+    },
+    "src/common/@babel/types": {
+        "dependencies": []
+    },
+    "src/common/@babel/generator": {
+        "dependencies": []
+    },
+    "src/common/@babel/parser": {
+        "dependencies": []
+    },
+    "src/code-object/module.tsx": {
+        "url": "src/code-object/module.html",
+        "dependencies": [
+            "src/code-object/@babel/types",
+            "src/code-object/export-class",
+            "src/code-object/method",
+            "src/code-object/local-context",
+            "src/code-object/@babel/core",
+            "src/common/utility",
+            "src/code-object/@babel/traverse",
+            "typedraft"
+        ]
+    },
+    "src/code-object/export-class": {
+        "dependencies": []
+    },
+    "src/code-object/method": {
+        "dependencies": []
+    },
+    "src/code-object/local-context": {
+        "dependencies": []
+    },
+    "typedraft": {
+        "dependencies": []
+    },
+    "src/plug-in/draft-plugin-class.tsx": {
+        "url": "src/plug-in/draft-plugin-class.html",
+        "dependencies": [
+            "src/core/transcriber"
+        ]
+    },
+    "src/plug-in/draft-plugin-filter.tsx": {
+        "url": "src/plug-in/draft-plugin-filter.html",
+        "dependencies": [
+            "src/core/transcriber"
+        ]
+    },
+    "src/plug-in/draft-plugin-local-context.tsx": {
+        "url": "src/plug-in/draft-plugin-local-context.html",
+        "dependencies": [
+            "src/core/transcriber",
+            "src/plug-in/@babel/types",
+            "src/plug-in/@babel/core",
+            "toposort"
+        ]
+    },
+    "src/plug-in/@babel/types": {
+        "dependencies": []
+    },
+    "src/plug-in/@babel/core": {
+        "dependencies": []
+    },
+    "toposort": {
+        "dependencies": []
+    },
+    "src/plug-in/draft-plugin-dsl.tsx": {
+        "url": "src/plug-in/draft-plugin-dsl.html",
+        "dependencies": [
+            "src/core/transcriber"
+        ]
+    },
+    "src/plug-in/draft-plugin-refresh.tsx": {
+        "url": "src/plug-in/draft-plugin-refresh.html",
+        "dependencies": [
+            "src/core/transcriber"
+        ]
+    },
+    "src/core/transcriber.tsx": {
+        "url": "src/core/transcriber.html",
+        "dependencies": [
+            "src/code-object/module",
+            "src/code-object/export-class",
+            "src/code-object/method",
+            "src/core/@babel/types",
+            "src/plug-in/draft-plugin-class",
+            "src/plug-in/draft-plugin-filter",
+            "src/plug-in/draft-plugin-local-context",
+            "src/code-object/local-context",
+            "src/plug-in/draft-plugin-dsl",
+            "src/common/utility",
+            "src/core/@babel/traverse",
+            "src/plug-in/draft-plugin-refresh"
+        ]
+    },
+    "src/code-object/module": {
+        "dependencies": []
+    },
+    "src/core/@babel/types": {
+        "dependencies": []
+    },
+    "src/plug-in/draft-plugin-class": {
+        "dependencies": []
+    },
+    "src/plug-in/draft-plugin-filter": {
+        "dependencies": []
+    },
+    "src/plug-in/draft-plugin-local-context": {
+        "dependencies": []
+    },
+    "src/plug-in/draft-plugin-dsl": {
+        "dependencies": []
+    },
+    "src/core/@babel/traverse": {
+        "dependencies": []
+    },
+    "src/plug-in/draft-plugin-refresh": {
+        "dependencies": []
+    },
+    "src/index": {
+        "url": "src/index.html",
+        "dependencies": [
+            "src/core/transcriber",
+            "src/code-object/export-class",
+            "src/code-object/local-context",
+            "src/code-object/method",
+            "src/code-object/module",
+            "src/plug-in/draft-plugin-class",
+            "src/plug-in/draft-plugin-dsl",
+            "src/plug-in/draft-plugin-filter",
+            "src/plug-in/draft-plugin-local-context",
+            "src/plug-in/draft-plugin-refresh",
+            "src/common/utility"
+        ]
+    },
+    "cli/config": {
+        "url": "cli/config.html",
+        "dependencies": [
+            "src"
+        ]
+    },
+    "src": {
+        "dependencies": []
+    },
+    "cli/literator": {
+        "url": "cli/literator.html",
+        "dependencies": [
+            "fs",
+            "fs-extra",
+            "filewalker",
+            "node-watch",
+            "src",
+            "cli/config"
+        ]
+    },
+    "fs": {
+        "dependencies": []
+    },
+    "fs-extra": {
+        "dependencies": []
+    },
+    "filewalker": {
+        "dependencies": []
+    },
+    "node-watch": {
+        "dependencies": []
+    },
+    "cli/cli": {
+        "url": "cli/cli.html",
+        "dependencies": [
+            "commander",
+            "cli/literator",
+            "path",
+            "fs",
+            "fs-extra",
+            "cli/config"
+        ]
+    },
+    "commander": {
+        "dependencies": []
+    },
+    "path": {
+        "dependencies": []
+    }
+}
