@@ -2,10 +2,8 @@ import { LocalContext } from "../../src/code-object/local-context";
 import { ToAst } from "../../src/common/utility";
 import { FunctionDeclaration, Statement } from "@babel/types";
 
-describe("local context", () =>
-{
-    test("local-context", () =>
-    {
+describe("local context", () => {
+    test("local-context", () => {
         //
         const code = `
             function Test(this: Foo, a: number, b: string){
@@ -25,10 +23,9 @@ describe("local context", () =>
         `) as Array<Statement>;
 
         expect(block).toEqual(expected);
-    })
+    });
 
-    test("local-context.name", () =>
-    {
+    test("local-context.name", () => {
         //
         const code = `
             function Test(value:number){
@@ -40,5 +37,5 @@ describe("local context", () =>
         const context = new LocalContext(raw);
         const context_name = context.GetContextName();
         expect(context_name).toEqual("match");
-    })
-})
+    });
+});

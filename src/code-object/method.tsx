@@ -1,4 +1,13 @@
-import { ExpressionStatement, BinaryExpression, JSXElement, FunctionExpression, JSXIdentifier, isIdentifier, classMethod, ClassMethod } from "@babel/types";
+import {
+    ExpressionStatement,
+    BinaryExpression,
+    JSXElement,
+    FunctionExpression,
+    JSXIdentifier,
+    isIdentifier,
+    classMethod,
+    ClassMethod,
+} from "@babel/types";
 import { NodePath } from "@babel/traverse";
 
 /*
@@ -6,15 +15,22 @@ import { NodePath } from "@babel/traverse";
 
 As we want to rearrange code in literate programming, we will seperate class method from class body.
 */
-export class MethodCode
-{
+export class MethodCode {
     m_Code: ExpressionStatement;
     m_Path: NodePath<ExpressionStatement>;
 
-    get m_Left() { return this.m_Expression.left as JSXElement; }
-    get m_Right() { return this.m_Expression.right as FunctionExpression; }
-    get m_Expression() { return this.m_Code.expression as BinaryExpression; }
-    get m_ClassName() { return (this.m_Left.openingElement.name as JSXIdentifier).name; }
+    get m_Left() {
+        return this.m_Expression.left as JSXElement;
+    }
+    get m_Right() {
+        return this.m_Expression.right as FunctionExpression;
+    }
+    get m_Expression() {
+        return this.m_Code.expression as BinaryExpression;
+    }
+    get m_ClassName() {
+        return (this.m_Left.openingElement.name as JSXIdentifier).name;
+    }
 }
 
 /*
@@ -49,17 +65,17 @@ As described, "\<Foo/> + function Test" is an ```ExpressionStatement```, and we 
 
 */
 
-<MethodCode /> + function ToClassMethod(this: MethodCode): ClassMethod
-{
-    const { id, params: raw_params, body } = this.m_Right;
+<MethodCode /> +
+    function ToClassMethod(this: MethodCode): ClassMethod {
+        const { id, params: raw_params, body } = this.m_Right;
 
-    // remove "this" param
-    const params = raw_params.filter(param => isIdentifier(param) && param.name !== "this");
-    const kind = id.name === "constructor" ? "constructor" : "method";
+        // remove "this" param
+        const params = raw_params.filter((param) => isIdentifier(param) && param.name !== "this");
+        const kind = id.name === "constructor" ? "constructor" : "method";
 
-    const class_method = classMethod(kind, id, params, body);
-    return class_method;
-};
+        const class_method = classMethod(kind, id, params, body);
+        return class_method;
+    };
 
 /*
 We can get the "restored" class method now, but we have to find a way to insert it into class. See export-class.
@@ -68,8 +84,12 @@ We can get the "restored" class method now, but we have to find a way to insert 
 /*
 # Trivial
 */
-<MethodCode /> + function constructor(this: MethodCode, node: ExpressionStatement, path?: NodePath<ExpressionStatement>)
-{
-    this.m_Code = node;
-    this.m_Path = path;
-};
+<MethodCode /> +
+    function constructor(
+        this: MethodCode,
+        node: ExpressionStatement,
+        path?: NodePath<ExpressionStatement>
+    ) {
+        this.m_Code = node;
+        this.m_Path = path;
+    };

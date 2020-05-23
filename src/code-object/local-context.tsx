@@ -8,25 +8,28 @@ import { NodePath } from "@babel/traverse";
 
 The concept of local context is essential in typedraft, any function declaration is treated as a local context.
 */
-export class LocalContext
-{
+export class LocalContext {
     m_Code: FunctionDeclaration;
     m_Binding: Binding | null;
     m_Path: NodePath<FunctionDeclaration>;
 
-    get m_Refs() { return this.m_Binding.referencePaths; }
-    get m_Name() { return this.m_Code.id.name; }
+    get m_Refs() {
+        return this.m_Binding.referencePaths;
+    }
+    get m_Name() {
+        return this.m_Code.id.name;
+    }
 }
 
 /*
 The context itself does nothing but expresses our intention. If it's used with a DSL, we can resolve it to get the "real" statements.
 */
-<LocalContext /> + function Resolve(this: LocalContext & ILocalContext, dsl: IDSL)
-{
-    // because we don't need "use ..." after resolved
-    this.m_Code.body.directives = [];
-    this.m_Code.body.body = dsl.Transcribe(this.ToStatements(), this.m_Path);
-};
+<LocalContext /> +
+    function Resolve(this: LocalContext & ILocalContext, dsl: IDSL) {
+        // because we don't need "use ..." after resolved
+        this.m_Code.body.directives = [];
+        this.m_Code.body.body = dsl.Transcribe(this.ToStatements(), this.m_Path);
+    };
 
 /*
 ## Example in DSL
@@ -120,36 +123,39 @@ We don't use any DSL, then we just use the "host" language and the output(statem
 # Utility
 */
 
-<LocalContext /> + function ToStatements(this: LocalContext)
-{
-    return this.m_Code.body.body;
-};
+<LocalContext /> +
+    function ToStatements(this: LocalContext) {
+        return this.m_Code.body.body;
+    };
 
-<LocalContext /> + function GetContextName(this: LocalContext)
-{
-    const [directive] = this.m_Code.body.directives;
-    if (directive)
-    {
-        const [, context_name] = directive.value.value.split(" ");
-        return context_name;
-    }
-    return "";
-};
+<LocalContext /> +
+    function GetContextName(this: LocalContext) {
+        const [directive] = this.m_Code.body.directives;
+        if (directive) {
+            const [, context_name] = directive.value.value.split(" ");
+            return context_name;
+        }
+        return "";
+    };
 
 /*
 # Trivial
 */
-<LocalContext /> + function constructor(this: LocalContext, node: FunctionDeclaration, binding?: Binding, path?: NodePath<FunctionDeclaration>)
-{
-    this.m_Code = node;
+<LocalContext /> +
+    function constructor(
+        this: LocalContext,
+        node: FunctionDeclaration,
+        binding?: Binding,
+        path?: NodePath<FunctionDeclaration>
+    ) {
+        this.m_Code = node;
 
-    // binding is used to find all references to this context, thus we can replace them with resolved statements
-    this.m_Binding = binding || null;
+        // binding is used to find all references to this context, thus we can replace them with resolved statements
+        this.m_Binding = binding || null;
 
-    this.m_Path = path;
-};
+        this.m_Path = path;
+    };
 
-export interface ILocalContext
-{
+export interface ILocalContext {
     ToStatements: () => Array<Statement>;
-};
+}

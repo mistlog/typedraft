@@ -3,10 +3,8 @@ import { ToAst, ToString } from "../../src/common/utility";
 import { MethodCode } from "../../src/code-object/method";
 import { ExpressionStatement, ExportNamedDeclaration } from "@babel/types";
 
-describe("export class", () =>
-{
-    test("export-class.add-member", () =>
-    {
+describe("export class", () => {
+    test("export-class.add-member", () => {
         //
         const class_code = `
             export class Foo {
@@ -30,5 +28,5 @@ describe("export class", () =>
         //
         export_class.AddMember(class_method);
         expect(ToString(export_class.m_Code)).toMatchSnapshot();
-    })
-})
+    });
+});
