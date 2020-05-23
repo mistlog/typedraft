@@ -3,10 +3,8 @@ import { ExportClassCode } from "../../src/code-object/export-class";
 import { MethodCode } from "../../src/code-object/method";
 import { LocalContext } from "../../src/code-object/local-context";
 
-describe("module", () =>
-{
-    test("module.to-draft", () =>
-    {
+describe("module", () => {
+    test("module.to-draft", () => {
         //
         const code = `
             export class Foo{
@@ -30,10 +28,9 @@ describe("module", () =>
         expect(export_class instanceof ExportClassCode).toEqual(true);
         expect(method instanceof MethodCode).toEqual(true);
         expect(local_context instanceof LocalContext).toEqual(true);
-    })
+    });
 
-    test("normal function is not local context", () =>
-    {
+    test("normal function is not local context", () => {
         //
         const code = `
             export class Foo{
@@ -54,5 +51,5 @@ describe("module", () =>
         const _module = new ModuleCode(code);
         const draft = _module.ToDraft();
         expect(draft.length).toEqual(2);
-    })
-})
+    });
+});

@@ -1,4 +1,10 @@
-import { Program, File, ExpressionStatement, ExportNamedDeclaration, FunctionDeclaration } from "@babel/types";
+import {
+    Program,
+    File,
+    ExpressionStatement,
+    ExportNamedDeclaration,
+    FunctionDeclaration,
+} from "@babel/types";
 import { ExportClassCode } from "./export-class";
 import { MethodCode } from "./method";
 import { LocalContext } from "./local-context";
@@ -15,8 +21,7 @@ A .tsx file is considered as a module and we will transform these 3 types of cod
 */
 export type Draft = Array<ExportClassCode | MethodCode | LocalContext>;
 
-export class ModuleCode
-{
+export class ModuleCode {
     m_File: File;
     m_Path: NodePath<Program>;
 }
@@ -69,52 +74,42 @@ export class Foo {
 
 As we are only interested in the draft part of a module, then we need a way to return this "view" of module code.
 */
-< ModuleCode /> + function ToDraft(this: ModuleCode)
-{
-    // refresh and update bindings
-    this.m_File = ToFile(ToString(this.m_File));
+<ModuleCode /> +
+    function ToDraft(this: ModuleCode) {
+        // refresh and update bindings
+        this.m_File = ToFile(ToString(this.m_File));
 
-    //
-    let draft: Draft = [];
+        //
+        let draft: Draft = [];
 
-    const that = this;
-    const visitor: Visitor = {
-        Program(path)
-        {
-            that.m_Path = path;
-            path.get("body").forEach(path =>
-            {
-                //@ts-ignore
-                <CreateDraft />;
-            })
-        }
-    }
+        const that = this;
+        const visitor: Visitor = {
+            Program(path) {
+                that.m_Path = path;
+                path.get("body").forEach((path) => {
+                    //@ts-ignore
+                    <CreateDraft />;
+                });
+            },
+        };
 
-    traverse(this.m_File, visitor);
-    return draft;
-};
+        traverse(this.m_File, visitor);
+        return draft;
+    };
 
 /*
 ## Create draft
 */
 
-function CreateDraft(path: NodePath<Node>, draft: Draft)
-{
-    if (path.isEmptyStatement())
-    {
+function CreateDraft(path: NodePath<Node>, draft: Draft) {
+    if (path.isEmptyStatement()) {
         // remove redundant ; before tag, see utility.ts
         path.remove();
-    }
-    else if (IsExportClassCode(path))
-    {
+    } else if (IsExportClassCode(path)) {
         draft.push(new ExportClassCode(path.node, path));
-    }
-    else if (IsMethodCode(path))
-    {
+    } else if (IsMethodCode(path)) {
         draft.push(new MethodCode(path.node, path));
-    }
-    else if (IsLocalContext(path))
-    {
+    } else if (IsLocalContext(path)) {
         const name = path.node.id.name;
         const binding = path.scope.parent.getBinding(name);
         draft.push(new LocalContext(path.node, binding, path));
@@ -122,10 +117,8 @@ function CreateDraft(path: NodePath<Node>, draft: Draft)
 }
 
 // TODO: NodePath<Node> doesn't work: type predicates error
-export function IsExportClassCode(path: NodePath<any>): path is NodePath<ExportNamedDeclaration>
-{
-    if (!path.isExportNamedDeclaration())
-    {
+export function IsExportClassCode(path: NodePath<any>): path is NodePath<ExportNamedDeclaration> {
+    if (!path.isExportNamedDeclaration()) {
         return false;
     }
 
@@ -133,16 +126,13 @@ export function IsExportClassCode(path: NodePath<any>): path is NodePath<ExportN
     return is_export_class;
 }
 
-export function IsMethodCode(path: NodePath<any>): path is NodePath<ExpressionStatement>
-{
-    if (!path.isExpressionStatement())
-    {
+export function IsMethodCode(path: NodePath<any>): path is NodePath<ExpressionStatement> {
+    if (!path.isExpressionStatement()) {
         return false;
     }
 
     const expression = path.get("expression") as NodePath<Node>;
-    if (!expression.isBinaryExpression())
-    {
+    if (!expression.isBinaryExpression()) {
         return false;
     }
 
@@ -151,10 +141,8 @@ export function IsMethodCode(path: NodePath<any>): path is NodePath<ExpressionSt
     return left_is_jsx && right_is_function;
 }
 
-export function IsLocalContext(path: NodePath<any>): path is NodePath<FunctionDeclaration>
-{
-    if (!path.isFunctionDeclaration())
-    {
+export function IsLocalContext(path: NodePath<any>): path is NodePath<FunctionDeclaration> {
+    if (!path.isFunctionDeclaration()) {
         return false;
     }
 
@@ -163,8 +151,7 @@ export function IsLocalContext(path: NodePath<any>): path is NodePath<FunctionDe
 
     const name = path.node.id.name;
     const binding = path.scope.parent.getBinding(name);
-    const is_local_context = binding.referencePaths.some(path =>
-    {
+    const is_local_context = binding.referencePaths.some((path) => {
         const used_as_jsx = path.parentPath?.parentPath?.isJSXElement();
         const used_as_statement = path.parentPath?.parentPath?.parentPath?.isExpressionStatement();
         return (has_context && used_as_jsx) || (used_as_jsx && used_as_statement);
@@ -178,8 +165,7 @@ You may want to refer to the usage of [babel](https://github.com/jamiebuilds/bab
 /*
 # Trivial
 */
-<ModuleCode /> + function constructor(this: ModuleCode, code: string)
-{
-    this.m_File = ToFile(code);
-};
-
+<ModuleCode /> +
+    function constructor(this: ModuleCode, code: string) {
+        this.m_File = ToFile(code);
+    };

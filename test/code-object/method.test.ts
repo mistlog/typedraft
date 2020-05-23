@@ -2,10 +2,8 @@ import { MethodCode } from "../../src/code-object/method";
 import { ToAst, ToString } from "../../src/common/utility";
 import { ExpressionStatement } from "@babel/types";
 
-describe("method", () =>
-{
-    test("method.to-class-method", () =>
-    {
+describe("method", () => {
+    test("method.to-class-method", () => {
         const code = `
             <Foo/> + function Test(this: Foo, a: number, b: string){
                 return a.toString()+b;
@@ -17,5 +15,5 @@ describe("method", () =>
 
         expect(ToString(class_method)).toMatchSnapshot();
         expect(method.m_ClassName).toEqual("Foo");
-    })
-})
+    });
+});

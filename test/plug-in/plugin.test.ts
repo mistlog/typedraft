@@ -3,14 +3,18 @@ import { Transcriber, IDSL } from "../../src/core/transcriber";
 import { LocalContextPlugin } from "../../src/plug-in/draft-plugin-local-context";
 import { ToAst, ToString } from "../../src/common/utility";
 import { FilterPlugin } from "../../src/plug-in/draft-plugin-filter";
-import { Statement, FunctionDeclaration, labeledStatement, blockStatement, identifier } from "@babel/types";
+import {
+    Statement,
+    FunctionDeclaration,
+    labeledStatement,
+    blockStatement,
+    identifier,
+} from "@babel/types";
 import { NodePath } from "@babel/traverse";
 import { PatternMatch } from "draft-dsl-match";
 
-describe("plugin.local-context", () =>
-{
-    test("transcribe.simple", () =>
-    {
+describe("plugin.local-context", () => {
+    test("transcribe.simple", () => {
         //
         const code = `
             <Foo/> + function Test(this: Foo, a: number, b: string){
@@ -27,14 +31,13 @@ describe("plugin.local-context", () =>
 
         // remove last filter plugin from default transcriber
         transcriber.m_Plugins.pop();
-        const plugin = transcriber.m_Plugins.find(plugin => plugin instanceof LocalContextPlugin);
+        const plugin = transcriber.m_Plugins.find((plugin) => plugin instanceof LocalContextPlugin);
         Reflect.set(plugin, "GetContextList", () => ["Snippet"]);
 
         const result = transcriber.Transcribe();
         expect(result).toMatchSnapshot();
-    })
-    test("transcribe.nested", () =>
-    {
+    });
+    test("transcribe.nested", () => {
         //
         const code = `
             <Foo/> + function Test(this: Foo, a: number, b: string){
@@ -54,16 +57,14 @@ describe("plugin.local-context", () =>
 
         const transcriber = new Transcriber(code);
         transcriber.m_Plugins.pop();
-        const plugin = transcriber.m_Plugins.find(plugin => plugin instanceof LocalContextPlugin);
+        const plugin = transcriber.m_Plugins.find((plugin) => plugin instanceof LocalContextPlugin);
         Reflect.set(plugin, "GetContextList", () => ["SnippetNested", "Snippet"]);
 
-        const result = transcriber.Transcribe();;
+        const result = transcriber.Transcribe();
         expect(result).toMatchSnapshot();
-    })
+    });
 
-
-    test("transcribe.integrated.export-function", () =>
-    {
+    test("transcribe.integrated.export-function", () => {
         //
         const code = `
             export function Test(a: number, b: string){
@@ -80,10 +81,9 @@ describe("plugin.local-context", () =>
         transcriber.m_Plugins.pop();
         const result = transcriber.Transcribe();
         expect(result).toMatchSnapshot();
-    })
+    });
 
-    test("integrated.method", () =>
-    {
+    test("integrated.method", () => {
         //
         const code = `
             <Foo/> + function Test(this: Foo, a: number, b: string){
@@ -116,10 +116,9 @@ describe("plugin.local-context", () =>
         transcriber.m_Plugins.pop();
         const result = transcriber.Transcribe();
         expect(result).toMatchSnapshot();
-    })
+    });
 
-    test("get-context-list.simple", () =>
-    {
+    test("get-context-list.simple", () => {
         //
         const code = `
             <Foo/> + function Test(this: Foo, a: number, b: string){
@@ -134,13 +133,14 @@ describe("plugin.local-context", () =>
 
         const transcriber = new Transcriber(code);
         transcriber.RefreshDraft();
-        const plugin = transcriber.m_Plugins.find(plugin => plugin instanceof LocalContextPlugin) as LocalContextPlugin;
+        const plugin = transcriber.m_Plugins.find(
+            (plugin) => plugin instanceof LocalContextPlugin
+        ) as LocalContextPlugin;
         const context_list = plugin.GetContextList();
         expect(context_list).toEqual(["Snippet"]);
-    })
+    });
 
-    test("get-context-list.nested", () =>
-    {
+    test("get-context-list.nested", () => {
         //
         const code = `
             <Foo/> + function Test(this: Foo, a: number, b: string){
@@ -171,22 +171,19 @@ describe("plugin.local-context", () =>
 
         const transcriber = new Transcriber(code);
         transcriber.RefreshDraft();
-        const plugin = transcriber.m_Plugins.find(plugin => plugin instanceof LocalContextPlugin) as LocalContextPlugin;
+        const plugin = transcriber.m_Plugins.find(
+            (plugin) => plugin instanceof LocalContextPlugin
+        ) as LocalContextPlugin;
         const context_list = plugin.GetContextList();
         expect(context_list).toEqual(["DeepSnippet", "SnippetNested", "Snippet", "AnotherSnippet"]);
-    })
-})
+    });
+});
 
-describe("plugin.dsl", () =>
-{
-    test("dsl.log", () =>
-    {
+describe("plugin.dsl", () => {
+    test("dsl.log", () => {
         //
-        class Foo implements IDSL
-        {
-            Transcribe(block: Array<Statement>): Array<Statement>
-            {
-
+        class Foo implements IDSL {
+            Transcribe(block: Array<Statement>): Array<Statement> {
                 const transcribed = ToAst(`
                     console.log("current");
                 `);
@@ -211,10 +208,9 @@ describe("plugin.dsl", () =>
         transcriber.AddDSL("foo", new Foo());
         const result = transcriber.Transcribe();
         expect(result).toMatchSnapshot();
-    })
+    });
 
-    test("dsl.refresh-draft", () =>
-    {
+    test("dsl.refresh-draft", () => {
         const code = `
             export function Main(){
                 <TestMatch/>;
@@ -235,15 +231,12 @@ describe("plugin.dsl", () =>
         transcriber.AddDSL("match", new PatternMatch());
         const result = transcriber.Transcribe();
         expect(result).toMatchSnapshot();
-    })
+    });
 
-    test("dsl.nested", () =>
-    {
+    test("dsl.nested", () => {
         //
-        class Watch implements IDSL
-        {
-            Transcribe(block: Array<Statement>): Array<Statement>
-            {
+        class Watch implements IDSL {
+            Transcribe(block: Array<Statement>): Array<Statement> {
                 return [labeledStatement(identifier("$"), blockStatement(block))];
             }
         }
@@ -276,10 +269,9 @@ describe("plugin.dsl", () =>
         transcriber.AddDSL("match", new PatternMatch());
         const result = transcriber.Transcribe();
         expect(result).toMatchSnapshot();
-    })
+    });
 
-    test("dsl.nested.2", () =>
-    {
+    test("dsl.nested.2", () => {
         const code = `
             export function Main(value: any)
             {
@@ -309,25 +301,22 @@ describe("plugin.dsl", () =>
         transcriber.AddDSL("match", new PatternMatch());
         const result = transcriber.Transcribe();
         expect(result).toMatchSnapshot();
-    })
+    });
 
-    test("dsl.rename.test-use-path", () =>
-    {
+    test("dsl.rename.test-use-path", () => {
         //
-        class Foo implements IDSL
-        {
-            Transcribe(block: Array<Statement>, path: NodePath<FunctionDeclaration>): Array<Statement>
-            {
-
+        class Foo implements IDSL {
+            Transcribe(
+                block: Array<Statement>,
+                path: NodePath<FunctionDeclaration>
+            ): Array<Statement> {
                 path.traverse({
-                    Identifier(path)
-                    {
-                        if (path.node.name === "x")
-                        {
+                    Identifier(path) {
+                        if (path.node.name === "x") {
                             path.node.name = "y";
                         }
-                    }
-                })
+                    },
+                });
 
                 return block;
             }
@@ -350,13 +339,11 @@ describe("plugin.dsl", () =>
         transcriber.AddDSL("foo", new Foo());
         const result = transcriber.Transcribe();
         expect(result).toMatchSnapshot();
-    })
-})
+    });
+});
 
-describe("plugin.filter", () =>
-{
-    test("filter", () =>
-    {
+describe("plugin.filter", () => {
+    test("filter", () => {
         //
         const code = `
             export interface IFoo{
@@ -382,10 +369,9 @@ describe("plugin.filter", () =>
         transcriber.AddPlugin(new FilterPlugin(transcriber));
         const result = transcriber.Transcribe();
         expect(result).toMatchSnapshot();
-    })
+    });
 
-    test("filter local context", () =>
-    {
+    test("filter local context", () => {
         //
         const code = `
             export interface IFoo{
@@ -413,5 +399,5 @@ describe("plugin.filter", () =>
         const transcriber = new Transcriber(code);
         const result = transcriber.Transcribe();
         expect(result).toMatchSnapshot();
-    })
-})
+    });
+});
