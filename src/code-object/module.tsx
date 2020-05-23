@@ -121,36 +121,37 @@ function CreateDraft(path: NodePath<Node>, draft: Draft)
     }
 }
 
-export function IsExportClassCode(path: NodePath<Node>): path is NodePath<ExportNamedDeclaration>
+// TODO: NodePath<Node> doesn't work: type predicates error
+export function IsExportClassCode(path: NodePath<any>): path is NodePath<ExportNamedDeclaration>
 {
     if (!path.isExportNamedDeclaration())
     {
         return false;
     }
 
-    const is_export_class = path.get("declaration").isClassDeclaration();
+    const is_export_class = (path.get("declaration") as NodePath<Node>).isClassDeclaration();
     return is_export_class;
 }
 
-export function IsMethodCode(path: NodePath<Node>): path is NodePath<ExpressionStatement>
+export function IsMethodCode(path: NodePath<any>): path is NodePath<ExpressionStatement>
 {
     if (!path.isExpressionStatement())
     {
         return false;
     }
 
-    const expression = path.get("expression");
+    const expression = path.get("expression") as NodePath<Node>;
     if (!expression.isBinaryExpression())
     {
         return false;
     }
 
-    const left_is_jsx = expression.get("left").isJSXElement();
-    const right_is_function = expression.get("right").isFunctionExpression();
+    const left_is_jsx = (expression.get("left") as NodePath<Node>).isJSXElement();
+    const right_is_function = (expression.get("right") as NodePath<Node>).isFunctionExpression();
     return left_is_jsx && right_is_function;
 }
 
-export function IsLocalContext(path: NodePath<Node>): path is NodePath<FunctionDeclaration>
+export function IsLocalContext(path: NodePath<any>): path is NodePath<FunctionDeclaration>
 {
     if (!path.isFunctionDeclaration())
     {
