@@ -10,7 +10,8 @@ export class ClassPlugin {
     };
 
 <ClassPlugin /> +
-    function Transcribe(this: ClassPlugin) {
+    function Transcribe(this: ClassPlugin) 
+    {
         const transcriber = this.m_Transcriber;
 
         transcriber.TraverseMethod((methods, class_name) => {
