@@ -74,20 +74,17 @@
             
     <div class="contentarea">
         <pre class="syntaxhighlight"><code><span class="keyword">import</span> <span class="punctuation">{</span> <span id="8" data-toggle="tooltip" data-title="any">IPlugin</span> <span class="punctuation">}</span> <span class="keyword">from</span> <span class="string">&quot;../core/transcriber&quot;</span><span class="punctuation">;</span>
-<span class="keyword">import</span> <span class="punctuation">{</span> <span id="56" data-toggle="tooltip" data-title="any">ITranscriber</span> <span class="punctuation">}</span> <span class="keyword">from</span> <span class="string">&quot;../core/transcriber&quot;</span><span class="punctuation">;</span>
+<span class="keyword">import</span> <span class="punctuation">{</span> <span id="55" data-toggle="tooltip" data-title="any">ITranscriber</span> <span class="punctuation">}</span> <span class="keyword">from</span> <span class="string">&quot;../core/transcriber&quot;</span><span class="punctuation">;</span>
 
-<span class="keyword">export</span> <span class="keyword">class</span> <span id="99" class="typename" data-toggle="tooltip" data-title="RefreshDraftPlugin">RefreshDraftPlugin</span> <span class="keyword">implements</span> <a href="draft-plugin-refresh.html#8"><span data-toggle="tooltip" data-title="IPlugin">IPlugin</span></a>
-<span class="punctuation">{</span>
-    <span id="156" data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span><span class="punctuation">:</span> <a href="draft-plugin-refresh.html#56"><span data-toggle="tooltip" data-title="ITranscriber">ITranscriber</span></a><span class="punctuation">;</span>
+<span class="keyword">export</span> <span class="keyword">class</span> <span id="98" class="typename" data-toggle="tooltip" data-title="RefreshDraftPlugin">RefreshDraftPlugin</span> <span class="keyword">implements</span> <a href="draft-plugin-refresh.html#8"><span data-toggle="tooltip" data-title="IPlugin">IPlugin</span></a> <span class="punctuation">{</span>
+    <span id="152" data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span><span class="punctuation">:</span> <a href="draft-plugin-refresh.html#55"><span data-toggle="tooltip" data-title="ITranscriber">ITranscriber</span></a><span class="punctuation">;</span>
 
-    <span class="keyword">constructor</span><span class="punctuation">(</span><span id="210" data-toggle="tooltip" data-title="ITranscriber">transcriber</span><span class="punctuation">:</span> <a href="draft-plugin-refresh.html#56"><span data-toggle="tooltip" data-title="ITranscriber">ITranscriber</span></a><span class="punctuation">)</span>
-    <span class="punctuation">{</span>
-        <span class="keyword">this</span><span class="punctuation">.</span><a href="draft-plugin-refresh.html#156"><span data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span></a> <span class="punctuation">=</span> <a href="draft-plugin-refresh.html#210"><span data-toggle="tooltip" data-title="ITranscriber">transcriber</span></a><span class="punctuation">;</span>
+    <span class="keyword">constructor</span><span class="punctuation">(</span><span id="203" data-toggle="tooltip" data-title="ITranscriber">transcriber</span><span class="punctuation">:</span> <a href="draft-plugin-refresh.html#55"><span data-toggle="tooltip" data-title="ITranscriber">ITranscriber</span></a><span class="punctuation">)</span> <span class="punctuation">{</span>
+        <span class="keyword">this</span><span class="punctuation">.</span><a href="draft-plugin-refresh.html#152"><span data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span></a> <span class="punctuation">=</span> <a href="draft-plugin-refresh.html#203"><span data-toggle="tooltip" data-title="ITranscriber">transcriber</span></a><span class="punctuation">;</span>
     <span class="punctuation">}</span>
 
-    <span id="293" class="member" data-toggle="tooltip" data-title="() =&gt; void">Transcribe</span><span class="punctuation">(</span><span class="punctuation">)</span>
-    <span class="punctuation">{</span>
-        <span class="keyword">this</span><span class="punctuation">.</span><a href="draft-plugin-refresh.html#156"><span data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span></a><span class="punctuation">.</span><a href="../core/transcriber.html#1989"><span data-toggle="tooltip" data-title="() =&gt; void">RefreshDraft</span></a><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
+    <span id="279" class="member" data-toggle="tooltip" data-title="() =&gt; void">Transcribe</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span>
+        <span class="keyword">this</span><span class="punctuation">.</span><a href="draft-plugin-refresh.html#152"><span data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span></a><span class="punctuation">.</span><a href="../core/transcriber.html#2007"><span data-toggle="tooltip" data-title="() =&gt; void">RefreshDraft</span></a><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
     <span class="punctuation">}</span>
 <span class="punctuation">}</span>
 </code></pre>
