@@ -1,5 +1,7 @@
+
 <!doctype html>
 <html lang="en">
+
 <head>
     <title>Code coverage report for code-object/module.ts</title>
     <meta charset="utf-8" />
@@ -12,40 +14,48 @@
         }
     </style>
 </head>
+    
 <body>
 <div class='wrapper'>
-  <div class='pad1'>
-    <h1>
-      <a href="../index.html">All files</a> / <a href="index.html">code-object</a> module.ts
-    </h1>
-    <div class='clearfix'>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
-        <span class="quiet">Statements</span>
-        <span class='fraction'>52/52</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">88.1% </span>
-        <span class="quiet">Branches</span>
-        <span class='fraction'>37/42</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
-        <span class="quiet">Functions</span>
-        <span class='fraction'>8/8</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
-        <span class="quiet">Lines</span>
-        <span class='fraction'>52/52</span>
-      </div>
+    <div class='pad1'>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">code-object</a> module.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>52/52</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">88.1% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>37/42</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>8/8</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>52/52</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
     </div>
-    <p class="quiet">
-      Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
-    </p>
-  </div>
-  <div class='status-line high'></div>
-<pre><table class="coverage">
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
 <a name='L3'></a><a href='#L3'>3</a>
@@ -257,30 +267,30 @@ export class ModuleCode {
   }
 &nbsp;
 }
-export function IsExportClassCode(path: NodePath&lt;Node&gt;): path is NodePath&lt;ExportNamedDeclaration&gt; {
+export function IsExportClassCode(path: NodePath&lt;any&gt;): path is NodePath&lt;ExportNamedDeclaration&gt; {
   if (!path.isExportNamedDeclaration()) {
     return false;
   }
 &nbsp;
-  const is_export_class = path.get("declaration").isClassDeclaration();
+  const is_export_class = (path.get("declaration") as NodePath&lt;Node&gt;).isClassDeclaration();
   return is_export_class;
 }
-export function IsMethodCode(path: NodePath&lt;Node&gt;): path is NodePath&lt;ExpressionStatement&gt; {
+export function IsMethodCode(path: NodePath&lt;any&gt;): path is NodePath&lt;ExpressionStatement&gt; {
   if (!path.isExpressionStatement()) {
     return false;
   }
 &nbsp;
-  const expression = path.get("expression");
+  const expression = (path.get("expression") as NodePath&lt;Node&gt;);
 &nbsp;
   if (!expression.isBinaryExpression()) {
     return false;
   }
 &nbsp;
-  const left_is_jsx = expression.get("left").isJSXElement();
-  const right_is_function = expression.get("right").isFunctionExpression();
+  const left_is_jsx = (expression.get("left") as NodePath&lt;Node&gt;).isJSXElement();
+  const right_is_function = (expression.get("right") as NodePath&lt;Node&gt;).isFunctionExpression();
   return left_is_jsx &amp;&amp; right_is_function;
 }
-export function IsLocalContext(path: NodePath&lt;Node&gt;): path is NodePath&lt;FunctionDeclaration&gt; {
+export function IsLocalContext(path: NodePath&lt;any&gt;): path is NodePath&lt;FunctionDeclaration&gt; {
   if (!path.isFunctionDeclaration()) {
     return false;
   }
@@ -295,24 +305,24 @@ export function IsLocalContext(path: NodePath&lt;Node&gt;): path is NodePath&lt;
     return has_context &amp;&amp; used_as_jsx || used_as_jsx &amp;&amp; used_as_statement;
   });
   return is_local_context;
-}</pre></td></tr>
-</table></pre>
-<div class='push'></div><!-- for sticky footer -->
-</div><!-- /wrapper -->
-<div class='footer quiet pad2 space-top1 center small'>
-  Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu May 21 2020 14:54:28 GMT+0000 (Coordinated Universal Time)
-</div>
-</div>
-<script src="../prettify.js"></script>
-<script>
-window.onload = function () {
-        if (typeof prettyPrint === 'function') {
-            prettyPrint();
-        }
-};
-</script>
-<script src="../sorter.js"></script>
-<script src="../block-navigation.js"></script>
-</body>
+}</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
+                at Sat May 23 2020 05:13:39 GMT+0000 (Coordinated Universal Time)
+            </div>
+        </div>
+        <script src="../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../sorter.js"></script>
+        <script src="../block-navigation.js"></script>
+    </body>
 </html>
+    
