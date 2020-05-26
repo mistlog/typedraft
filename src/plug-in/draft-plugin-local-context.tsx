@@ -20,10 +20,10 @@ As context can be nested, we will translate them in order. Then find references 
         const to_transcribe = this.GetContextList();
 
         // find and replace
-        to_transcribe.forEach((name) => {
+        to_transcribe.forEach(name => {
             const context = this.m_Transcriber.GetLocalContext(name);
-            context.m_Refs.forEach((path) => {
-                const parent = path.findParent((path) => path.isExpressionStatement());
+            context.m_Refs.forEach(path => {
+                const parent = path.findParent(path => path.isExpressionStatement());
                 parent.replaceWithMultiple(context.ToStatements());
             });
         });
@@ -40,14 +40,14 @@ Topological sort is used to find the deps relation of context.
         const graph = [];
 
         this.m_Transcriber.TraverseLocalContext((context, name) => {
-            context.m_Refs.forEach((path) => {
+            context.m_Refs.forEach(path => {
                 /**
                  * isFunctionDeclaration: context is used in another context
                  * isFunctionExpression: context is used in class method
                  * isExportDeclaration: context is used in export function
                  */
                 const parent = path.findParent(
-                    (path) =>
+                    path =>
                         path.isFunctionDeclaration() ||
                         path.isFunctionExpression() ||
                         path.isExportDeclaration()
@@ -63,7 +63,7 @@ Topological sort is used to find the deps relation of context.
         });
 
         // filter the result, because the name can be the function that uses context, instead of context itself.
-        const context_list = toposort(graph).filter((name) =>
+        const context_list = toposort(graph).filter(name =>
             this.m_Transcriber.GetLocalContext(name)
         );
         return context_list;

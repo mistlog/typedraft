@@ -1,70 +1,77 @@
 {
-  "name": "typedraft",
-  "version": "0.1.12",
-  "description": "TypeDraft is a superset of typescript with built-in support for DSL extension and literate programming.",
-  "keywords": [
-    "literate programming",
-    "dsl",
-    "transcriber",
-    "literator",
-    "compiler",
-    "typescript",
-    "javascript"
-  ],
-  "bin": {
-    "td": "dist/cli/cli.js"
-  },
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mistlog/typedraft"
-  },
-  "homepage": "https://github.com/mistlog/typedraft",
-  "scripts": {
-    "pretest": "npm run transcribe",
-    "test": "jest --coverage",
-    "test:watch": "jest --watch",
-    "prebuild": "npm run clean:dist",
-    "build": "npm run transcribe && tsc",
-    "postbuild": "npm run docs",
-    "dev": "npm run transcribe:watch",
-    "docs": "npm run clean:ts && lits",
-    "format": "prettier --write ./src ./test ./script ./cli",
-    "check:format":"prettier --check ./src ./test ./script ./cli",
-    "transcribe": "td ./src",
-    "transcribe:watch": "td ./src -w",
-    "release": "npm run build && npm pack",
-    "clean": "npm run clean:ts && npm run clean:dist && npm run clean:docs",
-    "clean:ts": "ts-node ./script/clean-ts.ts",
-    "clean:docs": "ts-node ./script/clean-docs.ts",
-    "clean:dist": "ts-node ./script/clean-dist.ts"
-  },
-  "author": "mistlog",
-  "license": "MIT",
-  "dependencies": {
-    "@babel/core": "^7.6.2",
-    "commander": "^4.0.1",
-    "filewalker": "^0.1.3",
-    "fs-extra": "^8.1.0",
-    "node-watch": "^0.6.3",
-    "toposort": "2.0.2"
-  },
-  "devDependencies": {
-    "@types/fs-extra": "^8.0.1",
-    "@types/jest": "^24.0.18",
-    "@types/node": "^12.12.14",
-    "@types/toposort": "2.0.3",
-    "draft-dsl-match": "0.0.3",
-    "jest": "^24.9.0",
-    "litscript": "^1.1.6",
-    "prettier": "^2.0.5",
-    "ts-jest": "^24.0.2",
-    "ts-node": "^8.3.0",
-    "typedraft": "^0.1.11",
-    "typescript": "^3.8.3"
-  }
+    "name": "typedraft",
+    "version": "0.1.12",
+    "description": "TypeDraft is a superset of typescript with built-in support for DSL extension and literate programming.",
+    "keywords": [
+        "literate programming",
+        "dsl",
+        "transcriber",
+        "literator",
+        "compiler",
+        "typescript",
+        "javascript"
+    ],
+    "bin": {
+        "td": "dist/cli/cli.js"
+    },
+    "main": "dist/src/index.js",
+    "types": "dist/src/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mistlog/typedraft"
+    },
+    "homepage": "https://github.com/mistlog/typedraft",
+    "scripts": {
+        "pretest": "npm run transcribe",
+        "test": "jest --coverage",
+        "test:watch": "jest --watch",
+        "prebuild": "npm run clean:dist",
+        "build": "npm run transcribe && tsc",
+        "postbuild": "npm run docs",
+        "dev": "npm run transcribe:watch",
+        "docs": "npm run clean:ts && lits",
+        "format": "prettier --write ./src ./test ./script ./cli",
+        "check:format": "prettier --check ./src ./test ./script ./cli",
+        "transcribe": "td ./src",
+        "transcribe:watch": "td ./src -w",
+        "release": "npm run build && npm pack",
+        "clean": "npm run clean:ts && npm run clean:dist && npm run clean:docs",
+        "clean:ts": "ts-node ./script/clean-ts.ts",
+        "clean:docs": "ts-node ./script/clean-docs.ts",
+        "clean:dist": "ts-node ./script/clean-dist.ts"
+    },
+    "author": "mistlog",
+    "license": "MIT",
+    "dependencies": {
+        "@babel/core": "^7.6.2",
+        "commander": "^4.0.1",
+        "filewalker": "^0.1.3",
+        "fs-extra": "^8.1.0",
+        "node-watch": "^0.6.3",
+        "toposort": "2.0.2"
+    },
+    "devDependencies": {
+        "@types/fs-extra": "^8.0.1",
+        "@types/jest": "^24.0.18",
+        "@types/node": "^12.12.14",
+        "@types/toposort": "2.0.3",
+        "draft-dsl-match": "0.0.3",
+        "husky": "^4.2.5",
+        "jest": "^24.9.0",
+        "litscript": "^1.1.6",
+        "prettier": "^2.0.5",
+        "pretty-quick": "^2.0.1",
+        "ts-jest": "^24.0.2",
+        "ts-node": "^8.3.0",
+        "typedraft": "^0.1.11",
+        "typescript": "^3.8.3"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "pretty-quick --staged"
+        }
+    }
 }

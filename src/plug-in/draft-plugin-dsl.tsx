@@ -11,7 +11,7 @@ export class DSLPlugin {
 
 <DSLPlugin /> +
     function Transcribe(this: DSLPlugin) {
-        this.m_Transcriber.TraverseLocalContext((context) => {
+        this.m_Transcriber.TraverseLocalContext(context => {
             const context_name = context.GetContextName();
             const dsl = this.m_Transcriber.GetDSL(context_name);
             if (dsl) {

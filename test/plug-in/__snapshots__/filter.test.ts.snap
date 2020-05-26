@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`filter class method & local context 1`] = `
+"export interface IFoo {
+  foo: number;
+}
+export class Foo {}
+
+function Normal() {}"
+`;
