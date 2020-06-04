@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`export class export-class.add-member 1`] = `
+exports[`export class add member 1`] = `
 "export class Foo {
   static foo: number;
 

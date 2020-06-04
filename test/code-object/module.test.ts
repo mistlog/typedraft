@@ -1,12 +1,9 @@
-import { ModuleCode } from "../../src/code-object/module";
-import { ExportClassCode } from "../../src/code-object/export-class";
-import { MethodCode } from "../../src/code-object/method";
-import { LocalContext } from "../../src/code-object/local-context";
+import { ModuleCode, ExportClassCode, MethodCode, LocalContext } from "../../src";
 
 describe("module", () => {
-    test("module.to-draft", () => {
+    test("to draft", () => {
         //
-        const code = `
+        const _module = new ModuleCode(`
             export class Foo{
                 static foo: number;
             }
@@ -20,11 +17,10 @@ describe("module", () => {
                 a += this.foo;
                 return a.toString()+b;
             }
-        `;
+        `);
 
-        const _module = new ModuleCode(code);
+        //
         const [export_class, method, local_context] = _module.ToDraft();
-
         expect(export_class instanceof ExportClassCode).toEqual(true);
         expect(method instanceof MethodCode).toEqual(true);
         expect(local_context instanceof LocalContext).toEqual(true);
@@ -32,7 +28,7 @@ describe("module", () => {
 
     test("normal function is not local context", () => {
         //
-        const code = `
+        const _module = new ModuleCode(`
             export class Foo{
                 static foo: number;
             }
@@ -46,10 +42,11 @@ describe("module", () => {
                 a += this.foo;
                 return a.toString()+b;
             }
-        `;
+        `);
 
-        const _module = new ModuleCode(code);
-        const draft = _module.ToDraft();
-        expect(draft.length).toEqual(2);
+        //
+        const [export_class, method] = _module.ToDraft();
+        expect(export_class instanceof ExportClassCode).toEqual(true);
+        expect(method instanceof MethodCode).toEqual(true);
     });
 });

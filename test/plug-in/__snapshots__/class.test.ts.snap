@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`transcribe class 1`] = `
+"export class Foo {
+  static foo: number;
+
+  Test(a: number, b: string) {
+    <Bar />;
+    return a.toString() + b;
+  }
+
+}
+<Foo /> + function Test(this: Foo, a: number, b: string) {
+  <Bar />;
+  return a.toString() + b;
+};
+
+function Bar(this: Foo, a: number, b: string) {
+  a += this.foo;
+  return a.toString() + b;
+}
+
+console.log(\\"not draft, ignore this statement\\");"
+`;

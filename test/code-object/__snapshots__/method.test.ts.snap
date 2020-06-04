@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`method method.to-class-method 1`] = `
+exports[`method to class method 1`] = `
 "Test(a: number, b: string) {
   return a.toString() + b;
 }"
