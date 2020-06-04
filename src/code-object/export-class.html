@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>TypeDraft</title>
+    <title>TypeDraft - Export Class</title>
     <link rel="icon" type="image/icon" href="../../images/favicon.png" />
     <link rel="stylesheet" href="../../css/main.css" />
     
@@ -32,9 +32,9 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M223.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L319.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L393.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34zm-192 34l136 136c9.4 9.4 24.6 9.4 33.9 0l22.6-22.6c9.4-9.4 9.4-24.6 0-33.9L127.9 256l96.4-96.4c9.4-9.4 9.4-24.6 0-33.9L201.7 103c-9.4-9.4-24.6-9.4-33.9 0l-136 136c-9.5 9.4-9.5 24.6-.1 34z"/></svg>
         <span>Previous: Introduction</span>
     </a>
-    <a  >
+    <a class="enabled" href="method.html">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34zm192-34l-136-136c-9.4-9.4-24.6-9.4-33.9 0l-22.6 22.6c-9.4 9.4-9.4 24.6 0 33.9l96.4 96.4-96.4 96.4c-9.4 9.4-9.4 24.6 0 33.9l22.6 22.6c9.4 9.4 24.6 9.4 33.9 0l136-136c9.4-9.2 9.4-24.4 0-33.8z"/></svg>
-        <span>Next:</span>
+        <span>Next: Class Method</span>
     </a>
         </div>
         
@@ -58,6 +58,45 @@
         <a href="../../index.html"><span data-toggle="tooltip" data-title="Introduction page">Introduction</span></a>
         
     </li>
+    <li>
+        <button class="accordion">
+        Source Code
+        </button>
+            
+    <ul>
+        
+    <li>
+        
+        <a href="export-class.html" class="highlight">Export Class</a>
+        
+    </li>
+    <li>
+        
+        <a href="method.html">Class Method</a>
+        
+    </li>
+    <li>
+        
+        <a href="local-context.html">Local Context</a>
+        
+    </li>
+    <li>
+        
+        <a href="module.html">Module and Draft</a>
+        
+    </li>
+    <li>
+        
+        <a href="../core/transcriber.html">Transcriber</a>
+        
+    </li>
+    </ul>
+    </li>
+    <li>
+        
+        <a href="../../coverage/lcov-report/index.html"><span data-toggle="tooltip" data-title="Test Coverage">Unit Test</span></a>
+        
+    </li>
     </ul>
     </div>
             
@@ -73,49 +112,39 @@
         <div class="scrollingarea closepopups">
             
     <div class="contentarea">
-        <pre class="syntaxhighlight"><code><span class="keyword">import</span> <span class="punctuation">{</span> <span id="8" data-toggle="tooltip" data-title="any">ExportNamedDeclaration</span><span class="punctuation">,</span> <span id="32" data-toggle="tooltip" data-title="any">ClassDeclaration</span><span class="punctuation">,</span> <span id="50" data-toggle="tooltip" data-title="any">ClassMethod</span> <span class="punctuation">}</span> <span class="keyword">from</span> <span class="string">&quot;@babel/types&quot;</span><span class="punctuation">;</span>
-<span class="keyword">import</span> <span class="punctuation">{</span> <span id="94" data-toggle="tooltip" data-title="typeof NodePath">NodePath</span> <span class="punctuation">}</span> <span class="keyword">from</span> <span class="string">&quot;@babel/core&quot;</span><span class="punctuation">;</span>
+        <h1 id="export-class">Export Class</h1>
+<p>Exported class will be represented as <code>ExportClassCode</code>:</p>
+<pre class="syntaxhighlight"><code><span class="keyword">export</span> <span class="keyword">class</span> <span id="0" class="typename" data-toggle="tooltip" data-title="ExportClassCode">ExportClassCode</span> <span class="punctuation">{</span>
+    <span id="116" data-toggle="tooltip" data-title="NodePath&lt;ExportNamedDeclaration&gt;">m_Path</span><span class="punctuation">:</span> <a href="export-class.html#873"><span data-toggle="tooltip" data-title="NodePath&lt;T&gt;">NodePath</span></a><span class="punctuation">&lt;</span><a href="export-class.html#787"><span data-toggle="tooltip" data-title="ExportNamedDeclaration">ExportNamedDeclaration</span></a><span class="punctuation">&gt;</span><span class="punctuation">;</span>
 
-<span class="comment">/*
-# Class
-
-All exported class would be recorded as ```ExportClassCode```,
-*/</span>
-<span class="keyword">export</span> <span class="keyword">class</span> <span id="125" class="typename" data-toggle="tooltip" data-title="ExportClassCode">ExportClassCode</span> <span class="punctuation">{</span>
-    <span id="235" data-toggle="tooltip" data-title="ExportNamedDeclaration">m_Code</span><span class="punctuation">:</span> <a href="export-class.html#8"><span data-toggle="tooltip" data-title="ExportNamedDeclaration">ExportNamedDeclaration</span></a><span class="punctuation">;</span>
-    <span id="271" data-toggle="tooltip" data-title="NodePath&lt;ExportNamedDeclaration&gt;">m_Path</span><span class="punctuation">:</span> <a href="export-class.html#94"><span data-toggle="tooltip" data-title="NodePath&lt;T&gt;">NodePath</span></a><span class="punctuation">&lt;</span><a href="export-class.html#8"><span data-toggle="tooltip" data-title="ExportNamedDeclaration">ExportNamedDeclaration</span></a><span class="punctuation">&gt;</span><span class="punctuation">;</span>
-
-    <span class="keyword">get</span> <span id="317" class="member" data-toggle="tooltip" data-title="ClassDeclaration">m_Class</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span>
-        <span class="keyword">return</span> <span class="keyword">this</span><span class="punctuation">.</span><a href="export-class.html#235"><span data-toggle="tooltip" data-title="ExportNamedDeclaration">m_Code</span></a><span class="punctuation">.</span><span data-toggle="tooltip" data-title="any">declaration</span> <span class="keyword">as</span> <a href="export-class.html#32"><span data-toggle="tooltip" data-title="ClassDeclaration">ClassDeclaration</span></a><span class="punctuation">;</span>
+    <span class="keyword">get</span> <span id="162" class="member" data-toggle="tooltip" data-title="ExportNamedDeclaration">m_Code</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span>
+        <span class="keyword">return</span> <span class="keyword">this</span><span class="punctuation">.</span><a href="export-class.html#116"><span data-toggle="tooltip" data-title="NodePath&lt;ExportNamedDeclaration&gt;">m_Path</span></a><span class="punctuation">.</span><span data-toggle="tooltip" data-title="ExportNamedDeclaration">node</span><span class="punctuation">;</span>
     <span class="punctuation">}</span>
-    <span class="keyword">get</span> <span id="404" class="member" data-toggle="tooltip" data-title="any">m_Members</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span>
-        <span class="keyword">return</span> <span class="keyword">this</span><span class="punctuation">.</span><a href="export-class.html#317"><span class="member" data-toggle="tooltip" data-title="ClassDeclaration">m_Class</span></a><span class="punctuation">.</span><span data-toggle="tooltip" data-title="any">body</span><span class="punctuation">.</span>body<span class="punctuation">;</span>
+    <span class="keyword">get</span> <span id="221" class="member" data-toggle="tooltip" data-title="ClassDeclaration">m_Class</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span>
+        <span class="keyword">return</span> <span class="keyword">this</span><span class="punctuation">.</span><a href="export-class.html#162"><span class="member" data-toggle="tooltip" data-title="ExportNamedDeclaration">m_Code</span></a><span class="punctuation">.</span><span data-toggle="tooltip" data-title="any">declaration</span> <span class="keyword">as</span> <a href="export-class.html#811"><span data-toggle="tooltip" data-title="ClassDeclaration">ClassDeclaration</span></a><span class="punctuation">;</span>
     <span class="punctuation">}</span>
-    <span class="keyword">get</span> <span id="471" class="member" data-toggle="tooltip" data-title="any">m_Name</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span>
-        <span class="keyword">return</span> <span class="keyword">this</span><span class="punctuation">.</span><a href="export-class.html#317"><span class="member" data-toggle="tooltip" data-title="ClassDeclaration">m_Class</span></a><span class="punctuation">.</span><span data-toggle="tooltip" data-title="any">id</span><span class="punctuation">.</span>name<span class="punctuation">;</span>
+    <span class="keyword">get</span> <span id="307" class="member" data-toggle="tooltip" data-title="any">m_Members</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span>
+        <span class="keyword">return</span> <span class="keyword">this</span><span class="punctuation">.</span><a href="export-class.html#221"><span class="member" data-toggle="tooltip" data-title="ClassDeclaration">m_Class</span></a><span class="punctuation">.</span><span data-toggle="tooltip" data-title="any">body</span><span class="punctuation">.</span>body<span class="punctuation">;</span>
+    <span class="punctuation">}</span>
+    <span class="keyword">get</span> <span id="374" class="member" data-toggle="tooltip" data-title="string">m_Name</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span>
+        <span class="keyword">return</span> <span class="keyword">this</span><span class="punctuation">.</span><a href="export-class.html#221"><span class="member" data-toggle="tooltip" data-title="ClassDeclaration">m_Class</span></a><span class="punctuation">.</span><span data-toggle="tooltip" data-title="any">id</span><span class="punctuation">.</span>name <span class="keyword">as</span> <span class="keyword">string</span><span class="punctuation">;</span>
     <span class="punctuation">}</span>
 <span class="punctuation">}</span>
-
-<span class="comment">/*
-Then, we will restore class methods and add them to class. See document of method.
-*/</span>
-<span class="punctuation">&lt;</span><a href="export-class.html#125"><span class="typename" data-toggle="tooltip" data-title="typeof ExportClassCode">ExportClassCode</span></a> <span class="punctuation">/</span><span class="punctuation">&gt;</span> <span class="punctuation">+</span>
-    <span class="keyword">function</span> <span id="647" class="member" data-toggle="tooltip" data-title="(this: ExportClassCode, member: ClassMethod) =&gt; void">AddMember</span><span class="punctuation">(</span><span id="671" data-toggle="tooltip" data-title="ExportClassCode">this</span><span class="punctuation">:</span> <a href="export-class.html#125"><span class="typename" data-toggle="tooltip" data-title="ExportClassCode">ExportClassCode</span></a><span class="punctuation">,</span> <span id="693" data-toggle="tooltip" data-title="ClassMethod">member</span><span class="punctuation">:</span> <a href="export-class.html#50"><span data-toggle="tooltip" data-title="ClassMethod">ClassMethod</span></a><span class="punctuation">)</span> <span class="punctuation">{</span>
-        <span class="keyword">this</span><span class="punctuation">.</span><a href="export-class.html#404"><span class="member" data-toggle="tooltip" data-title="any">m_Members</span></a><span class="punctuation">.</span>push<span class="punctuation">(</span><a href="export-class.html#693"><span data-toggle="tooltip" data-title="ClassMethod">member</span></a><span class="punctuation">)</span><span class="punctuation">;</span>
+</code></pre>
+<h2 id="add-member">AddMember</h2>
+<pre class="syntaxhighlight"><code><span class="punctuation">&lt;</span><a href="export-class.html#0"><span class="typename" data-toggle="tooltip" data-title="typeof ExportClassCode">ExportClassCode</span></a> <span class="punctuation">/</span><span class="punctuation">&gt;</span> <span class="punctuation">+</span>
+    <span class="keyword">function</span> <span id="495" class="member" data-toggle="tooltip" data-title="(this: ExportClassCode, member: ClassMethod) =&gt; void">AddMember</span><span class="punctuation">(</span><span id="519" data-toggle="tooltip" data-title="ExportClassCode">this</span><span class="punctuation">:</span> <a href="export-class.html#0"><span class="typename" data-toggle="tooltip" data-title="ExportClassCode">ExportClassCode</span></a><span class="punctuation">,</span> <span id="541" data-toggle="tooltip" data-title="ClassMethod">member</span><span class="punctuation">:</span> <a href="export-class.html#829"><span data-toggle="tooltip" data-title="ClassMethod">ClassMethod</span></a><span class="punctuation">)</span> <span class="punctuation">{</span>
+        <span class="keyword">this</span><span class="punctuation">.</span><a href="export-class.html#307"><span class="member" data-toggle="tooltip" data-title="any">m_Members</span></a><span class="punctuation">.</span>push<span class="punctuation">(</span><a href="export-class.html#541"><span data-toggle="tooltip" data-title="ClassMethod">member</span></a><span class="punctuation">)</span><span class="punctuation">;</span>
+    <span class="punctuation">}</span><span class="punctuation">;</span>
+</code></pre>
+<h1 id="trivial">Trivial</h1>
+<pre class="syntaxhighlight"><code><span class="punctuation">&lt;</span><a href="export-class.html#0"><span class="typename" data-toggle="tooltip" data-title="typeof ExportClassCode">ExportClassCode</span></a> <span class="punctuation">/</span><span class="punctuation">&gt;</span> <span class="punctuation">+</span>
+    <span class="keyword">function</span> <span id="652" class="member" data-toggle="tooltip" data-title="(this: ExportClassCode, path: NodePath&lt;ExportNamedDeclaration&gt;) =&gt; void">constructor</span><span class="punctuation">(</span><span id="678" data-toggle="tooltip" data-title="ExportClassCode">this</span><span class="punctuation">:</span> <a href="export-class.html#0"><span class="typename" data-toggle="tooltip" data-title="ExportClassCode">ExportClassCode</span></a><span class="punctuation">,</span> <span id="700" data-toggle="tooltip" data-title="NodePath&lt;ExportNamedDeclaration&gt;">path</span><span class="punctuation">:</span> <a href="export-class.html#873"><span data-toggle="tooltip" data-title="NodePath&lt;T&gt;">NodePath</span></a><span class="punctuation">&lt;</span><a href="export-class.html#787"><span data-toggle="tooltip" data-title="ExportNamedDeclaration">ExportNamedDeclaration</span></a><span class="punctuation">&gt;</span><span class="punctuation">)</span> <span class="punctuation">{</span>
+        <span class="keyword">this</span><span class="punctuation">.</span><a href="export-class.html#116"><span data-toggle="tooltip" data-title="NodePath&lt;ExportNamedDeclaration&gt;">m_Path</span></a> <span class="punctuation">=</span> <a href="export-class.html#700"><span data-toggle="tooltip" data-title="NodePath&lt;ExportNamedDeclaration&gt;">path</span></a><span class="punctuation">;</span>
     <span class="punctuation">}</span><span class="punctuation">;</span>
 
-<span class="comment">/*
-# Trivial
-*/</span>
-<span class="punctuation">&lt;</span><a href="export-class.html#125"><span class="typename" data-toggle="tooltip" data-title="typeof ExportClassCode">ExportClassCode</span></a> <span class="punctuation">/</span><span class="punctuation">&gt;</span> <span class="punctuation">+</span>
-    <span class="keyword">function</span> <span id="799" class="member" data-toggle="tooltip" data-title="(this: ExportClassCode, node: ExportNamedDeclaration, path?: NodePath&lt;ExportNamedDeclaration&gt;) =&gt; void">constructor</span><span class="punctuation">(</span>
-        <span id="825" data-toggle="tooltip" data-title="ExportClassCode">this</span><span class="punctuation">:</span> <a href="export-class.html#125"><span class="typename" data-toggle="tooltip" data-title="ExportClassCode">ExportClassCode</span></a><span class="punctuation">,</span>
-        <span id="856" data-toggle="tooltip" data-title="ExportNamedDeclaration">node</span><span class="punctuation">:</span> <a href="export-class.html#8"><span data-toggle="tooltip" data-title="ExportNamedDeclaration">ExportNamedDeclaration</span></a><span class="punctuation">,</span>
-        <span id="894" data-toggle="tooltip" data-title="NodePath&lt;ExportNamedDeclaration&gt;">path</span><span class="punctuation">?</span><span class="punctuation">:</span> <a href="export-class.html#94"><span data-toggle="tooltip" data-title="NodePath&lt;T&gt;">NodePath</span></a><span class="punctuation">&lt;</span><a href="export-class.html#8"><span data-toggle="tooltip" data-title="ExportNamedDeclaration">ExportNamedDeclaration</span></a><span class="punctuation">&gt;</span>
-    <span class="punctuation">)</span> <span class="punctuation">{</span>
-        <span class="keyword">this</span><span class="punctuation">.</span><a href="export-class.html#235"><span data-toggle="tooltip" data-title="ExportNamedDeclaration">m_Code</span></a> <span class="punctuation">=</span> <a href="export-class.html#856"><span data-toggle="tooltip" data-title="ExportNamedDeclaration">node</span></a><span class="punctuation">;</span>
-        <span class="keyword">this</span><span class="punctuation">.</span><a href="export-class.html#271"><span data-toggle="tooltip" data-title="NodePath&lt;ExportNamedDeclaration&gt;">m_Path</span></a> <span class="punctuation">=</span> <a href="export-class.html#894"><span data-toggle="tooltip" data-title="NodePath&lt;ExportNamedDeclaration&gt;">path</span></a><span class="punctuation">;</span>
-    <span class="punctuation">}</span><span class="punctuation">;</span>
+<span class="keyword">import</span> <span class="punctuation">{</span> <span id="787" data-toggle="tooltip" data-title="any">ExportNamedDeclaration</span><span class="punctuation">,</span> <span id="811" data-toggle="tooltip" data-title="any">ClassDeclaration</span><span class="punctuation">,</span> <span id="829" data-toggle="tooltip" data-title="any">ClassMethod</span> <span class="punctuation">}</span> <span class="keyword">from</span> <span class="string">&quot;@babel/types&quot;</span><span class="punctuation">;</span>
+<span class="keyword">import</span> <span class="punctuation">{</span> <span id="873" data-toggle="tooltip" data-title="typeof NodePath">NodePath</span> <span class="punctuation">}</span> <span class="keyword">from</span> <span class="string">&quot;@babel/core&quot;</span><span class="punctuation">;</span>
 </code></pre>
 
         

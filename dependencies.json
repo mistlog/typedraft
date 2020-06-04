@@ -1,4 +1,33 @@
 {
+    "src/common/utility": {
+        "url": "src/common/utility.html",
+        "dependencies": [
+            "src/common/@babel/core",
+            "src/common/@babel/types",
+            "src/common/@babel/traverse",
+            "src/common/@babel/traverse/lib/scope/binding",
+            "src/common/@babel/parser",
+            "src/common/@babel/generator"
+        ]
+    },
+    "src/common/@babel/core": {
+        "dependencies": []
+    },
+    "src/common/@babel/types": {
+        "dependencies": []
+    },
+    "src/common/@babel/traverse": {
+        "dependencies": []
+    },
+    "src/common/@babel/traverse/lib/scope/binding": {
+        "dependencies": []
+    },
+    "src/common/@babel/parser": {
+        "dependencies": []
+    },
+    "src/common/@babel/generator": {
+        "dependencies": []
+    },
     "src/code-object/export-class.tsx": {
         "url": "src/code-object/export-class.html",
         "dependencies": [
@@ -33,27 +62,6 @@
     "src/core/transcriber": {
         "dependencies": []
     },
-    "src/common/utility": {
-        "url": "src/common/utility.html",
-        "dependencies": [
-            "src/common/@babel/core",
-            "src/common/@babel/types",
-            "src/common/@babel/generator",
-            "src/common/@babel/parser"
-        ]
-    },
-    "src/common/@babel/core": {
-        "dependencies": []
-    },
-    "src/common/@babel/types": {
-        "dependencies": []
-    },
-    "src/common/@babel/generator": {
-        "dependencies": []
-    },
-    "src/common/@babel/parser": {
-        "dependencies": []
-    },
     "src/code-object/module.tsx": {
         "url": "src/code-object/module.html",
         "dependencies": [
@@ -61,10 +69,8 @@
             "src/code-object/export-class",
             "src/code-object/method",
             "src/code-object/local-context",
-            "src/code-object/@babel/core",
             "src/common/utility",
-            "src/code-object/@babel/traverse",
-            "typedraft"
+            "src/code-object/@babel/traverse"
         ]
     },
     "src/code-object/export-class": {
@@ -76,11 +82,35 @@
     "src/code-object/local-context": {
         "dependencies": []
     },
-    "typedraft": {
+    "src/core/transcriber.tsx": {
+        "url": "src/core/transcriber.html",
+        "dependencies": [
+            "src/core/@babel/types",
+            "src/core/@babel/traverse",
+            "src/common/utility",
+            "src/code-object/module",
+            "src/code-object/export-class",
+            "src/code-object/method",
+            "src/code-object/local-context"
+        ]
+    },
+    "src/core/@babel/types": {
+        "dependencies": []
+    },
+    "src/core/@babel/traverse": {
+        "dependencies": []
+    },
+    "src/code-object/module": {
         "dependencies": []
     },
     "src/plug-in/draft-plugin-class.tsx": {
         "url": "src/plug-in/draft-plugin-class.html",
+        "dependencies": [
+            "src/core/transcriber"
+        ]
+    },
+    "src/plug-in/draft-plugin-dsl.tsx": {
+        "url": "src/plug-in/draft-plugin-dsl.html",
         "dependencies": [
             "src/core/transcriber"
         ]
@@ -109,58 +139,14 @@
     "toposort": {
         "dependencies": []
     },
-    "src/plug-in/draft-plugin-dsl.tsx": {
-        "url": "src/plug-in/draft-plugin-dsl.html",
-        "dependencies": [
-            "src/core/transcriber"
-        ]
-    },
     "src/plug-in/draft-plugin-refresh.tsx": {
         "url": "src/plug-in/draft-plugin-refresh.html",
         "dependencies": [
-            "src/core/transcriber"
-        ]
-    },
-    "src/core/transcriber.tsx": {
-        "url": "src/core/transcriber.html",
-        "dependencies": [
-            "src/code-object/module",
+            "src/core/transcriber",
             "src/code-object/export-class",
             "src/code-object/method",
-            "src/core/@babel/types",
-            "src/plug-in/draft-plugin-class",
-            "src/plug-in/draft-plugin-filter",
-            "src/plug-in/draft-plugin-local-context",
-            "src/code-object/local-context",
-            "src/plug-in/draft-plugin-dsl",
-            "src/common/utility",
-            "src/core/@babel/traverse",
-            "src/plug-in/draft-plugin-refresh"
+            "src/code-object/local-context"
         ]
-    },
-    "src/code-object/module": {
-        "dependencies": []
-    },
-    "src/core/@babel/types": {
-        "dependencies": []
-    },
-    "src/plug-in/draft-plugin-class": {
-        "dependencies": []
-    },
-    "src/plug-in/draft-plugin-filter": {
-        "dependencies": []
-    },
-    "src/plug-in/draft-plugin-local-context": {
-        "dependencies": []
-    },
-    "src/plug-in/draft-plugin-dsl": {
-        "dependencies": []
-    },
-    "src/core/@babel/traverse": {
-        "dependencies": []
-    },
-    "src/plug-in/draft-plugin-refresh": {
-        "dependencies": []
     },
     "src/index": {
         "url": "src/index.html",
@@ -177,6 +163,21 @@
             "src/plug-in/draft-plugin-refresh",
             "src/common/utility"
         ]
+    },
+    "src/plug-in/draft-plugin-class": {
+        "dependencies": []
+    },
+    "src/plug-in/draft-plugin-dsl": {
+        "dependencies": []
+    },
+    "src/plug-in/draft-plugin-filter": {
+        "dependencies": []
+    },
+    "src/plug-in/draft-plugin-local-context": {
+        "dependencies": []
+    },
+    "src/plug-in/draft-plugin-refresh": {
+        "dependencies": []
     },
     "cli/config": {
         "url": "cli/config.html",

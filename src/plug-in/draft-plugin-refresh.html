@@ -28,9 +28,9 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM64 72c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8V72zm0 64c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zm192.81 248H304c8.84 0 16 7.16 16 16s-7.16 16-16 16h-47.19c-16.45 0-31.27-9.14-38.64-23.86-2.95-5.92-8.09-6.52-10.17-6.52s-7.22.59-10.02 6.19l-7.67 15.34a15.986 15.986 0 0 1-14.31 8.84c-.38 0-.75-.02-1.14-.05-6.45-.45-12-4.75-14.03-10.89L144 354.59l-10.61 31.88c-5.89 17.66-22.38 29.53-41 29.53H80c-8.84 0-16-7.16-16-16s7.16-16 16-16h12.39c4.83 0 9.11-3.08 10.64-7.66l18.19-54.64c3.3-9.81 12.44-16.41 22.78-16.41s19.48 6.59 22.77 16.41l13.88 41.64c19.77-16.19 54.05-9.7 66 14.16 2.02 4.06 5.96 6.5 10.16 6.5zM377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9z"/></svg>
         <span>License</span>
     </a>
-    <a class="enabled" href="../../index.html">
+    <a class="enabled" href="../../coverage/lcov-report/index.html">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M223.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L319.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L393.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34zm-192 34l136 136c9.4 9.4 24.6 9.4 33.9 0l22.6-22.6c9.4-9.4 9.4-24.6 0-33.9L127.9 256l96.4-96.4c9.4-9.4 9.4-24.6 0-33.9L201.7 103c-9.4-9.4-24.6-9.4-33.9 0l-136 136c-9.5 9.4-9.5 24.6-.1 34z"/></svg>
-        <span>Previous: Introduction</span>
+        <span>Previous: Unit Test</span>
     </a>
     <a  >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34zm192-34l-136-136c-9.4-9.4-24.6-9.4-33.9 0l-22.6 22.6c-9.4 9.4-9.4 24.6 0 33.9l96.4 96.4-96.4 96.4c-9.4 9.4-9.4 24.6 0 33.9l22.6 22.6c9.4 9.4 24.6 9.4 33.9 0l136-136c9.4-9.2 9.4-24.4 0-33.8z"/></svg>
@@ -58,6 +58,45 @@
         <a href="../../index.html"><span data-toggle="tooltip" data-title="Introduction page">Introduction</span></a>
         
     </li>
+    <li>
+        <button class="accordion">
+        Source Code
+        </button>
+            
+    <ul>
+        
+    <li>
+        
+        <a href="../code-object/export-class.html">Export Class</a>
+        
+    </li>
+    <li>
+        
+        <a href="../code-object/method.html">Class Method</a>
+        
+    </li>
+    <li>
+        
+        <a href="../code-object/local-context.html">Local Context</a>
+        
+    </li>
+    <li>
+        
+        <a href="../code-object/module.html">Module and Draft</a>
+        
+    </li>
+    <li>
+        
+        <a href="../core/transcriber.html">Transcriber</a>
+        
+    </li>
+    </ul>
+    </li>
+    <li>
+        
+        <a href="../../coverage/lcov-report/index.html"><span data-toggle="tooltip" data-title="Test Coverage">Unit Test</span></a>
+        
+    </li>
     </ul>
     </div>
             
@@ -73,18 +112,40 @@
         <div class="scrollingarea closepopups">
             
     <div class="contentarea">
-        <pre class="syntaxhighlight"><code><span class="keyword">import</span> <span class="punctuation">{</span> <span id="8" data-toggle="tooltip" data-title="any">IPlugin</span> <span class="punctuation">}</span> <span class="keyword">from</span> <span class="string">&quot;../core/transcriber&quot;</span><span class="punctuation">;</span>
-<span class="keyword">import</span> <span class="punctuation">{</span> <span id="55" data-toggle="tooltip" data-title="any">ITranscriber</span> <span class="punctuation">}</span> <span class="keyword">from</span> <span class="string">&quot;../core/transcriber&quot;</span><span class="punctuation">;</span>
+        <pre class="syntaxhighlight"><code><span class="keyword">import</span> <span class="punctuation">{</span> <span id="8" data-toggle="tooltip" data-title="any">IPlugin</span><span class="punctuation">,</span> <span id="17" data-toggle="tooltip" data-title="any">ITranscriber</span> <span class="punctuation">}</span> <span class="keyword">from</span> <span class="string">&quot;../core/transcriber&quot;</span><span class="punctuation">;</span>
+<span class="keyword">import</span> <span class="punctuation">{</span> <span id="69" data-toggle="tooltip" data-title="typeof ExportClassCode">ExportClassCode</span> <span class="punctuation">}</span> <span class="keyword">from</span> <span class="string">&quot;../code-object/export-class&quot;</span><span class="punctuation">;</span>
+<span class="keyword">import</span> <span class="punctuation">{</span> <span id="132" data-toggle="tooltip" data-title="typeof MethodCode">MethodCode</span> <span class="punctuation">}</span> <span class="keyword">from</span> <span class="string">&quot;../code-object/method&quot;</span><span class="punctuation">;</span>
+<span class="keyword">import</span> <span class="punctuation">{</span> <span id="184" data-toggle="tooltip" data-title="typeof LocalContext">LocalContext</span> <span class="punctuation">}</span> <span class="keyword">from</span> <span class="string">&quot;../code-object/local-context&quot;</span><span class="punctuation">;</span>
 
-<span class="keyword">export</span> <span class="keyword">class</span> <span id="98" class="typename" data-toggle="tooltip" data-title="RefreshDraftPlugin">RefreshDraftPlugin</span> <span class="keyword">implements</span> <a href="draft-plugin-refresh.html#8"><span data-toggle="tooltip" data-title="IPlugin">IPlugin</span></a> <span class="punctuation">{</span>
-    <span id="152" data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span><span class="punctuation">:</span> <a href="draft-plugin-refresh.html#55"><span data-toggle="tooltip" data-title="ITranscriber">ITranscriber</span></a><span class="punctuation">;</span>
+<span class="keyword">export</span> <span class="keyword">class</span> <span id="236" class="typename" data-toggle="tooltip" data-title="RefreshDraftPlugin">RefreshDraftPlugin</span> <span class="keyword">implements</span> <a href="draft-plugin-refresh.html#8"><span data-toggle="tooltip" data-title="IPlugin">IPlugin</span></a> <span class="punctuation">{</span>
+    <span id="290" data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span><span class="punctuation">:</span> <a href="draft-plugin-refresh.html#17"><span data-toggle="tooltip" data-title="ITranscriber">ITranscriber</span></a><span class="punctuation">;</span>
 
-    <span class="keyword">constructor</span><span class="punctuation">(</span><span id="203" data-toggle="tooltip" data-title="ITranscriber">transcriber</span><span class="punctuation">:</span> <a href="draft-plugin-refresh.html#55"><span data-toggle="tooltip" data-title="ITranscriber">ITranscriber</span></a><span class="punctuation">)</span> <span class="punctuation">{</span>
-        <span class="keyword">this</span><span class="punctuation">.</span><a href="draft-plugin-refresh.html#152"><span data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span></a> <span class="punctuation">=</span> <a href="draft-plugin-refresh.html#203"><span data-toggle="tooltip" data-title="ITranscriber">transcriber</span></a><span class="punctuation">;</span>
+    <span class="keyword">constructor</span><span class="punctuation">(</span><span id="341" data-toggle="tooltip" data-title="ITranscriber">transcriber</span><span class="punctuation">:</span> <a href="draft-plugin-refresh.html#17"><span data-toggle="tooltip" data-title="ITranscriber">ITranscriber</span></a><span class="punctuation">)</span> <span class="punctuation">{</span>
+        <span class="keyword">this</span><span class="punctuation">.</span><a href="draft-plugin-refresh.html#290"><span data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span></a> <span class="punctuation">=</span> <a href="draft-plugin-refresh.html#341"><span data-toggle="tooltip" data-title="ITranscriber">transcriber</span></a><span class="punctuation">;</span>
     <span class="punctuation">}</span>
 
-    <span id="279" class="member" data-toggle="tooltip" data-title="() =&gt; void">Transcribe</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span>
-        <span class="keyword">this</span><span class="punctuation">.</span><a href="draft-plugin-refresh.html#152"><span data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span></a><span class="punctuation">.</span><a href="../core/transcriber.html#2007"><span data-toggle="tooltip" data-title="() =&gt; void">RefreshDraft</span></a><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
+    <span id="417" class="member" data-toggle="tooltip" data-title="() =&gt; void">Transcribe</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span>
+</code></pre>
+<p>clear</p>
+<pre class="syntaxhighlight"><code>        <span class="keyword">this</span><span class="punctuation">.</span><a href="draft-plugin-refresh.html#290"><span data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span></a><span class="punctuation">.</span><a href="../core/transcriber.html#3402"><span data-toggle="tooltip" data-title="Map&lt;string, ExportClassCode&gt;">m_ClassMap</span></a><span class="punctuation">.</span><span class="member" data-toggle="tooltip" data-title="() =&gt; void">clear</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
+        <span class="keyword">this</span><span class="punctuation">.</span><a href="draft-plugin-refresh.html#290"><span data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span></a><span class="punctuation">.</span><a href="../core/transcriber.html#3510"><span data-toggle="tooltip" data-title="Map&lt;string, MethodCode[]&gt;">m_MethodMap</span></a><span class="punctuation">.</span><span class="member" data-toggle="tooltip" data-title="() =&gt; void">clear</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
+        <span class="keyword">this</span><span class="punctuation">.</span><a href="draft-plugin-refresh.html#290"><span data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span></a><span class="punctuation">.</span><a href="../core/transcriber.html#3559"><span data-toggle="tooltip" data-title="Map&lt;string, LocalContext&gt;">m_ContextMap</span></a><span class="punctuation">.</span><span class="member" data-toggle="tooltip" data-title="() =&gt; void">clear</span><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
+</code></pre>
+<p>prepare draft</p>
+<pre class="syntaxhighlight"><code>        <span class="keyword">const</span> <span id="686" data-toggle="tooltip" data-title="any">draft</span> <span class="punctuation">=</span> <span class="keyword">this</span><span class="punctuation">.</span><a href="draft-plugin-refresh.html#290"><span data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span></a><span class="punctuation">.</span><a href="../core/transcriber.html#3375"><span data-toggle="tooltip" data-title="ModuleCode">m_Module</span></a><span class="punctuation">.</span>ToDraft<span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
+        <a href="draft-plugin-refresh.html#686"><span data-toggle="tooltip" data-title="any">draft</span></a><span class="punctuation">.</span>forEach<span class="punctuation">(</span><span id="756" data-toggle="tooltip" data-title="any">each</span> <span class="punctuation">=&gt;</span> <span class="punctuation">{</span>
+            <span class="keyword">if</span> <span class="punctuation">(</span><a href="draft-plugin-refresh.html#756"><span data-toggle="tooltip" data-title="any">each</span></a> <span class="keyword">instanceof</span> <a href="draft-plugin-refresh.html#69"><span data-toggle="tooltip" data-title="typeof ExportClassCode">ExportClassCode</span></a><span class="punctuation">)</span> <span class="punctuation">{</span>
+                <span class="keyword">this</span><span class="punctuation">.</span><a href="draft-plugin-refresh.html#290"><span data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span></a><span class="punctuation">.</span><a href="../core/transcriber.html#3402"><span data-toggle="tooltip" data-title="Map&lt;string, ExportClassCode&gt;">m_ClassMap</span></a><span class="punctuation">.</span><span class="member" data-toggle="tooltip" data-title="(key: string, value: ExportClassCode) =&gt; Map&lt;string, ExportClassCode&gt;">set</span><span class="punctuation">(</span><a href="draft-plugin-refresh.html#756"><span data-toggle="tooltip" data-title="ExportClassCode">each</span></a><span class="punctuation">.</span><a href="../code-object/export-class.html#374"><span class="member" data-toggle="tooltip" data-title="string">m_Name</span></a><span class="punctuation">,</span> <a href="draft-plugin-refresh.html#756"><span data-toggle="tooltip" data-title="ExportClassCode">each</span></a><span class="punctuation">)</span><span class="punctuation">;</span>
+            <span class="punctuation">}</span> <span class="keyword">else</span> <span class="keyword">if</span> <span class="punctuation">(</span><a href="draft-plugin-refresh.html#756"><span data-toggle="tooltip" data-title="any">each</span></a> <span class="keyword">instanceof</span> <a href="draft-plugin-refresh.html#132"><span data-toggle="tooltip" data-title="typeof MethodCode">MethodCode</span></a><span class="punctuation">)</span> <span class="punctuation">{</span>
+                <span class="keyword">const</span> <span id="961" data-toggle="tooltip" data-title="string">class_name</span> <span class="punctuation">=</span> <a href="draft-plugin-refresh.html#756"><span data-toggle="tooltip" data-title="MethodCode">each</span></a><span class="punctuation">.</span><a href="../code-object/method.html#513"><span class="member" data-toggle="tooltip" data-title="string">m_ClassName</span></a><span class="punctuation">;</span>
+                <span class="keyword">const</span> <span id="1014" data-toggle="tooltip" data-title="MethodCode[]">methods</span> <span class="punctuation">=</span> <span class="keyword">this</span><span class="punctuation">.</span><a href="draft-plugin-refresh.html#290"><span data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span></a><span class="punctuation">.</span><a href="../core/transcriber.html#3510"><span data-toggle="tooltip" data-title="Map&lt;string, MethodCode[]&gt;">m_MethodMap</span></a><span class="punctuation">.</span><span class="member" data-toggle="tooltip" data-title="(key: string) =&gt; MethodCode[]">get</span><span class="punctuation">(</span><a href="draft-plugin-refresh.html#961"><span data-toggle="tooltip" data-title="string">class_name</span></a><span class="punctuation">)</span><span class="punctuation">;</span>
+                <a href="draft-plugin-refresh.html#1014"><span data-toggle="tooltip" data-title="MethodCode[]">methods</span></a>
+                    <span class="punctuation">?</span> <a href="draft-plugin-refresh.html#1014"><span data-toggle="tooltip" data-title="MethodCode[]">methods</span></a><span class="punctuation">.</span><span class="member" data-toggle="tooltip" data-title="(...items: MethodCode[]) =&gt; number">push</span><span class="punctuation">(</span><a href="draft-plugin-refresh.html#756"><span data-toggle="tooltip" data-title="MethodCode">each</span></a><span class="punctuation">)</span>
+                    <span class="punctuation">:</span> <span class="keyword">this</span><span class="punctuation">.</span><a href="draft-plugin-refresh.html#290"><span data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span></a><span class="punctuation">.</span><a href="../core/transcriber.html#3510"><span data-toggle="tooltip" data-title="Map&lt;string, MethodCode[]&gt;">m_MethodMap</span></a><span class="punctuation">.</span><span class="member" data-toggle="tooltip" data-title="(key: string, value: MethodCode[]) =&gt; Map&lt;string, MethodCode[]&gt;">set</span><span class="punctuation">(</span><a href="draft-plugin-refresh.html#961"><span data-toggle="tooltip" data-title="string">class_name</span></a><span class="punctuation">,</span> <span class="punctuation">[</span><a href="draft-plugin-refresh.html#756"><span data-toggle="tooltip" data-title="MethodCode">each</span></a><span class="punctuation">]</span><span class="punctuation">)</span><span class="punctuation">;</span>
+            <span class="punctuation">}</span> <span class="keyword">else</span> <span class="keyword">if</span> <span class="punctuation">(</span><a href="draft-plugin-refresh.html#756"><span data-toggle="tooltip" data-title="any">each</span></a> <span class="keyword">instanceof</span> <a href="draft-plugin-refresh.html#184"><span data-toggle="tooltip" data-title="typeof LocalContext">LocalContext</span></a><span class="punctuation">)</span> <span class="punctuation">{</span>
+                <span class="keyword">this</span><span class="punctuation">.</span><a href="draft-plugin-refresh.html#290"><span data-toggle="tooltip" data-title="ITranscriber">m_Transcriber</span></a><span class="punctuation">.</span><a href="../core/transcriber.html#3559"><span data-toggle="tooltip" data-title="Map&lt;string, LocalContext&gt;">m_ContextMap</span></a><span class="punctuation">.</span><span class="member" data-toggle="tooltip" data-title="(key: string, value: LocalContext) =&gt; Map&lt;string, LocalContext&gt;">set</span><span class="punctuation">(</span><a href="draft-plugin-refresh.html#756"><span data-toggle="tooltip" data-title="LocalContext">each</span></a><span class="punctuation">.</span><a href="../code-object/local-context.html#302"><span class="member" data-toggle="tooltip" data-title="any">m_Name</span></a><span class="punctuation">,</span> <a href="draft-plugin-refresh.html#756"><span data-toggle="tooltip" data-title="LocalContext">each</span></a><span class="punctuation">)</span><span class="punctuation">;</span>
+            <span class="punctuation">}</span>
+        <span class="punctuation">}</span><span class="punctuation">)</span><span class="punctuation">;</span>
     <span class="punctuation">}</span>
 <span class="punctuation">}</span>
 </code></pre>
