@@ -8,11 +8,12 @@ export class Transcriber {
     m_Module: ModuleCode;
 
     /**
-     * the 3 types of code we will transform
+     * the 4 types of code we will transform
      */
     m_ClassMap: Map<string, ExportClassCode>;
     m_MethodMap: Map<string, Array<MethodCode>>;
     m_ContextMap: Map<string, LocalContext>;
+    m_InlineContextMap: Map<Symbol, InlineContext>;
 
     m_DSLMap: Map<string, IDSL>;
     m_Plugins: Array<IPlugin>;
@@ -54,7 +55,7 @@ export class Transcriber {
 <Transcriber /> + function PrepareDSLs(this: Transcriber) {};
 
 /**
- * ## Local Context and Class
+ * ## Context and Class
  */
 <Transcriber /> +
     function GetLocalContext(this: Transcriber, name: string) {
@@ -64,6 +65,11 @@ export class Transcriber {
 <Transcriber /> +
     function TraverseLocalContext(this: Transcriber, callback: TraverseLocalContextCallback) {
         this.m_ContextMap.forEach((context, name) => callback(context, name));
+    };
+
+<Transcriber /> +
+    function TraverseInlineContext(this: Transcriber, callback: TraverseInlineContextCallback) {
+        this.m_InlineContextMap.forEach(context => callback(context));
     };
 
 <Transcriber /> +
@@ -86,6 +92,7 @@ export class Transcriber {
         this.m_ClassMap = new Map<string, ExportClassCode>();
         this.m_MethodMap = new Map<string, Array<MethodCode>>();
         this.m_ContextMap = new Map<string, LocalContext>();
+        this.m_InlineContextMap = new Map<Symbol, InlineContext>();
         this.m_DSLMap = new Map<string, IDSL>();
 
         this.PrepareDSLs();
@@ -93,7 +100,10 @@ export class Transcriber {
     };
 
 export interface IDSL {
-    Transcribe(block: Array<Statement>, path?: NodePath<FunctionDeclaration>): Array<Statement>;
+    Transcribe(
+        block: Array<Statement>,
+        path?: NodePath<FunctionDeclaration> | NodePath<BlockStatement>
+    ): Array<Statement>;
 }
 
 export interface IPlugin {
@@ -110,6 +120,7 @@ export interface ITranscriber {
 
     TraverseMethod: (callback: TraverseMethodCallback) => void;
     TraverseLocalContext: (callback: TraverseLocalContextCallback) => void;
+    TraverseInlineContext: (callback: TraverseInlineContextCallback) => void;
 
     m_Module: ModuleCode;
 
@@ -119,14 +130,16 @@ export interface ITranscriber {
     m_ClassMap: Map<string, ExportClassCode>;
     m_MethodMap: Map<string, Array<MethodCode>>;
     m_ContextMap: Map<string, LocalContext>;
+    m_InlineContextMap: Map<Symbol, InlineContext>;
 
     m_DSLMap: Map<string, IDSL>;
 }
 
 export type TraverseLocalContextCallback = (context: LocalContext, name: string) => void;
+export type TraverseInlineContextCallback = (context: InlineContext) => void;
 export type TraverseMethodCallback = (methods: Array<MethodCode>, class_name: string) => void;
 
-import { Statement, FunctionDeclaration } from "@babel/types";
+import { Statement, FunctionDeclaration, BlockStatement } from "@babel/types";
 import { NodePath } from "@babel/traverse";
 
 import { ToString } from "../common/utility";
@@ -135,3 +148,4 @@ import { ModuleCode } from "../code-object/module";
 import { ExportClassCode } from "../code-object/export-class";
 import { MethodCode } from "../code-object/method";
 import { LocalContext } from "../code-object/local-context";
+import { InlineContext } from "../code-object/inline-context";

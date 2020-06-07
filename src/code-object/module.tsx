@@ -1,13 +1,13 @@
 /**
  * # Draft
- * A .tsx file is considered as a module and we will transform these 3 types of code, they are collected and then transcibed to "real" code.
+ * A .tsx file is considered as a module and we will transform these 4 types of code, they are collected and then transcibed to "real" code.
  */
 export class ModuleCode {
     m_File: File;
     m_Path: NodePath<Program>;
 }
 
-export type Draft = Array<ExportClassCode | MethodCode | LocalContext>;
+export type Draft = Array<ExportClassCode | MethodCode | LocalContext | InlineContext>;
 
 /**
  * As we are only interested in the draft part of a module, then we need a way to return this "view" of module code.
@@ -22,11 +22,22 @@ export type Draft = Array<ExportClassCode | MethodCode | LocalContext>;
         /**
          * traverse file and set path
          */
+        let draft: Draft = [];
         traverse<{ _module: ModuleCode }>(
             this.m_File,
             {
                 Program(path) {
                     this._module.m_Path = path;
+                },
+
+                ExpressionStatement(path) {
+                    const expression = path.get("expression");
+                    if (expression.isStringLiteral()) {
+                        const literal = expression.node.value.trim();
+                        if (literal.startsWith("use") && path.parentPath.isBlockStatement()) {
+                            draft.push(new InlineContext(path.parentPath));
+                        }
+                    }
                 },
             },
             null,
@@ -36,7 +47,6 @@ export type Draft = Array<ExportClassCode | MethodCode | LocalContext>;
         /**
          * collect draft parts
          */
-        let draft: Draft = [];
         this.m_Path.get("body").forEach(path => {
             //@ts-ignore
             <AddToDraft />;
@@ -124,3 +134,4 @@ import { MethodCode } from "./method";
 import { LocalContext } from "./local-context";
 import { ToFile, ToString } from "../common/utility";
 import traverse, { NodePath, Node } from "@babel/traverse";
+import { InlineContext } from "./inline-context";

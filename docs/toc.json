@@ -20,6 +20,10 @@
                 "file": "src/code-object/local-context.html"
             },
             {
+                "page": "Inline Context",
+                "file": "src/code-object/inline-context.html"
+            },
+            {
                 "page": "Module and Draft",
                 "file": "src/code-object/module.html"
             },

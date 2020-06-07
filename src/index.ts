@@ -2,6 +2,7 @@ export * from "./core/transcriber";
 
 export * from "./code-object/export-class";
 export * from "./code-object/local-context";
+export * from "./code-object/inline-context";
 export * from "./code-object/method";
 export * from "./code-object/module";
 

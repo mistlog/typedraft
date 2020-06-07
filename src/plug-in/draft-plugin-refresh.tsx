@@ -2,6 +2,7 @@ import { IPlugin, ITranscriber } from "../core/transcriber";
 import { ExportClassCode } from "../code-object/export-class";
 import { MethodCode } from "../code-object/method";
 import { LocalContext } from "../code-object/local-context";
+import { InlineContext } from "../code-object/inline-context";
 
 export class RefreshDraftPlugin implements IPlugin {
     m_Transcriber: ITranscriber;
@@ -17,6 +18,7 @@ export class RefreshDraftPlugin implements IPlugin {
         this.m_Transcriber.m_ClassMap.clear();
         this.m_Transcriber.m_MethodMap.clear();
         this.m_Transcriber.m_ContextMap.clear();
+        this.m_Transcriber.m_InlineContextMap.clear();
 
         /**
          * prepare draft
@@ -33,6 +35,8 @@ export class RefreshDraftPlugin implements IPlugin {
                     : this.m_Transcriber.m_MethodMap.set(class_name, [each]);
             } else if (each instanceof LocalContext) {
                 this.m_Transcriber.m_ContextMap.set(each.m_Name, each);
+            } else if (each instanceof InlineContext) {
+                this.m_Transcriber.m_InlineContextMap.set(each.m_ID, each);
             }
         });
     }
