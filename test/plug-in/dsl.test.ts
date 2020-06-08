@@ -9,18 +9,17 @@ import {
 import { NodePath } from "@babel/traverse";
 import { PatternMatch } from "draft-dsl-match";
 
-test("simple", () => {
-    //
-    class Foo implements IDSL {
-        Transcribe(block: Array<Statement>): Array<Statement> {
-            const transcribed = ToAst(`
-                    console.log("current");
-                `);
+class Foo implements IDSL {
+    Transcribe(block: Array<Statement>): Array<Statement> {
+        const transcribed = ToAst(`
+                console.log("current");
+            `);
 
-            return [transcribed as Statement];
-        }
+        return [transcribed as Statement];
     }
+}
 
+test("simple", () => {
     //
     const code = `
         export function Main(){
@@ -132,6 +131,24 @@ test("use path param", () => {
                 console.log(x + 1);
             }
         `;
+
+    const transcriber = MakeDefaultTranscriber(code);
+    transcriber.AddDSL("foo", new Foo());
+    const result = transcriber.Transcribe();
+    expect(result).toMatchSnapshot();
+});
+
+test("inline context", () => {
+    const code = `
+        export function Main(){
+            console.log("hello");
+            {
+                'use foo';
+                console.log("previous");
+            }
+            console.log("world");
+        }
+    `;
 
     const transcriber = MakeDefaultTranscriber(code);
     transcriber.AddDSL("foo", new Foo());

@@ -1,5 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`inline context 1`] = `
+"export function Main() {
+  console.log(\\"hello\\");
+  {
+    console.log(\\"current\\");
+  }
+  console.log(\\"world\\");
+}"
+`;
+
 exports[`local context added after dsl resolved 1`] = `
 "export function Main() {
   if (value === \\"a\\") {
