@@ -62,6 +62,14 @@
     "src/core/transcriber": {
         "dependencies": []
     },
+    "src/code-object/inline-context.tsx": {
+        "url": "src/code-object/inline-context.html",
+        "dependencies": [
+            "src/code-object/@babel/types",
+            "src/code-object/@babel/traverse",
+            "src/core/transcriber"
+        ]
+    },
     "src/code-object/module.tsx": {
         "url": "src/code-object/module.html",
         "dependencies": [
@@ -70,7 +78,8 @@
             "src/code-object/method",
             "src/code-object/local-context",
             "src/common/utility",
-            "src/code-object/@babel/traverse"
+            "src/code-object/@babel/traverse",
+            "src/code-object/inline-context"
         ]
     },
     "src/code-object/export-class": {
@@ -82,6 +91,9 @@
     "src/code-object/local-context": {
         "dependencies": []
     },
+    "src/code-object/inline-context": {
+        "dependencies": []
+    },
     "src/core/transcriber.tsx": {
         "url": "src/core/transcriber.html",
         "dependencies": [
@@ -91,7 +103,8 @@
             "src/code-object/module",
             "src/code-object/export-class",
             "src/code-object/method",
-            "src/code-object/local-context"
+            "src/code-object/local-context",
+            "src/code-object/inline-context"
         ]
     },
     "src/core/@babel/types": {
@@ -145,7 +158,8 @@
             "src/core/transcriber",
             "src/code-object/export-class",
             "src/code-object/method",
-            "src/code-object/local-context"
+            "src/code-object/local-context",
+            "src/code-object/inline-context"
         ]
     },
     "src/index": {
@@ -154,6 +168,7 @@
             "src/core/transcriber",
             "src/code-object/export-class",
             "src/code-object/local-context",
+            "src/code-object/inline-context",
             "src/code-object/method",
             "src/code-object/module",
             "src/plug-in/draft-plugin-class",
