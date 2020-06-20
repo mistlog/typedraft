@@ -1,19 +1,19 @@
-import { readFileSync } from "fs";
-import { outputFileSync, removeSync } from "fs-extra";
 import * as traverse from "filewalker";
-import * as watch from "node-watch";
+import { default as watch } from "node-watch";
+import { outputFileSync, removeSync, readFileSync } from "fs-extra";
 import { MakeDefaultTranscriber } from "../src";
-import { config } from "./config";
 
 function TraverseDirectory(path: string, callback: (name: string, path: string) => void) {
     const action = (relative: string, stats, absolute: string) => callback(relative, absolute);
-    traverse(path).on("file", action).walk();
+    traverse(path)
+        .on("file", action)
+        .on("error", error => console.log(error))
+        .walk();
 }
 
 export function InspectDirectory(path: string) {
     ComposeDirectory(path);
 
-    //@ts-ignore
     watch(path, { recursive: true }, (event, name: string) => {
         if (name.endsWith(".tsx")) {
             console.log(event, name);
@@ -29,7 +29,6 @@ export function InspectDirectory(path: string) {
 export function InspectFile(path: string) {
     ComposeFile(path);
 
-    //@ts-ignore
     watch(path, (event, name: string) => {
         if (name.endsWith(".tsx")) {
             console.log(event, name);
@@ -65,7 +64,6 @@ export function CrossoutDirectory(path: string) {
 export function ComposeFile(source: string) {
     const code = readFileSync(source, "utf8");
     const transcriber = MakeDefaultTranscriber(code);
-    config.dsls.forEach(dsl => transcriber.AddDSL(dsl.name, dsl.dsl));
     const result = transcriber.Transcribe();
     outputFileSync(source.replace(".tsx", ".ts"), result, "utf8");
 }
