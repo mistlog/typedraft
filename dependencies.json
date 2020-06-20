@@ -194,36 +194,25 @@
     "src/plug-in/draft-plugin-refresh": {
         "dependencies": []
     },
-    "cli/config": {
-        "url": "cli/config.html",
-        "dependencies": [
-            "src"
-        ]
-    },
-    "src": {
-        "dependencies": []
-    },
     "cli/literator": {
         "url": "cli/literator.html",
         "dependencies": [
-            "fs",
-            "fs-extra",
             "filewalker",
             "node-watch",
-            "src",
-            "cli/config"
+            "fs-extra",
+            "src"
         ]
-    },
-    "fs": {
-        "dependencies": []
-    },
-    "fs-extra": {
-        "dependencies": []
     },
     "filewalker": {
         "dependencies": []
     },
     "node-watch": {
+        "dependencies": []
+    },
+    "fs-extra": {
+        "dependencies": []
+    },
+    "src": {
         "dependencies": []
     },
     "cli/cli": {
@@ -232,9 +221,7 @@
             "commander",
             "cli/literator",
             "path",
-            "fs",
-            "fs-extra",
-            "cli/config"
+            "fs-extra"
         ]
     },
     "commander": {
