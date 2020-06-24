@@ -32,11 +32,7 @@ export class Transcriber {
 /**
  * # Utility
  * Other methods are just utilities.
- *
- * ## Plugin
  */
-
-<Transcriber /> + function PreparePlugins(this: Transcriber & ITranscriber) {};
 
 /**
  * ## DSL
@@ -51,8 +47,6 @@ export class Transcriber {
     function GetDSL(this: Transcriber, name: string) {
         return this.m_DSLMap.get(name);
     };
-
-<Transcriber /> + function PrepareDSLs(this: Transcriber) {};
 
 /**
  * ## Context and Class
@@ -94,9 +88,7 @@ export class Transcriber {
         this.m_ContextMap = new Map<string, LocalContext>();
         this.m_InlineContextMap = new Map<Symbol, InlineContext>();
         this.m_DSLMap = new Map<string, IDSL>();
-
-        this.PrepareDSLs();
-        this.PreparePlugins();
+        this.m_Plugins = new Array<IPlugin>();
     };
 
 export interface IDSL {
@@ -111,8 +103,9 @@ export interface IPlugin {
 }
 
 export interface ITranscriber {
-    PrepareDSLs: () => void;
-    PreparePlugins: () => void;
+    Transcribe: () => string;
+
+    AddDSL: (name: string, dsl: IDSL) => void;
 
     GetDSL: (name: string) => IDSL;
     GetClass: (name: string) => ExportClassCode;
@@ -133,6 +126,7 @@ export interface ITranscriber {
     m_InlineContextMap: Map<Symbol, InlineContext>;
 
     m_DSLMap: Map<string, IDSL>;
+    m_Plugins: Array<IPlugin>;
 }
 
 export type TraverseLocalContextCallback = (context: LocalContext, name: string) => void;
