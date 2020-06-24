@@ -96,6 +96,8 @@ export interface IDSL {
         block: Array<Statement>,
         path?: NodePath<FunctionDeclaration> | NodePath<BlockStatement>
     ): Array<Statement>;
+
+    m_Merge?: boolean;
 }
 
 export interface IPlugin {

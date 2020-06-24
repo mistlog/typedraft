@@ -10,6 +10,12 @@ import { NodePath } from "@babel/traverse";
 import { PatternMatch } from "draft-dsl-match";
 
 class Foo implements IDSL {
+    m_Merge: boolean;
+
+    constructor(merge: boolean = false) {
+        this.m_Merge = merge;
+    }
+
     Transcribe(block: Array<Statement>): Array<Statement> {
         const transcribed = ToAst(`
                 console.log("current");
@@ -152,6 +158,24 @@ test("inline context", () => {
 
     const transcriber = MakeDefaultTranscriber(code);
     transcriber.AddDSL("foo", new Foo());
+    const result = transcriber.Transcribe();
+    expect(result).toMatchSnapshot();
+});
+
+test("inline context: merge", () => {
+    const code = `
+        export function Main(){
+            console.log("hello");
+            {
+                'use foo';
+                console.log("previous");
+            }
+            console.log("world");
+        }
+    `;
+
+    const transcriber = MakeDefaultTranscriber(code);
+    transcriber.AddDSL("foo", new Foo(true));
     const result = transcriber.Transcribe();
     expect(result).toMatchSnapshot();
 });
