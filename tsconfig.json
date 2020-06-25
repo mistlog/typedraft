@@ -5,7 +5,8 @@
         "moduleResolution": "node",
         "outDir": "./dist",
         "declaration": true,
-        "jsx": "preserve"
+        "jsx": "preserve",
+        "skipLibCheck": true
     },
     "include": [
         "src/**/*.ts",

@@ -1,44 +1,44 @@
-import { LocalContext } from "../../src/code-object/local-context";
-import { ToAst } from "../../src/common/utility";
-import { FunctionDeclaration, Statement } from "@babel/types";
+import { LocalContext, ToAst, ToBinding } from "../../src";
+import { Statement } from "@babel/types";
 
-describe("local context", () =>
-{
-    test("local-context", () =>
-    {
+describe("local context", () => {
+    test("to statement", () => {
         //
-        const code = `
+        const context = new LocalContext(
+            ToBinding(`
             function Test(this: Foo, a: number, b: string){
                 a += this.foo;
                 return a.toString()+b;
             }
-        `;
-
-        const raw = ToAst(code) as FunctionDeclaration;
-        const context = new LocalContext(raw);
-        const block = context.ToStatements();
+        `)
+        );
 
         //
-        const expected = ToAst(`
+        const expected = ToAst<Array<Statement>>(`
             a += this.foo;
             return a.toString()+b;
-        `) as Array<Statement>;
+        `);
+        expect(context.ToStatements()).toEqual(expected);
+    });
 
-        expect(block).toEqual(expected);
-    })
+    test("get context name: empty", () => {
+        const context = new LocalContext(
+            ToBinding(`
+            function Test(value:number){
+            }
+        `)
+        );
+        expect(context.GetContextName()).toEqual("");
+    });
 
-    test("local-context.name", () =>
-    {
-        //
-        const code = `
+    test("get context name", () => {
+        const context = new LocalContext(
+            ToBinding(`
             function Test(value:number){
                 'use match';
             }
-        `;
-
-        const raw = ToAst(code) as FunctionDeclaration;
-        const context = new LocalContext(raw);
-        const context_name = context.GetContextName();
-        expect(context_name).toEqual("match");
-    })
-})
+        `)
+        );
+        expect(context.GetContextName()).toEqual("match");
+    });
+});

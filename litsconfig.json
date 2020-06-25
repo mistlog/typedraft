@@ -1,0 +1,29 @@
+{
+    "baseDir": ".",
+    "outDir": "./docs",
+    "outputFormat": "html",
+    "files": [
+        "**.md"
+    ],
+    "exclude": [
+        ".git",
+        "node_modules"
+    ],
+    "silent": false,
+    "tocFile": "toc.json",
+    "updateToc": false,
+    "excludeFromToc": [],
+    "dependencyGraph": "dependencies.json",
+    "template": "lits-template",
+    "bundle": true,
+    "watch": false,
+    "deployMode": "dev",
+    "frontMatter": {
+        "projectName": "TypeDraft",
+        "repository": "",
+        "download": "",
+        "footer": "Copyright © 2020 mistlog",
+        "logo": "",
+        "userTheme": "./docs/theme/user-theme.less"
+    }
+}

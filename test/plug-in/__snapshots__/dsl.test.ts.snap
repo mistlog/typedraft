@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`inline context 1`] = `
+"export function Main() {
+  console.log(\\"hello\\");
+  {
+    console.log(\\"current\\");
+  }
+  console.log(\\"world\\");
+}"
+`;
+
+exports[`inline context: merge 1`] = `
+"export function Main() {
+  console.log(\\"hello\\");
+  console.log(\\"current\\");
+  console.log(\\"world\\");
+}"
+`;
+
+exports[`local context added after dsl resolved 1`] = `
+"export function Main() {
+  if (value === \\"a\\") {
+    console.log(\\"value is a\\");
+  }
+}"
+`;
+
+exports[`nested dsl 1`] = `
+"export function Main() {
+  $: {
+    if (value === \\"a\\") {
+      console.log(\\"value is a\\");
+    }
+
+    b = value + 1;
+  }
+}"
+`;
+
+exports[`simple 1`] = `
+"export function Main() {
+  console.log(\\"current\\");
+}"
+`;
+
+exports[`use path param 1`] = `
+"export function Main() {
+  const y = 1;
+  console.log(y + 1);
+}"
+`;

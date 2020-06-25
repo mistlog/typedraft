@@ -1,34 +1,27 @@
-import { ExportClassCode } from "../../src/code-object/export-class";
-import { ToAst, ToString } from "../../src/common/utility";
-import { MethodCode } from "../../src/code-object/method";
+import { ExportClassCode, ToString, ToNodePath, MethodCode } from "../../src";
 import { ExpressionStatement, ExportNamedDeclaration } from "@babel/types";
 
-describe("export class", () =>
-{
-    test("export-class.add-member", () =>
-    {
+describe("export class", () => {
+    test("add member", () => {
         //
-        const class_code = `
+        const export_class = new ExportClassCode(
+            ToNodePath<ExportNamedDeclaration>(`
             export class Foo {
                 static foo : number;
             }
-        `;
+        `)
+        );
 
-        const raw = ToAst(class_code) as ExportNamedDeclaration;
-        const export_class = new ExportClassCode(raw);
-
-        //
-        const method_code = `
+        const method = new MethodCode(
+            ToNodePath<ExpressionStatement>(`
             <Foo/> + function Test(this: Foo, a: number, b: string){
                 return a.toString()+b;
             }
-        `;
-
-        const method = new MethodCode(ToAst(method_code) as ExpressionStatement);
-        const class_method = method.ToClassMethod();
+        `)
+        );
 
         //
-        export_class.AddMember(class_method);
+        export_class.AddMember(method.ToClassMethod());
         expect(ToString(export_class.m_Code)).toMatchSnapshot();
-    })
-})
+    });
+});

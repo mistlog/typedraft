@@ -1,184 +1,137 @@
-import { Program, File, ExpressionStatement, ExportNamedDeclaration, FunctionDeclaration } from "@babel/types";
-import { ExportClassCode } from "./export-class";
-import { MethodCode } from "./method";
-import { LocalContext } from "./local-context";
-import { Visitor } from "@babel/core";
-import { ToFile } from "../common/utility";
-import traverse, { NodePath, Node } from "@babel/traverse";
-import { ToString } from "typedraft";
-
-/*
-# Draft
-
-A .tsx file is considered as a module and we will transform these 3 types of code, they are collected and then transcibed to "real" code.
-
-*/
-export type Draft = Array<ExportClassCode | MethodCode | LocalContext>;
-
-export class ModuleCode
-{
+/**
+ * # Draft
+ * A .tsx file is considered as a module and we will transform these 4 types of code, they are collected and then transcibed to "real" code.
+ */
+export class ModuleCode {
     m_File: File;
     m_Path: NodePath<Program>;
 }
 
-/*
-## Example
+export type Draft = Array<ExportClassCode | MethodCode | LocalContext | InlineContext>;
 
-Typical file with draft would be:
+/**
+ * As we are only interested in the draft part of a module, then we need a way to return this "view" of module code.
+ */
+<ModuleCode /> +
+    function ToDraft(this: ModuleCode) {
+        /**
+         * refresh and update bindings because DSL only transforms code
+         */
+        this.m_File = ToFile(ToString(this.m_File));
 
-```typescript
-export class Foo {
-    static foo: number;
-}
-
-<Foo/> + function Test(this: Foo, a: number, b: string){
-    <Bar/>;
-    return a.toString()+b;
-};
-
-function Bar(this: Foo, a: number, b: string){
-    a += this.foo;
-    <Nested/>
-    console.log("bar");
-}
-
-function Nested(){
-    console.log("nested");
-}
-```
-
-The transcribed code would be:
-
-```typescript
-export class Foo {
-  static foo: number;
-
-  Test(a: number, b: string) {
-    a += this.foo;
-    console.log("nested");
-    console.log("bar");
-    return a.toString() + b;
-  }
-}
-```
-
-*/
-
-/*
-# View Module as Draft
-
-As we are only interested in the draft part of a module, then we need a way to return this "view" of module code.
-*/
-< ModuleCode /> + function ToDraft(this: ModuleCode)
-{
-    // refresh and update bindings
-    this.m_File = ToFile(ToString(this.m_File));
-
-    //
-    let draft: Draft = [];
-
-    const that = this;
-    const visitor: Visitor = {
-        Program(path)
-        {
-            that.m_Path = path;
-            path.get("body").forEach(path =>
+        /**
+         * traverse file and set path
+         */
+        let draft: Draft = [];
+        traverse<{ _module: ModuleCode }>(
+            this.m_File,
             {
-                //@ts-ignore
-                <CreateDraft />;
-            })
-        }
-    }
+                Program(path) {
+                    this._module.m_Path = path;
+                },
 
-    traverse(this.m_File, visitor);
-    return draft;
-};
+                ExpressionStatement(path) {
+                    const expression = path.get("expression");
+                    if (expression.isStringLiteral()) {
+                        const literal = expression.node.value.trim();
+                        if (literal.startsWith("use") && path.parentPath.isBlockStatement()) {
+                            draft.push(new InlineContext(path.parentPath));
+                        }
+                    }
+                },
+            },
+            null,
+            { _module: this }
+        );
 
-/*
-## Create draft
-*/
+        /**
+         * collect draft parts
+         */
+        this.m_Path.get("body").forEach(path => {
+            //@ts-ignore
+            <AddToDraft />;
+        });
+        return draft;
+    };
 
-function CreateDraft(path: NodePath<Node>, draft: Draft)
-{
-    if (path.isEmptyStatement())
-    {
-        // remove redundant ; before tag, see utility.ts
+/**
+ * ## Create draft
+ */
+function AddToDraft(path: NodePath<Node>, draft: Draft) {
+    if (path.isEmptyStatement()) {
+        /**
+         * remove redundant ; before tag, see comment of `ToFile` in utility.ts
+         */
         path.remove();
-    }
-    else if (IsExportClassCode(path))
-    {
-        draft.push(new ExportClassCode(path.node, path));
-    }
-    else if (IsMethodCode(path))
-    {
-        draft.push(new MethodCode(path.node, path));
-    }
-    else if (IsLocalContext(path))
-    {
-        const name = path.node.id.name;
-        const binding = path.scope.parent.getBinding(name);
-        draft.push(new LocalContext(path.node, binding, path));
+    } else if (IsExportClassCode(path)) {
+        draft.push(new ExportClassCode(path));
+    } else if (IsMethodCode(path)) {
+        draft.push(new MethodCode(path));
+    } else if (IsLocalContext(path)) {
+        draft.push(new LocalContext(path.scope.parent.getBinding(path.node.id.name)));
     }
 }
 
-export function IsExportClassCode(path: NodePath<Node>): path is NodePath<ExportNamedDeclaration>
-{
-    if (!path.isExportNamedDeclaration())
-    {
+export function IsExportClassCode(path: NodePath<any>): path is NodePath<ExportNamedDeclaration> {
+    if (!path.isExportNamedDeclaration()) {
         return false;
     }
 
-    const is_export_class = path.get("declaration").isClassDeclaration();
-    return is_export_class;
+    const declaration = path.get("declaration") as NodePath<Node>;
+    return declaration.isClassDeclaration();
 }
 
-export function IsMethodCode(path: NodePath<Node>): path is NodePath<ExpressionStatement>
-{
-    if (!path.isExpressionStatement())
-    {
+export function IsMethodCode(path: NodePath<any>): path is NodePath<ExpressionStatement> {
+    if (!path.isExpressionStatement()) {
         return false;
     }
 
-    const expression = path.get("expression");
-    if (!expression.isBinaryExpression())
-    {
+    const expression = path.get("expression") as NodePath<Node>;
+    if (!expression.isBinaryExpression()) {
         return false;
     }
 
-    const left_is_jsx = expression.get("left").isJSXElement();
-    const right_is_function = expression.get("right").isFunctionExpression();
-    return left_is_jsx && right_is_function;
+    const left = expression.get("left") as NodePath<Node>;
+    const right = expression.get("right") as NodePath<Node>;
+    return left.isJSXElement() && right.isFunctionExpression();
 }
 
-export function IsLocalContext(path: NodePath<Node>): path is NodePath<FunctionDeclaration>
-{
-    if (!path.isFunctionDeclaration())
-    {
+export function IsLocalContext(path: NodePath<any>): path is NodePath<FunctionDeclaration> {
+    if (!path.isFunctionDeclaration()) {
         return false;
     }
 
-    const [directive] = path.node.body.directives;
+    const [directive]: [string] = path.node.body.directives;
     const has_context = Boolean(directive);
 
     const name = path.node.id.name;
     const binding = path.scope.parent.getBinding(name);
-    const is_local_context = binding.referencePaths.some(path =>
-    {
+    const is_local_context = binding.referencePaths.some(path => {
         const used_as_jsx = path.parentPath?.parentPath?.isJSXElement();
         const used_as_statement = path.parentPath?.parentPath?.parentPath?.isExpressionStatement();
         return (has_context && used_as_jsx) || (used_as_jsx && used_as_statement);
     });
     return is_local_context;
 }
-/*
-You may want to refer to the usage of [babel](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#toc-bindings).
-*/
 
-/*
-# Trivial
-*/
-<ModuleCode /> + function constructor(this: ModuleCode, code: string)
-{
-    this.m_File = ToFile(code);
-};
+/**
+ * # Trivial
+ */
+<ModuleCode /> +
+    function constructor(this: ModuleCode, code: string) {
+        this.m_File = ToFile(code);
+    };
 
+import {
+    Program,
+    File,
+    ExpressionStatement,
+    ExportNamedDeclaration,
+    FunctionDeclaration,
+} from "@babel/types";
+import { ExportClassCode } from "./export-class";
+import { MethodCode } from "./method";
+import { LocalContext } from "./local-context";
+import { ToFile, ToString } from "../common/utility";
+import traverse, { NodePath, Node } from "@babel/traverse";
+import { InlineContext } from "./inline-context";
