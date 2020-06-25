@@ -22,7 +22,11 @@ export class InlineContext {
 
 <InlineContext /> +
     function Resolve(this: InlineContext & IInlineContext, dsl: IDSL) {
-        this.m_Code.body = dsl.Transcribe(this.ToStatements(), this.m_Path);
+        if (dsl.m_Merge) {
+            this.m_Path.replaceWithMultiple(dsl.Transcribe(this.ToStatements(), this.m_Path));
+        } else {
+            this.m_Code.body = dsl.Transcribe(this.ToStatements(), this.m_Path);
+        }
     };
 
 <InlineContext /> +
