@@ -221,13 +221,17 @@
             "commander",
             "cli/literator",
             "path",
-            "fs-extra"
+            "fs-extra",
+            "cosmiconfig"
         ]
     },
     "commander": {
         "dependencies": []
     },
     "path": {
+        "dependencies": []
+    },
+    "cosmiconfig": {
         "dependencies": []
     }
 }

@@ -24,7 +24,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>24/24</span>
+                <span class='fraction'>23/23</span>
             </div>
         
             
@@ -38,14 +38,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>15/15</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>20/20</span>
+                <span class='fraction'>19/19</span>
             </div>
         
             
@@ -145,10 +145,7 @@
 <a name='L87'></a><a href='#L87'>87</a>
 <a name='L88'></a><a href='#L88'>88</a>
 <a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a>
-<a name='L92'></a><a href='#L92'>92</a>
-<a name='L93'></a><a href='#L93'>93</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">11x</span>
+<a name='L90'></a><a href='#L90'>90</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -158,22 +155,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">51x</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">57x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -185,7 +178,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -193,18 +186,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -256,8 +250,6 @@
     });
   }
 &nbsp;
-  PreparePlugins() {}
-&nbsp;
   AddDSL(name: string, dsl: IDSL) {
     this.m_DSLMap.set(name, dsl);
   }
@@ -265,8 +257,6 @@
   GetDSL(name: string) {
     return this.m_DSLMap.get(name);
   }
-&nbsp;
-  PrepareDSLs() {}
 &nbsp;
   GetLocalContext(name: string) {
     return this.m_ContextMap.get(name);
@@ -295,20 +285,20 @@
     this.m_ContextMap = new Map&lt;string, LocalContext&gt;();
     this.m_InlineContextMap = new Map&lt;Symbol, InlineContext&gt;();
     this.m_DSLMap = new Map&lt;string, IDSL&gt;();
-    this.PrepareDSLs();
-    this.PreparePlugins();
+    this.m_Plugins = new Array&lt;IPlugin&gt;();
   }
 &nbsp;
 }
 export interface IDSL {
   Transcribe(block: Array&lt;Statement&gt;, path?: NodePath&lt;FunctionDeclaration&gt; | NodePath&lt;BlockStatement&gt;): Array&lt;Statement&gt;;
+  m_Merge?: boolean;
 }
 export interface IPlugin {
   Transcribe(): void;
 }
 export interface ITranscriber {
-  PrepareDSLs: () =&gt; void;
-  PreparePlugins: () =&gt; void;
+  Transcribe: () =&gt; string;
+  AddDSL: (name: string, dsl: IDSL) =&gt; void;
   GetDSL: (name: string) =&gt; IDSL;
   GetClass: (name: string) =&gt; ExportClassCode;
   GetLocalContext: (name: string) =&gt; LocalContext;
@@ -321,6 +311,7 @@ export interface ITranscriber {
   m_ContextMap: Map&lt;string, LocalContext&gt;;
   m_InlineContextMap: Map&lt;Symbol, InlineContext&gt;;
   m_DSLMap: Map&lt;string, IDSL&gt;;
+  m_Plugins: Array&lt;IPlugin&gt;;
 }
 export type TraverseLocalContextCallback = (context: LocalContext, name: string) =&gt; void;
 export type TraverseInlineContextCallback = (context: InlineContext) =&gt; void;
@@ -339,7 +330,7 @@ import { InlineContext } from "../code-object/inline-context";</pre></td></tr></
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Jun 20 2020 04:07:09 GMT+0000 (Coordinated Universal Time)
+                at Thu Jun 25 2020 02:01:38 GMT+0000 (Coordinated Universal Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
