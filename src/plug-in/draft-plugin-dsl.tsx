@@ -1,4 +1,6 @@
 import { ITranscriber } from "../core/transcriber";
+import { InlineContext } from "../code-object/inline-context";
+import { LocalContext } from "../code-object/local-context";
 
 export class DSLPlugin {
     m_Transcriber: ITranscriber;
@@ -11,19 +13,8 @@ export class DSLPlugin {
 
 <DSLPlugin /> +
     function Transcribe(this: DSLPlugin) {
-        this.m_Transcriber.TraverseInlineContext(context => {
-            const context_name = context.GetContextName();
-            const dsl = this.m_Transcriber.GetDSL(context_name);
-            if (dsl) {
-                context.Resolve(dsl);
-            }
-        });
-
-        this.m_Transcriber.TraverseLocalContext(context => {
-            const context_name = context.GetContextName();
-            const dsl = this.m_Transcriber.GetDSL(context_name);
-            if (dsl) {
-                context.Resolve(dsl);
-            }
-        });
+        const ResolveDSL = (context: InlineContext | LocalContext) =>
+            context.Resolve(this.m_Transcriber.GetDSL(context.GetDSLName()));
+        this.m_Transcriber.TraverseInlineContext(ResolveDSL);
+        this.m_Transcriber.TraverseLocalContext(ResolveDSL);
     };

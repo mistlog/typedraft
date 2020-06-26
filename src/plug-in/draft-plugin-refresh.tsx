@@ -30,10 +30,8 @@ export class RefreshDraftPlugin {
                 (each: InlineContext) => this.m_Transcriber.m_InlineContextMap.set(each.m_ID, each);
                 (each: MethodCode) => {
                     const class_name = each.m_ClassName;
-                    const methods = this.m_Transcriber.m_MethodMap.get(class_name);
-                    methods
-                        ? methods.push(each)
-                        : this.m_Transcriber.m_MethodMap.set(class_name, [each]);
+                    const methods = this.m_Transcriber.m_MethodMap.get(class_name) ?? [];
+                    this.m_Transcriber.m_MethodMap.set(class_name, [...methods, each]);
                 };
             }
         });
