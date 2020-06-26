@@ -125,7 +125,9 @@
     "src/plug-in/draft-plugin-dsl.tsx": {
         "url": "src/plug-in/draft-plugin-dsl.html",
         "dependencies": [
-            "src/core/transcriber"
+            "src/core/transcriber",
+            "src/code-object/inline-context",
+            "src/code-object/local-context"
         ]
     },
     "src/plug-in/draft-plugin-filter.tsx": {
