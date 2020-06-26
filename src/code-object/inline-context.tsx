@@ -30,13 +30,13 @@ export class InlineContext {
     };
 
 <InlineContext /> +
-    function GetContextName(this: InlineContext) {
+    function GetDSLName(this: InlineContext) {
         const statement = this.m_Path.node.body[0] as ExpressionStatement;
-        if (!statement) {
+        if (!statement || !isStringLiteral(statement.expression)) {
             return "";
         }
 
-        const [, dsl_name] = (statement.expression as StringLiteral).value.trim().split(" ");
+        const [, dsl_name] = statement.expression.value.trim().split(" ");
         return dsl_name;
     };
 
@@ -44,6 +44,6 @@ export interface IInlineContext {
     ToStatements: () => Array<Statement>;
 }
 
-import { BlockStatement, StringLiteral, ExpressionStatement, Statement } from "@babel/types";
+import { BlockStatement, ExpressionStatement, Statement, isStringLiteral } from "@babel/types";
 import { NodePath } from "@babel/traverse";
 import { IDSL } from "../core/transcriber";

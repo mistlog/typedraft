@@ -21,17 +21,17 @@ describe("local context", () => {
         expect(context.ToStatements()).toEqual(expected);
     });
 
-    test("get context name: empty", () => {
+    test("get dsl name: empty", () => {
         const context = new LocalContext(
             ToBinding(`
             function Test(value:number){
             }
         `)
         );
-        expect(context.GetContextName()).toEqual("");
+        expect(context.GetDSLName()).toEqual("");
     });
 
-    test("get context name", () => {
+    test("get dsl name", () => {
         const context = new LocalContext(
             ToBinding(`
             function Test(value:number){
@@ -39,6 +39,6 @@ describe("local context", () => {
             }
         `)
         );
-        expect(context.GetContextName()).toEqual("match");
+        expect(context.GetDSLName()).toEqual("match");
     });
 });
