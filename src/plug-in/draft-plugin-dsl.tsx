@@ -13,8 +13,15 @@ export class DSLPlugin {
 
 <DSLPlugin /> +
     function Transcribe(this: DSLPlugin) {
-        const ResolveDSL = (context: InlineContext | LocalContext) =>
-            context.Resolve(this.m_Transcriber.GetDSL(context.GetDSLName()));
+        const ResolveDSL = (context: InlineContext | LocalContext) => {
+            const dsl = this.m_Transcriber.GetDSL(context.GetDSLName());
+            /**
+             * DSL name can be "" in local context, then dsl will be undefined
+             */
+            if (dsl) {
+                context.Resolve(dsl);
+            }
+        };
         this.m_Transcriber.TraverseInlineContext(ResolveDSL);
         this.m_Transcriber.TraverseLocalContext(ResolveDSL);
     };
