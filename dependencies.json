@@ -224,7 +224,8 @@
             "cli/literator",
             "path",
             "fs-extra",
-            "cosmiconfig"
+            "cosmiconfig",
+            "cli/@endemolshinegroup/cosmiconfig-typescript-loader"
         ]
     },
     "commander": {
@@ -234,6 +235,9 @@
         "dependencies": []
     },
     "cosmiconfig": {
+        "dependencies": []
+    },
+    "cli/@endemolshinegroup/cosmiconfig-typescript-loader": {
         "dependencies": []
     }
 }
