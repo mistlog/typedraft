@@ -1,7 +1,7 @@
 import { ToNodePath, ToAst, InlineContext } from "../../src";
 import { Statement } from "@babel/types";
 
-test("get context name", () => {
+test("get dsl name", () => {
     const context = new InlineContext(
         ToNodePath(`
         {
@@ -10,7 +10,18 @@ test("get context name", () => {
         }
     `)
     );
-    expect(context.GetContextName()).toEqual("foo");
+    expect(context.GetDSLName()).toEqual("foo");
+});
+
+test("get dsl name: empty", () => {
+    const context = new InlineContext(
+        ToNodePath(`
+        {
+            console.log("previous");
+        }
+    `)
+    );
+    expect(context.GetDSLName()).toEqual("");
 });
 
 test("to statement", () => {

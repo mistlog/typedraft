@@ -22,10 +22,11 @@ As context can be nested, we will translate them in order. Then find references 
         // find and replace
         to_transcribe.forEach(name => {
             const context = this.m_Transcriber.GetLocalContext(name);
-            context.m_Refs.forEach(path => {
-                const parent = path.findParent(path => path.isExpressionStatement());
-                parent.replaceWithMultiple(context.ToStatements());
-            });
+            context.m_Refs.forEach(path =>
+                path
+                    .findParent(path => path.isExpressionStatement())
+                    .replaceWithMultiple(context.ToStatements())
+            );
         });
     };
 

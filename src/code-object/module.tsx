@@ -102,15 +102,15 @@ export function IsLocalContext(path: NodePath<any>): path is NodePath<FunctionDe
     }
 
     const [directive]: [string] = path.node.body.directives;
-    const has_context = Boolean(directive);
 
-    const name = path.node.id.name;
-    const binding = path.scope.parent.getBinding(name);
-    const is_local_context = binding.referencePaths.some(path => {
-        const used_as_jsx = path.parentPath?.parentPath?.isJSXElement();
-        const used_as_statement = path.parentPath?.parentPath?.parentPath?.isExpressionStatement();
-        return (has_context && used_as_jsx) || (used_as_jsx && used_as_statement);
-    });
+    const is_local_context = path.scope.parent
+        .getBinding(path.node.id.name)
+        .referencePaths.some(path => {
+            const used_as_jsx = path.parentPath?.parentPath?.isJSXElement();
+            const used_as_statement = path.parentPath?.parentPath?.parentPath?.isExpressionStatement();
+            const has_context = Boolean(directive);
+            return used_as_jsx && (has_context || used_as_statement);
+        });
     return is_local_context;
 }
 

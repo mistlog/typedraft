@@ -43,6 +43,22 @@ test("simple", () => {
     expect(result).toMatchSnapshot();
 });
 
+test("no dsl", () => {
+    //
+    const code = `
+        export function Main(){
+            <Test/>;
+        }
+
+        function Test(){
+            console.log("previous");
+        }
+    `;
+    const transcriber = MakeDefaultTranscriber(code);
+    const result = transcriber.Transcribe();
+    expect(result).toMatchSnapshot();
+});
+
 /**
  * <TestLog/> is not used as local context, but after DSL "match" resolved,
  * it will be used as local context,

@@ -11,12 +11,9 @@ export class ClassPlugin {
 
 <ClassPlugin /> +
     function Transcribe(this: ClassPlugin) {
-        const transcriber = this.m_Transcriber;
-
-        transcriber.TraverseMethod((methods, class_name) => {
-            const target_class = transcriber.GetClass(class_name);
-            if (target_class) {
-                methods.forEach(method => target_class.AddMember(method.ToClassMethod()));
-            }
-        });
+        this.m_Transcriber.TraverseMethod((methods, class_name) =>
+            methods.forEach(method =>
+                this.m_Transcriber.GetClass(class_name).AddMember(method.ToClassMethod())
+            )
+        );
     };

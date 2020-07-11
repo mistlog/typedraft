@@ -9,7 +9,8 @@ import {
 } from "./literator";
 import { resolve } from "path";
 import { readJSONSync, lstatSync } from "fs-extra";
-import { cosmiconfigSync } from "cosmiconfig";
+import { cosmiconfig } from "cosmiconfig";
+import { default as tsLoader } from "@endemolshinegroup/cosmiconfig-typescript-loader";
 
 const package_json = readJSONSync(resolve(__dirname, "../../package.json"));
 program.version(package_json.version);
@@ -27,17 +28,25 @@ if (args.length === 0) {
         const path = resolve(working_directory, target);
 
         // find config
-        const config_info = cosmiconfigSync("typedraft").search();
-        let config: ITypeDraftConfig = { DSLs: [], DraftPlugins: [] };
-        if (config_info && !config_info.isEmpty) {
-            config = { ...config, ...config_info.config };
-        }
+        const explorer = cosmiconfig("typedraft", {
+            searchPlaces: [`typedraft.config.ts`],
+            loaders: {
+                ".ts": tsLoader,
+            },
+        });
 
-        //
-        if (lstatSync(path).isDirectory()) {
-            program.watch ? InspectDirectory(path, config) : ComposeDirectory(path, config);
-        } else {
-            program.watch ? InspectFile(path, config) : ComposeFile(path, config);
-        }
+        explorer.search().then(config_info => {
+            let config: ITypeDraftConfig = { DSLs: [], DraftPlugins: [] };
+            if (config_info && !config_info.isEmpty) {
+                config = { ...config, ...config_info.config };
+            }
+
+            //
+            if (lstatSync(path).isDirectory()) {
+                program.watch ? InspectDirectory(path, config) : ComposeDirectory(path, config);
+            } else {
+                program.watch ? InspectFile(path, config) : ComposeFile(path, config);
+            }
+        });
     }
 }

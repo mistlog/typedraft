@@ -38,6 +38,12 @@ exports[`nested dsl 1`] = `
 }"
 `;
 
+exports[`no dsl 1`] = `
+"export function Main() {
+  console.log(\\"previous\\");
+}"
+`;
+
 exports[`simple 1`] = `
 "export function Main() {
   console.log(\\"current\\");
