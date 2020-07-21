@@ -35,7 +35,7 @@ export function ToFile(raw: string) {
     const code = raw.replace(new RegExp("^<", "gm"), ";<");
     return parse(code, {
         sourceType: "module",
-        plugins: ["typescript", "jsx", "optionalChaining"],
+        plugins: ["typescript", "jsx", ["decorators", { decoratorsBeforeExport: true }]],
     });
 }
 

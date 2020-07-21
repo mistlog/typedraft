@@ -38,3 +38,23 @@ interface IFoo {
 
     expect(() => MakeDefaultTranscriber(code)).not.toThrow();
 });
+
+test("parse decorator", () => {
+    const code = `
+        @Injectable()
+        export class CoreService {}
+
+        function Injectable() {}
+    `;
+
+    expect(() => MakeDefaultTranscriber(code)).not.toThrow();
+});
+
+test("parse Optional Chaining & Nullish Coalescing", () => {
+    const code = `
+        let x = foo?.bar.baz();
+        let y = foo ?? bar();
+    `;
+
+    expect(() => MakeDefaultTranscriber(code)).not.toThrow();
+});
