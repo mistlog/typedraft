@@ -4,7 +4,7 @@ TypeDraft is a superset of typescript with built-in support for DSL extension an
 
 ## Documentation
 
-The document is maintained in [typedraft-docs](https://github.com/mistlog/typedraft-docs).
+see [https://mistlog.github.io/typedraft-docs/](https://mistlog.github.io/typedraft-docs/).
 
 ## License
 
