@@ -1,6 +1,6 @@
 {
     "name": "typedraft",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "description": "TypeDraft is a superset of typescript with built-in support for DSL extension and literate programming.",
     "keywords": [
         "literate programming",
@@ -23,7 +23,7 @@
         "type": "git",
         "url": "https://github.com/mistlog/typedraft"
     },
-    "homepage": "https://github.com/mistlog/typedraft",
+    "homepage": "https://mistlog.github.io/typedraft-docs/",
     "scripts": {
         "pretest": "npm run transcribe",
         "test": "jest --coverage",
