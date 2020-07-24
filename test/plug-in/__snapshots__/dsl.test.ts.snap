@@ -38,6 +38,20 @@ exports[`nested dsl 1`] = `
 }"
 `;
 
+exports[`nested dsl: merge 1`] = `
+"export function Main() {
+  $: {
+    \\"use watch\\";
+
+    if (value === \\"a\\") {
+      console.log(\\"value is a\\");
+    }
+
+    b = value + 1;
+  }
+}"
+`;
+
 exports[`no dsl 1`] = `
 "export function Main() {
   console.log(\\"previous\\");

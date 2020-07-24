@@ -22,11 +22,13 @@ export class InlineContext {
 
 <InlineContext /> +
     function Resolve(this: InlineContext & IInlineContext, dsl: IDSL) {
+        const resolved = dsl.Transcribe(this.ToStatements(), this.m_Path);
         if (dsl.m_Merge) {
-            this.m_Path.replaceWithMultiple(dsl.Transcribe(this.ToStatements(), this.m_Path));
+            this.m_Path.insertAfter(resolved);
         } else {
-            this.m_Code.body = dsl.Transcribe(this.ToStatements(), this.m_Path);
+            this.m_Path.insertAfter(blockStatement(resolved));
         }
+        this.m_Path.remove();
     };
 
 <InlineContext /> +
@@ -44,6 +46,12 @@ export interface IInlineContext {
     ToStatements: () => Array<Statement>;
 }
 
-import { BlockStatement, ExpressionStatement, Statement, isStringLiteral } from "@babel/types";
+import {
+    BlockStatement,
+    ExpressionStatement,
+    Statement,
+    isStringLiteral,
+    blockStatement,
+} from "@babel/types";
 import { NodePath } from "@babel/traverse";
 import { IDSL } from "../core/transcriber";
