@@ -125,6 +125,44 @@ test("nested dsl", () => {
     expect(result).toMatchSnapshot();
 });
 
+test("nested dsl: merge", () => {
+    //
+    class Watch implements IDSL {
+        m_Merge: boolean;
+        constructor() {
+            this.m_Merge = true;
+        }
+        Transcribe(block: Array<Statement>): Array<Statement> {
+            const [use_watch, ...rest] = block;
+            return [labeledStatement(identifier("$"), blockStatement(rest))];
+        }
+    }
+
+    //
+    const code = `
+            export function Main(){
+                {
+                    "use watch";
+                    {
+                        "use match";
+        
+                        (value: "a") =>
+                        {
+                            console.log("value is a");
+                        };
+                    }
+                    b = value + 1;
+                }
+            }
+        `;
+
+    const transcriber = MakeDefaultTranscriber(code);
+    transcriber.AddDSL("watch", new Watch());
+    transcriber.AddDSL("match", new PatternMatch(true));
+    const result = transcriber.Transcribe();
+    expect(result).toMatchSnapshot();
+});
+
 test("use path param", () => {
     //
     class Foo implements IDSL {

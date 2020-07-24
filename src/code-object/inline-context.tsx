@@ -44,6 +44,12 @@ export interface IInlineContext {
     ToStatements: () => Array<Statement>;
 }
 
-import { BlockStatement, ExpressionStatement, Statement, isStringLiteral } from "@babel/types";
+import {
+    BlockStatement,
+    ExpressionStatement,
+    Statement,
+    isStringLiteral,
+    blockStatement,
+} from "@babel/types";
 import { NodePath } from "@babel/traverse";
 import { IDSL } from "../core/transcriber";
