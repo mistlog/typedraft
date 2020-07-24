@@ -35,7 +35,10 @@ export type Draft = Array<ExportClassCode | MethodCode | LocalContext | InlineCo
                     if (expression.isStringLiteral()) {
                         const literal = expression.node.value.trim();
                         if (literal.startsWith("use") && path.parentPath.isBlockStatement()) {
-                            draft.push(new InlineContext(path.parentPath));
+                            /**
+                             * inline context should be resolved from deepest
+                             */
+                            draft.unshift(new InlineContext(path.parentPath));
                         }
                     }
                 },
