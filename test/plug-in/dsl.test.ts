@@ -133,7 +133,8 @@ test("nested dsl: merge", () => {
             this.m_Merge = true;
         }
         Transcribe(block: Array<Statement>): Array<Statement> {
-            return [labeledStatement(identifier("$"), blockStatement(block))];
+            const [use_watch, ...rest] = block;
+            return [labeledStatement(identifier("$"), blockStatement(rest))];
         }
     }
 
