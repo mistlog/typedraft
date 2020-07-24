@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1595561249185" clover="3.2.0">
-  <project timestamp="1595561249185" name="All files">
-    <metrics statements="214" coveredstatements="214" conditionals="80" coveredconditionals="72" methods="81" coveredmethods="81" elements="375" coveredelements="367" complexity="0" loc="214" ncloc="214" packages="5" files="13" classes="13"/>
+<coverage generated="1595581070535" clover="3.2.0">
+  <project timestamp="1595581070535" name="All files">
+    <metrics statements="212" coveredstatements="212" conditionals="80" coveredconditionals="72" methods="81" coveredmethods="81" elements="373" coveredelements="365" complexity="0" loc="212" ncloc="212" packages="5" files="13" classes="13"/>
     <package name="src">
       <metrics statements="22" coveredstatements="22" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="index.ts" path="/home/runner/work/typedraft/typedraft/src/index.ts">
@@ -31,7 +31,7 @@
       </file>
     </package>
     <package name="src.code-object">
-      <metrics statements="101" coveredstatements="101" conditionals="59" coveredconditionals="53" methods="37" coveredmethods="37"/>
+      <metrics statements="99" coveredstatements="99" conditionals="59" coveredconditionals="53" methods="37" coveredmethods="37"/>
       <file name="export-class.ts" path="/home/runner/work/typedraft/typedraft/src/code-object/export-class.ts">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="6"/>
         <line num="1" count="11" type="stmt"/>
@@ -43,23 +43,21 @@
         <line num="25" count="8" type="stmt"/>
       </file>
       <file name="inline-context.ts" path="/home/runner/work/typedraft/typedraft/src/code-object/inline-context.ts">
-        <metrics statements="16" coveredstatements="16" conditionals="6" coveredconditionals="6" methods="6" coveredmethods="6"/>
+        <metrics statements="14" coveredstatements="14" conditionals="6" coveredconditionals="6" methods="6" coveredmethods="6"/>
         <line num="1" count="11" type="stmt"/>
-        <line num="5" count="5" type="stmt"/>
-        <line num="9" count="5" type="stmt"/>
-        <line num="13" count="8" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="9" count="6" type="stmt"/>
+        <line num="13" count="7" type="stmt"/>
         <line num="17" count="5" type="stmt"/>
-        <line num="21" count="4" type="stmt"/>
-        <line num="23" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="24" count="3" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
-        <line num="29" count="4" type="stmt"/>
-        <line num="33" count="6" type="stmt"/>
-        <line num="35" count="6" type="cond" truecount="4" falsecount="0"/>
-        <line num="36" count="1" type="stmt"/>
-        <line num="39" count="5" type="stmt"/>
-        <line num="40" count="5" type="stmt"/>
-        <line num="47" count="11" type="stmt"/>
+        <line num="21" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="29" count="6" type="stmt"/>
+        <line num="31" count="6" type="cond" truecount="4" falsecount="0"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="35" count="5" type="stmt"/>
+        <line num="36" count="5" type="stmt"/>
+        <line num="43" count="11" type="stmt"/>
       </file>
       <file name="local-context.ts" path="/home/runner/work/typedraft/typedraft/src/code-object/local-context.ts">
         <metrics statements="14" coveredstatements="14" conditionals="2" coveredconditionals="2" methods="8" coveredmethods="8"/>
@@ -101,11 +99,11 @@
         <line num="7" count="29" type="stmt"/>
         <line num="8" count="29" type="stmt"/>
         <line num="12" count="29" type="stmt"/>
-        <line num="16" count="105" type="stmt"/>
-        <line num="18" count="105" type="cond" truecount="2" falsecount="0"/>
-        <line num="19" count="5" type="stmt"/>
-        <line num="21" count="5" type="cond" truecount="3" falsecount="1"/>
-        <line num="22" count="5" type="stmt"/>
+        <line num="16" count="104" type="stmt"/>
+        <line num="18" count="104" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="4" type="stmt"/>
+        <line num="21" count="4" type="cond" truecount="3" falsecount="1"/>
+        <line num="22" count="4" type="stmt"/>
         <line num="30" count="29" type="stmt"/>
         <line num="31" count="89" type="cond" truecount="2" falsecount="0"/>
         <line num="32" count="15" type="stmt"/>
@@ -257,12 +255,12 @@
         <line num="13" count="27" type="stmt"/>
         <line num="14" count="27" type="stmt"/>
         <line num="15" count="27" type="stmt"/>
-        <line num="16" count="51" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="50" type="cond" truecount="2" falsecount="0"/>
         <line num="17" count="5" type="stmt"/>
-        <line num="18" count="46" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="45" type="cond" truecount="2" falsecount="0"/>
         <line num="19" count="29" type="stmt"/>
-        <line num="20" count="17" type="cond" truecount="2" falsecount="0"/>
-        <line num="21" count="5" type="stmt"/>
+        <line num="20" count="16" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="4" type="stmt"/>
         <line num="22" count="12" type="cond" truecount="1" falsecount="1"/>
         <line num="23" count="12" type="stmt"/>
         <line num="24" count="12" type="cond" truecount="4" falsecount="0"/>
