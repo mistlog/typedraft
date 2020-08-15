@@ -69,7 +69,7 @@
         "pretty-quick": "^2.0.1",
         "ts-jest": "^24.0.2",
         "ts-node": "^8.3.0",
-        "typedraft": "0.2.2"
+        "typedraft": "0.0.0-31fb921"
     },
     "husky": {
         "hooks": {

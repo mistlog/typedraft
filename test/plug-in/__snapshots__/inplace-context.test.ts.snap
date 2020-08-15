@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`not inplace context no dsl 1`] = `
+"const temp = Λ<number>(\\"math\\")\`
+                1+2
+            \`;"
+`;
+
+exports[`not inplace context not call expression 1`] = `
+"context<number>\`
+                1+2
+            \`;"
+`;
+
+exports[`not inplace context not context or Λ 1`] = `
+"whatever<number>(\\"math\\")\`
+                1+2
+            \`;"
+`;
+
+exports[`use inplace context as expression 1`] = `"const temp = \\"3\\";"`;
+
+exports[`use inplace context as expression statement 1`] = `"\\"3\\";"`;
