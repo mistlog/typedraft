@@ -50,7 +50,7 @@ export class Foo {
 
 <MethodCode /> +
     function ToClassMethod(this: MethodCode): ClassMethod {
-        const { id, params: raw_params, body } = this.m_Right;
+        const { id, params: raw_params, body, typeParameters } = this.m_Right;
 
         /**
          * remove param "this":
@@ -64,6 +64,7 @@ export class Foo {
         const kind = id.name === "constructor" ? id.name : "method";
 
         const class_method = classMethod(kind, id, params, body);
+        class_method.typeParameters = typeParameters;
         return class_method;
     };
 

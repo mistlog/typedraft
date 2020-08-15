@@ -6,6 +6,12 @@ exports[`method default value 1`] = `
 }"
 `;
 
+exports[`method template param 1`] = `
+"Test<S>(a: number) {
+  return a.toString() + b;
+}"
+`;
+
 exports[`method to class method 1`] = `
 "Test(a: number, b: string) {
   return a.toString() + b;

@@ -26,4 +26,16 @@ describe("method", () => {
 
         expect(ToString(method.ToClassMethod())).toMatchSnapshot();
     });
+
+    test("template param", () => {
+        const method = new MethodCode(
+            ToNodePath<ExpressionStatement>(`
+            <Foo/> + function Test<S>(this: Foo, a: number){
+                return a.toString()+b;
+            }
+        `)
+        );
+
+        expect(ToString(method.ToClassMethod())).toMatchSnapshot();
+    });
 });
