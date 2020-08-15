@@ -55,7 +55,12 @@ export class Foo {
         /**
          * remove param "this":
          */
-        const params = raw_params.filter(param => isIdentifier(param) && param.name !== "this");
+        const params = raw_params.filter(param => {
+            if (isIdentifier(param) && param.name === "this") {
+                return false;
+            }
+            return true;
+        });
         const kind = id.name === "constructor" ? id.name : "method";
 
         const class_method = classMethod(kind, id, params, body);
