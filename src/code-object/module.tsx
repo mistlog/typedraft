@@ -13,7 +13,7 @@ export type Draft = Array<ExportClassCode | MethodCode | LocalContext | InlineCo
  * As we are only interested in the draft part of a module, then we need a way to return this "view" of module code.
  */
 <ModuleCode /> +
-    function ToDraft(this: ModuleCode) {
+    function ToDraft(this: ModuleCode & IModuleCode) {
         /**
          * refresh and update bindings because DSL only transforms code
          */
@@ -23,8 +23,7 @@ export type Draft = Array<ExportClassCode | MethodCode | LocalContext | InlineCo
          * traverse file and set path
          */
         let draft: Draft = [];
-        traverse<{ _module: ModuleCode }>(
-            this.m_File,
+        this.Traverse<{ _module: ModuleCode }>(
             {
                 Program(path) {
                     this._module.m_Path = path;
@@ -43,7 +42,6 @@ export type Draft = Array<ExportClassCode | MethodCode | LocalContext | InlineCo
                     }
                 },
             },
-            null,
             { _module: this }
         );
 
@@ -55,6 +53,16 @@ export type Draft = Array<ExportClassCode | MethodCode | LocalContext | InlineCo
             <AddToDraft />;
         });
         return draft;
+    };
+
+export interface IModuleCode {
+    Traverse<S>(visitor: TraverseOptions<S>, state: S): void;
+}
+
+<ModuleCode /> +
+    function Traverse<S>(this: ModuleCode, visitor: TraverseOptions<S>, state: S = null) {
+        this.m_File = ToFile(ToString(this.m_File));
+        traverse<S>(this.m_File, visitor, null, state);
     };
 
 /**
@@ -136,5 +144,5 @@ import { ExportClassCode } from "./export-class";
 import { MethodCode } from "./method";
 import { LocalContext } from "./local-context";
 import { ToFile, ToString } from "../common/utility";
-import traverse, { NodePath, Node } from "@babel/traverse";
+import traverse, { NodePath, Node, TraverseOptions } from "@babel/traverse";
 import { InlineContext } from "./inline-context";
