@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1597500037424" clover="3.2.0">
-  <project timestamp="1597500037424" name="All files">
-    <metrics statements="235" coveredstatements="235" conditionals="91" coveredconditionals="83" methods="85" coveredmethods="85" elements="411" coveredelements="403" complexity="0" loc="235" ncloc="235" packages="5" files="14" classes="14"/>
+<coverage generated="1597972388915" clover="3.2.0">
+  <project timestamp="1597972388916" name="All files">
+    <metrics statements="236" coveredstatements="236" conditionals="91" coveredconditionals="83" methods="85" coveredmethods="85" elements="412" coveredelements="404" complexity="0" loc="236" ncloc="236" packages="5" files="14" classes="14"/>
     <package name="src">
-      <metrics statements="22" coveredstatements="22" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <metrics statements="23" coveredstatements="23" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="index.ts" path="/home/runner/work/typedraft/typedraft/src/index.ts">
-        <metrics statements="22" coveredstatements="22" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <metrics statements="23" coveredstatements="23" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="12" type="stmt"/>
         <line num="3" count="12" type="stmt"/>
         <line num="4" count="12" type="stmt"/>
@@ -24,10 +24,11 @@
         <line num="23" count="12" type="stmt"/>
         <line num="24" count="12" type="stmt"/>
         <line num="25" count="12" type="stmt"/>
-        <line num="27" count="12" type="stmt"/>
-        <line num="28" count="26" type="stmt"/>
+        <line num="26" count="12" type="stmt"/>
+        <line num="28" count="12" type="stmt"/>
         <line num="29" count="26" type="stmt"/>
-        <line num="37" count="26" type="stmt"/>
+        <line num="30" count="26" type="stmt"/>
+        <line num="39" count="26" type="stmt"/>
       </file>
     </package>
     <package name="src.code-object">
@@ -109,8 +110,8 @@
         <line num="21" count="4" type="cond" truecount="3" falsecount="1"/>
         <line num="22" count="4" type="stmt"/>
         <line num="30" count="29" type="stmt"/>
-        <line num="31" count="103" type="cond" truecount="2" falsecount="0"/>
-        <line num="32" count="29" type="stmt"/>
+        <line num="31" count="105" type="cond" truecount="2" falsecount="0"/>
+        <line num="32" count="31" type="stmt"/>
         <line num="33" count="74" type="cond" truecount="2" falsecount="0"/>
         <line num="34" count="7" type="stmt"/>
         <line num="35" count="67" type="cond" truecount="2" falsecount="0"/>
@@ -118,8 +119,8 @@
         <line num="37" count="53" type="cond" truecount="2" falsecount="0"/>
         <line num="38" count="30" type="stmt"/>
         <line num="41" count="29" type="stmt"/>
-        <line num="45" count="34" type="stmt"/>
-        <line num="46" count="34" type="stmt"/>
+        <line num="45" count="43" type="stmt"/>
+        <line num="46" count="43" type="stmt"/>
         <line num="50" count="28" type="stmt"/>
         <line num="58" count="12" type="stmt"/>
         <line num="59" count="74" type="cond" truecount="2" falsecount="0"/>
@@ -172,10 +173,10 @@
         <line num="22" count="3" type="stmt"/>
         <line num="29" count="3" type="stmt"/>
         <line num="32" count="12" type="stmt"/>
-        <line num="35" count="91" type="stmt"/>
-        <line num="36" count="91" type="stmt"/>
+        <line num="35" count="100" type="stmt"/>
+        <line num="36" count="100" type="stmt"/>
         <line num="42" count="12" type="stmt"/>
-        <line num="43" count="91" type="cond" truecount="2" falsecount="0"/>
+        <line num="43" count="100" type="cond" truecount="2" falsecount="0"/>
       </file>
     </package>
     <package name="src.core">
@@ -183,7 +184,7 @@
       <file name="transcriber.ts" path="/home/runner/work/typedraft/typedraft/src/core/transcriber.ts">
         <metrics statements="19" coveredstatements="19" conditionals="0" coveredconditionals="0" methods="13" coveredmethods="13"/>
         <line num="1" count="12" type="stmt"/>
-        <line num="11" count="74" type="stmt"/>
+        <line num="11" count="83" type="stmt"/>
         <line num="12" count="23" type="stmt"/>
         <line num="18" count="9" type="stmt"/>
         <line num="22" count="10" type="stmt"/>
@@ -231,10 +232,10 @@
       </file>
       <file name="draft-plugin-inplace-context.ts" path="/home/runner/work/typedraft/typedraft/src/plug-in/draft-plugin-inplace-context.ts">
         <metrics statements="17" coveredstatements="17" conditionals="8" coveredconditionals="8" methods="3" coveredmethods="3"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="8" count="5" type="stmt"/>
-        <line num="12" count="5" type="stmt"/>
-        <line num="13" count="5" type="stmt"/>
+        <line num="4" count="12" type="stmt"/>
+        <line num="8" count="31" type="stmt"/>
+        <line num="12" count="14" type="stmt"/>
+        <line num="13" count="14" type="stmt"/>
         <line num="15" count="5" type="stmt"/>
         <line num="17" count="5" type="cond" truecount="2" falsecount="0"/>
         <line num="18" count="1" type="stmt"/>

@@ -164,6 +164,14 @@
             "src/code-object/inline-context"
         ]
     },
+    "src/plug-in/draft-plugin-inplace-context.tsx": {
+        "url": "src/plug-in/draft-plugin-inplace-context.html",
+        "dependencies": [
+            "src/core/transcriber",
+            "src/plug-in/@babel/core",
+            "src/plug-in/@babel/types"
+        ]
+    },
     "src/index": {
         "url": "src/index.html",
         "dependencies": [
@@ -178,7 +186,8 @@
             "src/plug-in/draft-plugin-filter",
             "src/plug-in/draft-plugin-local-context",
             "src/plug-in/draft-plugin-refresh",
-            "src/common/utility"
+            "src/common/utility",
+            "src/plug-in/draft-plugin-inplace-context"
         ]
     },
     "src/plug-in/draft-plugin-class": {
@@ -194,6 +203,9 @@
         "dependencies": []
     },
     "src/plug-in/draft-plugin-refresh": {
+        "dependencies": []
+    },
+    "src/plug-in/draft-plugin-inplace-context": {
         "dependencies": []
     },
     "cli/literator": {
