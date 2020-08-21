@@ -18,6 +18,6 @@ exports[`not inplace context not context or Λ 1`] = `
             \`;"
 `;
 
-exports[`use inplace context as expression 1`] = `"const temp = \\"3\\";"`;
+exports[`use inplace context as expression 1`] = `"const temp = \\"3number\\";"`;
 
 exports[`use inplace context as expression statement 1`] = `"\\"3\\";"`;

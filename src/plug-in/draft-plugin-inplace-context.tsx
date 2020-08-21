@@ -1,6 +1,7 @@
 import { ITranscriber } from "../core/transcriber";
 import { NodePath, Node } from "@babel/core";
 import { StringLiteral, Identifier } from "@babel/types";
+import { ToString } from "../common/utility";
 
 export class InplaceContextPlugin {
     m_Transcriber: ITranscriber;
@@ -37,7 +38,11 @@ export class InplaceContextPlugin {
                     return;
                 }
 
-                path.replaceWith(dsl.InplaceTranscribe(path.get("quasi")));
+                //
+                const type = tag.node.typeParameters
+                    ? ToString(tag.node.typeParameters.params[0])
+                    : "";
+                path.replaceWith(dsl.InplaceTranscribe(path.get("quasi"), type));
             },
         });
     };

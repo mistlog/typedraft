@@ -4,8 +4,8 @@ import { NodePath } from "@babel/core";
 import { TemplateLiteral, stringLiteral } from "@babel/types";
 
 class Math implements IDSL {
-    InplaceTranscribe(literal: NodePath<TemplateLiteral>) {
-        return stringLiteral("3");
+    InplaceTranscribe(literal: NodePath<TemplateLiteral>, type: string) {
+        return stringLiteral("3" + type);
     }
 }
 
@@ -27,7 +27,7 @@ test("use inplace context as expression", () => {
 test("use inplace context as expression statement", () => {
     //
     const code = `
-        context<number>("math")\`
+        context("math")\`
             1+2
         \`;
     `;

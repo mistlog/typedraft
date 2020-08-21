@@ -97,7 +97,7 @@ export interface IDSL {
         path?: NodePath<FunctionDeclaration> | NodePath<BlockStatement>
     ): Array<Statement>;
 
-    InplaceTranscribe?(literal: NodePath<TemplateLiteral>): Expression;
+    InplaceTranscribe?(literal: NodePath<TemplateLiteral>, type: string): Expression;
 
     m_Merge?: boolean;
 }
