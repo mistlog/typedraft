@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1597972388915" clover="3.2.0">
-  <project timestamp="1597972388916" name="All files">
-    <metrics statements="236" coveredstatements="236" conditionals="91" coveredconditionals="83" methods="85" coveredmethods="85" elements="412" coveredelements="404" complexity="0" loc="236" ncloc="236" packages="5" files="14" classes="14"/>
+<coverage generated="1598023534812" clover="3.2.0">
+  <project timestamp="1598023534812" name="All files">
+    <metrics statements="238" coveredstatements="238" conditionals="93" coveredconditionals="85" methods="85" coveredmethods="85" elements="416" coveredelements="408" complexity="0" loc="238" ncloc="238" packages="5" files="14" classes="14"/>
     <package name="src">
       <metrics statements="23" coveredstatements="23" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="index.ts" path="/home/runner/work/typedraft/typedraft/src/index.ts">
@@ -176,7 +176,7 @@
         <line num="35" count="100" type="stmt"/>
         <line num="36" count="100" type="stmt"/>
         <line num="42" count="12" type="stmt"/>
-        <line num="43" count="100" type="cond" truecount="2" falsecount="0"/>
+        <line num="43" count="101" type="cond" truecount="2" falsecount="0"/>
       </file>
     </package>
     <package name="src.core">
@@ -205,7 +205,7 @@
       </file>
     </package>
     <package name="src.plug-in">
-      <metrics statements="70" coveredstatements="70" conditionals="27" coveredconditionals="25" methods="28" coveredmethods="28"/>
+      <metrics statements="72" coveredstatements="72" conditionals="29" coveredconditionals="27" methods="28" coveredmethods="28"/>
       <file name="draft-plugin-class.ts" path="/home/runner/work/typedraft/typedraft/src/plug-in/draft-plugin-class.ts">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
         <line num="2" count="12" type="stmt"/>
@@ -231,24 +231,26 @@
         <line num="11" count="10" type="stmt"/>
       </file>
       <file name="draft-plugin-inplace-context.ts" path="/home/runner/work/typedraft/typedraft/src/plug-in/draft-plugin-inplace-context.ts">
-        <metrics statements="17" coveredstatements="17" conditionals="8" coveredconditionals="8" methods="3" coveredmethods="3"/>
+        <metrics statements="19" coveredstatements="19" conditionals="10" coveredconditionals="10" methods="3" coveredmethods="3"/>
         <line num="4" count="12" type="stmt"/>
-        <line num="8" count="31" type="stmt"/>
-        <line num="12" count="14" type="stmt"/>
+        <line num="5" count="12" type="stmt"/>
+        <line num="9" count="31" type="stmt"/>
         <line num="13" count="14" type="stmt"/>
-        <line num="15" count="5" type="stmt"/>
-        <line num="17" count="5" type="cond" truecount="2" falsecount="0"/>
-        <line num="18" count="1" type="stmt"/>
-        <line num="21" count="4" type="stmt"/>
+        <line num="14" count="14" type="stmt"/>
+        <line num="16" count="5" type="stmt"/>
+        <line num="18" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="1" type="stmt"/>
         <line num="22" count="4" type="stmt"/>
-        <line num="24" count="4" type="cond" truecount="4" falsecount="0"/>
-        <line num="25" count="1" type="stmt"/>
-        <line num="28" count="3" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="25" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="26" count="1" type="stmt"/>
         <line num="29" count="3" type="stmt"/>
         <line num="30" count="3" type="stmt"/>
-        <line num="32" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="33" count="1" type="stmt"/>
-        <line num="36" count="2" type="stmt"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="33" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="37" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="38" count="2" type="stmt"/>
       </file>
       <file name="draft-plugin-local-context.ts" path="/home/runner/work/typedraft/typedraft/src/plug-in/draft-plugin-local-context.ts">
         <metrics statements="16" coveredstatements="16" conditionals="5" coveredconditionals="4" methods="10" coveredmethods="10"/>

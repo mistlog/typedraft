@@ -169,7 +169,8 @@
         "dependencies": [
             "src/core/transcriber",
             "src/plug-in/@babel/core",
-            "src/plug-in/@babel/types"
+            "src/plug-in/@babel/types",
+            "src/common/utility"
         ]
     },
     "src/index": {
