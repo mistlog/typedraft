@@ -92,10 +92,12 @@ export class Transcriber {
     };
 
 export interface IDSL {
-    Transcribe(
+    Transcribe?(
         block: Array<Statement>,
         path?: NodePath<FunctionDeclaration> | NodePath<BlockStatement>
     ): Array<Statement>;
+
+    InplaceTranscribe?(literal: NodePath<TemplateLiteral>, type: string): Expression;
 
     m_Merge?: boolean;
 }
@@ -135,7 +137,13 @@ export type TraverseLocalContextCallback = (context: LocalContext, name: string)
 export type TraverseInlineContextCallback = (context: InlineContext) => void;
 export type TraverseMethodCallback = (methods: Array<MethodCode>, class_name: string) => void;
 
-import { Statement, FunctionDeclaration, BlockStatement } from "@babel/types";
+import {
+    Statement,
+    FunctionDeclaration,
+    BlockStatement,
+    Expression,
+    TemplateLiteral,
+} from "@babel/types";
 import { NodePath } from "@babel/traverse";
 
 import { ToString } from "../common/utility";

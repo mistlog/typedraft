@@ -23,10 +23,12 @@ import { DSLPlugin } from "./plug-in/draft-plugin-dsl";
 import { LocalContextPlugin } from "./plug-in/draft-plugin-local-context";
 import { ClassPlugin } from "./plug-in/draft-plugin-class";
 import { FilterPlugin } from "./plug-in/draft-plugin-filter";
+import { InplaceContextPlugin } from "./plug-in/draft-plugin-inplace-context";
 
 export function MakeDefaultTranscriber(_module: string): ITranscriber {
     const transcriber = new Transcriber(_module);
     transcriber.m_Plugins = [
+        new InplaceContextPlugin(transcriber),
         new RefreshDraftPlugin(transcriber),
         new DSLPlugin(transcriber),
         new RefreshDraftPlugin(transcriber),
@@ -35,4 +37,9 @@ export function MakeDefaultTranscriber(_module: string): ITranscriber {
         new FilterPlugin(transcriber),
     ];
     return transcriber;
+}
+
+declare global {
+    function Λ<T>(dsl: string): (...args) => T;
+    function context<T>(dsl: string): (...args) => T;
 }
