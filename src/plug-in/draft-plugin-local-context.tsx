@@ -1,8 +1,3 @@
-import { ITranscriber, IPlugin } from "../core/transcriber";
-import { FunctionDeclaration, FunctionExpression } from "@babel/types";
-import { NodePath } from "@babel/core";
-import * as toposort from "toposort";
-
 /*
 # Local Context Plugin
 */
@@ -82,3 +77,8 @@ export class ILocalContextPlugin implements IPlugin {
     function constructor(this: LocalContextPlugin, transcriber: ITranscriber) {
         this.m_Transcriber = transcriber;
     };
+
+import { ITranscriber, IPlugin } from "../core/transcriber";
+import { FunctionDeclaration, FunctionExpression } from "@babel/types";
+import { NodePath } from "@babel/core";
+import * as toposort from "toposort";

@@ -69,30 +69,38 @@ export interface IModuleCode {
  * ## Create draft
  */
 function AddToDraft(path: NodePath<Node>, draft: Draft) {
+    /**
+     * remove redundant ; before tag, see comment of `ToFile` in utility.ts
+     */
     if (path.isEmptyStatement()) {
-        /**
-         * remove redundant ; before tag, see comment of `ToFile` in utility.ts
-         */
         path.remove();
-    } else if (IsExportClassCode(path)) {
-        draft.push(new ExportClassCode(path));
-    } else if (IsMethodCode(path)) {
-        draft.push(new MethodCode(path));
-    } else if (IsLocalContext(path)) {
-        draft.push(new LocalContext(path.scope.parent.getBinding(path.node.id.name)));
+        return;
+    }
+
+    const to_add = Λ<ExportClassCode | LocalContext | MethodCode | null>("match")` ${
+        path as NodePath<any>
+    } 
+        ${IsExportClassCode(path)} -> ${(path: NodePath<ExportNamedDeclaration>) =>
+        new ExportClassCode(path)}
+        ${IsMethodCode(path)} -> ${(path: NodePath<ExpressionStatement>) => new MethodCode(path)}
+        ${IsLocalContext(path)} -> ${(path: NodePath<FunctionDeclaration>) =>
+        new LocalContext(path.scope.parent.getBinding(path.node.id.name))}
+        ${__} -> ${null}
+    `;
+
+    if (to_add) {
+        draft.push(to_add);
     }
 }
 
-export function IsExportClassCode(path: NodePath<any>): path is NodePath<ExportNamedDeclaration> {
-    if (!path.isExportNamedDeclaration()) {
-        return false;
-    }
-
-    const declaration = path.get("declaration") as NodePath<Node>;
-    return declaration.isClassDeclaration();
+export function IsExportClassCode(path: NodePath<any>) {
+    return (
+        path.isExportNamedDeclaration() &&
+        (path.get("declaration") as NodePath<Node>).isClassDeclaration()
+    );
 }
 
-export function IsMethodCode(path: NodePath<any>): path is NodePath<ExpressionStatement> {
+export function IsMethodCode(path: NodePath<any>) {
     if (!path.isExpressionStatement()) {
         return false;
     }
@@ -107,7 +115,7 @@ export function IsMethodCode(path: NodePath<any>): path is NodePath<ExpressionSt
     return left.isJSXElement() && right.isFunctionExpression();
 }
 
-export function IsLocalContext(path: NodePath<any>): path is NodePath<FunctionDeclaration> {
+export function IsLocalContext(path: NodePath<any>) {
     if (!path.isFunctionDeclaration()) {
         return false;
     }
@@ -146,3 +154,4 @@ import { LocalContext } from "./local-context";
 import { ToFile, ToString } from "../common/utility";
 import traverse, { NodePath, Node, TraverseOptions } from "@babel/traverse";
 import { InlineContext } from "./inline-context";
+import { MatchDSL, __ } from "draft-dsl-match";
