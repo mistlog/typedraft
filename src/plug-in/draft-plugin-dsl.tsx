@@ -1,7 +1,3 @@
-import { ITranscriber } from "../core/transcriber";
-import { InlineContext } from "../code-object/inline-context";
-import { LocalContext } from "../code-object/local-context";
-
 export class DSLPlugin {
     m_Transcriber: ITranscriber;
 }
@@ -25,3 +21,7 @@ export class DSLPlugin {
         this.m_Transcriber.TraverseInlineContext(ResolveDSL);
         this.m_Transcriber.TraverseLocalContext(ResolveDSL);
     };
+
+import { ITranscriber } from "../core/transcriber";
+import { InlineContext } from "../code-object/inline-context";
+import { LocalContext } from "../code-object/local-context";

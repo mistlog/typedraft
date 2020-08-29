@@ -1,5 +1,3 @@
-import { ITranscriber } from "../core/transcriber";
-
 export class ClassPlugin {
     m_Transcriber: ITranscriber;
 }
@@ -17,3 +15,5 @@ export class ClassPlugin {
             )
         );
     };
+
+import { ITranscriber } from "../core/transcriber";

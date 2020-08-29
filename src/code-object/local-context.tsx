@@ -39,8 +39,8 @@ export class LocalContext {
     function GetDSLName(this: LocalContext) {
         const [directive] = this.m_Code.body.directives;
         if (directive) {
-            const [, context_name] = directive.value.value.split(" ");
-            return context_name;
+            const [use, dsl_name] = directive.value.value.split(" ");
+            return dsl_name;
         }
         return "";
     };

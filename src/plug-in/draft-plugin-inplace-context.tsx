@@ -1,8 +1,3 @@
-import { ITranscriber } from "../core/transcriber";
-import { NodePath, Node } from "@babel/core";
-import { StringLiteral, Identifier } from "@babel/types";
-import { ToString } from "../common/utility";
-
 export class InplaceContextPlugin {
     m_Transcriber: ITranscriber;
 }
@@ -17,32 +12,31 @@ export class InplaceContextPlugin {
         const transcriber = this.m_Transcriber;
         transcriber.m_Module.Traverse({
             TaggedTemplateExpression(path) {
-                const tag = path.get("tag");
-                if (!tag.isCallExpression()) {
-                    return;
-                }
+                Λ("match")` ${path.node} 
+                    ${{
+                        tag: {
+                            type: "CallExpression",
+                            typeParameters: use("typeParams"),
+                            arguments: use("args"),
+                            callee: {
+                                type: "Identifier",
+                                name: when(name => name === "context" || name === "Λ"),
+                            },
+                        },
+                    }} -> ${(_, { args, typeParams }) => {
+                    const dsl = transcriber.m_DSLMap.get(args[0].value);
+                    if (dsl) {
+                        const type = typeParams ? ToString(typeParams.params[0]) : "";
+                        path.replaceWith(dsl.InplaceTranscribe(path.get("quasi"), type));
+                    }
+                }}
 
-                const callee = tag.get("callee") as NodePath<Identifier>;
-                const callee_name = callee.node.name as string;
-                if (callee_name !== "context" && callee_name !== "Λ") {
-                    return;
-                }
-
-                const [arg] = (tag.get("arguments") as Array<NodePath<Node>>) as [
-                    NodePath<StringLiteral>
-                ];
-                const dsl_name = arg.node.value;
-
-                const dsl = transcriber.m_DSLMap.get(dsl_name);
-                if (!dsl) {
-                    return;
-                }
-
-                //
-                const type = tag.node.typeParameters
-                    ? ToString(tag.node.typeParameters.params[0])
-                    : "";
-                path.replaceWith(dsl.InplaceTranscribe(path.get("quasi"), type));
+                    ${__} -> ${() => {}}
+                `;
             },
         });
     };
+
+import { ITranscriber } from "../core/transcriber";
+import { ToString } from "../common/utility";
+import { MatchDSL, when, __, use } from "draft-dsl-match";

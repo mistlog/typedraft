@@ -61,7 +61,7 @@
         "@types/jest": "^24.0.18",
         "@types/node": "^12.12.14",
         "@types/toposort": "2.0.3",
-        "draft-dsl-match": "^0.1.0",
+        "draft-dsl-match": "0.2.0",
         "husky": "^4.2.5",
         "jest": "^24.9.0",
         "litscript": "^1.1.6",

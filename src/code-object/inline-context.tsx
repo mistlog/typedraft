@@ -32,24 +32,21 @@ export class InlineContext {
 <InlineContext /> +
     function GetDSLName(this: InlineContext) {
         const statement = this.m_Path.node.body[0] as ExpressionStatement;
-        if (!statement || !isStringLiteral(statement.expression)) {
-            return "";
-        }
+        return Λ<string>("match")` ${statement} 
+            ${{ expression: { type: "StringLiteral", value: use("text") } }} -> ${(_, { text }) => {
+            const [use, dsl_name] = text.trim().split(" ");
+            return dsl_name;
+        }}
 
-        const [, dsl_name] = statement.expression.value.trim().split(" ");
-        return dsl_name;
+            ${__} -> ${""}
+        `;
     };
 
 export interface IInlineContext {
     ToStatements: () => Array<Statement>;
 }
 
-import {
-    BlockStatement,
-    ExpressionStatement,
-    Statement,
-    isStringLiteral,
-    blockStatement,
-} from "@babel/types";
+import { BlockStatement, ExpressionStatement, Statement } from "@babel/types";
 import { NodePath } from "@babel/traverse";
 import { IDSL } from "../core/transcriber";
+import { MatchDSL, __, use } from "draft-dsl-match";
