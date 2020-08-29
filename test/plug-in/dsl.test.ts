@@ -59,11 +59,6 @@ test("no dsl", () => {
     expect(result).toMatchSnapshot();
 });
 
-/**
- * <TestLog/> is not used as local context, but after DSL "match" resolved,
- * it will be used as local context,
- * thus after DSL resolved, we need to refresh draft again.
- */
 test("local context added after dsl resolved", () => {
     const code = `
             export function Main(){
@@ -71,9 +66,11 @@ test("local context added after dsl resolved", () => {
             }
 
             function TestMatch(value){
-                "use match";
-
-                (value: "a") => <TestLog/>;
+                Λ('match')\` \${value}
+                    \${"a"} -> \${()=>{
+                        <TestLog/>;
+                    }}
+                \`;
             }
 
             function TestLog(){
@@ -109,12 +106,9 @@ test("nested dsl", () => {
             }
 
             function Match(value){
-                "use match";
-
-                (value: "a") =>
-                {
-                    console.log("value is a");
-                };
+                Λ('match')\` \${value}
+                    \${"a"} -> \${()=>console.log("value is a")}
+                \`;
             }
         `;
 
@@ -143,14 +137,11 @@ test("nested dsl: merge", () => {
             export function Main(){
                 {
                     "use watch";
-                    {
-                        "use match";
         
-                        (value: "a") =>
-                        {
-                            console.log("value is a");
-                        };
-                    }
+                    Λ('match')\` \${value}
+                        \${"a"} -> \${()=>console.log("value is a")}
+                    \`;
+
                     b = value + 1;
                 }
             }
@@ -158,7 +149,7 @@ test("nested dsl: merge", () => {
 
     const transcriber = MakeDefaultTranscriber(code);
     transcriber.AddDSL("watch", new Watch());
-    transcriber.AddDSL("match", new PatternMatch(true));
+    transcriber.AddDSL("match", new PatternMatch());
     const result = transcriber.Transcribe();
     expect(result).toMatchSnapshot();
 });
