@@ -67,8 +67,12 @@
         "dependencies": [
             "src/code-object/@babel/types",
             "src/code-object/@babel/traverse",
-            "src/core/transcriber"
+            "src/core/transcriber",
+            "draft-dsl-match"
         ]
+    },
+    "draft-dsl-match": {
+        "dependencies": []
     },
     "src/code-object/module.tsx": {
         "url": "src/code-object/module.html",
@@ -79,7 +83,8 @@
             "src/code-object/local-context",
             "src/common/utility",
             "src/code-object/@babel/traverse",
-            "src/code-object/inline-context"
+            "src/code-object/inline-context",
+            "draft-dsl-match"
         ]
     },
     "src/code-object/export-class": {
@@ -161,16 +166,16 @@
             "src/code-object/export-class",
             "src/code-object/method",
             "src/code-object/local-context",
-            "src/code-object/inline-context"
+            "src/code-object/inline-context",
+            "draft-dsl-match"
         ]
     },
     "src/plug-in/draft-plugin-inplace-context.tsx": {
         "url": "src/plug-in/draft-plugin-inplace-context.html",
         "dependencies": [
             "src/core/transcriber",
-            "src/plug-in/@babel/core",
-            "src/plug-in/@babel/types",
-            "src/common/utility"
+            "src/common/utility",
+            "draft-dsl-match"
         ]
     },
     "src/index": {
