@@ -3,16 +3,12 @@
         "target": "es6",
         "module": "commonjs",
         "moduleResolution": "node",
+        "esModuleInterop": true,
         "outDir": "./dist",
         "declaration": true,
         "jsx": "preserve",
         "skipLibCheck": true
     },
-    "include": [
-        "src/**/*.ts",
-        "cli/**/*.ts"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+    "include": ["src/**/*.ts", "cli/**/*.ts"],
+    "exclude": ["node_modules"]
 }

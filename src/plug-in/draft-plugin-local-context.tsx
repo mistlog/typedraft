@@ -81,4 +81,4 @@ export class ILocalContextPlugin implements IPlugin {
 import { ITranscriber, IPlugin } from "../core/transcriber";
 import { FunctionDeclaration, FunctionExpression } from "@babel/types";
 import { NodePath } from "@babel/core";
-import * as toposort from "toposort";
+import { default as toposort } from "toposort";

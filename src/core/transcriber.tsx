@@ -97,7 +97,10 @@ export interface IDSL {
         path?: NodePath<FunctionDeclaration> | NodePath<BlockStatement>
     ): Array<Statement>;
 
-    InplaceTranscribe?(literal: NodePath<TemplateLiteral>, type: string): Expression;
+    /**
+     * @param literal TODO: NodePath<TemplateLiteral>
+     */
+    InplaceTranscribe?(literal: any, type: string): CallExpression;
 
     m_Merge?: boolean;
 }
@@ -141,7 +144,7 @@ import {
     Statement,
     FunctionDeclaration,
     BlockStatement,
-    Expression,
+    CallExpression,
     TemplateLiteral,
 } from "@babel/types";
 import { NodePath } from "@babel/traverse";
