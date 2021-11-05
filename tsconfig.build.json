@@ -8,6 +8,6 @@
         "jsx": "preserve",
         "skipLibCheck": true
     },
-    "include": ["src", "cli", "draft"],
+    "include": ["src", "cli"],
     "exclude": ["node_modules"]
 }

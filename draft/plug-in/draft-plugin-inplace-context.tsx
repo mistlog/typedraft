@@ -1,14 +1,15 @@
+import { ITranscriber } from "../core";
+import { ToString } from "../common";
+import { MatchDSL, when, __, use } from "draft-dsl-match";
+
 export class InplaceContextPlugin {
     m_Transcriber: ITranscriber;
-}
 
-<InplaceContextPlugin /> +
-    function constructor(this: InplaceContextPlugin, transcriber: ITranscriber) {
+    constructor(transcriber: ITranscriber) {
         this.m_Transcriber = transcriber;
-    };
+    }
 
-<InplaceContextPlugin /> +
-    function Transcribe(this: InplaceContextPlugin) {
+    Transcribe(this: InplaceContextPlugin) {
         const transcriber = this.m_Transcriber;
         transcriber.m_Module.Traverse({
             TaggedTemplateExpression(path) {
@@ -35,8 +36,5 @@ export class InplaceContextPlugin {
                 `;
             },
         });
-    };
-
-import { ITranscriber } from "../core/transcriber";
-import { ToString } from "../common/utility";
-import { MatchDSL, when, __, use } from "draft-dsl-match";
+    }
+}

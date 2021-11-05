@@ -1,6 +1,6 @@
 {
     "name": "typedraft",
-    "version": "0.2.6",
+    "version": "0.2.7-beta.8",
     "description": "TypeDraft is a superset of typescript with built-in support for DSL extension and literate programming.",
     "keywords": [
         "literate programming",
@@ -12,7 +12,7 @@
         "javascript"
     ],
     "bin": {
-        "td": "dist/cli/cli.js"
+        "draft": "dist/cli/cli.js"
     },
     "main": "dist/src/index.js",
     "types": "dist/src/index.d.ts",
@@ -25,31 +25,25 @@
     },
     "homepage": "https://mistlog.github.io/typedraft-docs/",
     "scripts": {
-        "pretest": "npm run transcribe",
+        "beta": "npm version prerelease --preid=beta && npm publish --tag beta",
+        "predev": "draft clean",
+        "dev": "draft dev",
+        "prebuild": "del-cli ./dist && draft clean",
+        "build": "draft build && tsc -p tsconfig.build.json",
         "test": "jest --coverage",
         "test:watch": "jest --watch",
-        "prebuild": "npm run clean:dist",
-        "build": "npm run transcribe && tsc",
-        "dev": "npm run transcribe:watch",
-        "format": "prettier --write ./src ./test ./script ./cli",
-        "check:format": "prettier --check ./src ./test ./script ./cli",
-        "transcribe": "td ./src",
-        "transcribe:watch": "td ./src -w",
-        "release": "npm run build && npm pack",
-        "clean": "npm run clean:ts && npm run clean:dist",
-        "clean:ts": "ts-node ./script/clean-ts.ts",
-        "clean:dist": "ts-node ./script/clean-dist.ts"
+        "format": "prettier --write ./src ./test ./script ./cli ./draft",
+        "format:check": "prettier --check ./src ./test ./script ./cli ./draft"
     },
     "author": "mistlog",
     "license": "MIT",
     "dependencies": {
         "@babel/core": "^7.6.2",
         "@endemolshinegroup/cosmiconfig-typescript-loader": "^3.0.0",
+        "cli-common": "0.0.2",
         "commander": "^4.0.1",
         "cosmiconfig": "^6.0.0",
-        "filewalker": "^0.1.3",
         "fs-extra": "^8.1.0",
-        "node-watch": "^0.6.3",
         "toposort": "2.0.2",
         "typescript": "^3.8.3"
     },
@@ -58,6 +52,7 @@
         "@types/jest": "^24.0.18",
         "@types/node": "^12.12.14",
         "@types/toposort": "2.0.3",
+        "del-cli": "^4.0.1",
         "draft-dsl-match": "0.2.0",
         "husky": "^4.2.5",
         "jest": "^24.9.0",
@@ -65,7 +60,7 @@
         "pretty-quick": "^2.0.1",
         "ts-jest": "^24.0.2",
         "ts-node": "^8.3.0",
-        "typedraft": "0.2.5"
+        "typedraft": "0.2.7-beta.8"
     },
     "husky": {
         "hooks": {
