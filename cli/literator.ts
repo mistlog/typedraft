@@ -6,7 +6,7 @@ import { MakeDefaultTranscriber, IDSL, IPlugin } from "../src";
 export interface ITypeDraftConfig {
     DSLs: Array<{ name: string; dsl: () => IDSL }>;
     DraftPlugins?: Array<IPlugin & Function>;
-    Targets: Array<{ src: string; dest: string; baseDir?: string }>;
+    Targets: Array<{ src: string; dest: string; baseDir?: string; extension?: string }>;
 }
 
 export function MakeTranscriberWithConfig(code: string, config: ITypeDraftConfig) {
