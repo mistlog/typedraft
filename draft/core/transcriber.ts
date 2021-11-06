@@ -1,3 +1,18 @@
+import {
+    Statement,
+    FunctionDeclaration,
+    BlockStatement,
+    Expression,
+    TemplateLiteral,
+} from "@babel/types";
+import { NodePath } from "@babel/traverse";
+import { ToString } from "../common/utility";
+import { ModuleCode } from "../code-object/module";
+import { ExportClassCode } from "../code-object/export-class";
+import { MethodCode } from "../code-object/method";
+import { LocalContext } from "../code-object/local-context";
+import { InlineContext } from "../code-object/inline-context";
+
 /**
  * # Transcriber
  * We always write code in one language and translate(compile) it to another, however, in both language, the code we write directly represents the execution flow.
@@ -17,70 +32,8 @@ export class Transcriber {
 
     m_DSLMap: Map<string, IDSL>;
     m_Plugins: Array<IPlugin>;
-}
 
-/**
- * A transcriber is just a container, it's a collection of plugins.
- * For example, to transform local context, we have `draft-plugin-local-context`, to add class method to class, we have `draft-plugin-class`, and `draft-plugin-dsl` for DSL extension support.
- */
-<Transcriber /> +
-    function Transcribe(this: Transcriber) {
-        this.m_Plugins.forEach(plugin => plugin.Transcribe());
-        return ToString(this.m_Module.m_File, { comments: false });
-    };
-
-/**
- * # Utility
- * Other methods are just utilities.
- */
-
-/**
- * ## DSL
- */
-
-<Transcriber /> +
-    function AddDSL(this: Transcriber, name: string, dsl: IDSL) {
-        this.m_DSLMap.set(name, dsl);
-    };
-
-<Transcriber /> +
-    function GetDSL(this: Transcriber, name: string) {
-        return this.m_DSLMap.get(name);
-    };
-
-/**
- * ## Context and Class
- */
-<Transcriber /> +
-    function GetLocalContext(this: Transcriber, name: string) {
-        return this.m_ContextMap.get(name);
-    };
-
-<Transcriber /> +
-    function TraverseLocalContext(this: Transcriber, callback: TraverseLocalContextCallback) {
-        this.m_ContextMap.forEach((context, name) => callback(context, name));
-    };
-
-<Transcriber /> +
-    function TraverseInlineContext(this: Transcriber, callback: TraverseInlineContextCallback) {
-        this.m_InlineContextMap.forEach(context => callback(context));
-    };
-
-<Transcriber /> +
-    function GetClass(this: Transcriber, name: string) {
-        return this.m_ClassMap.get(name);
-    };
-
-<Transcriber /> +
-    function TraverseMethod(this: Transcriber, callback: TraverseMethodCallback) {
-        this.m_MethodMap.forEach((methods, class_name) => callback(methods, class_name));
-    };
-
-/**
- * # Trivial
- */
-<Transcriber /> +
-    function constructor(this: Transcriber & ITranscriber, _module: string) {
+    constructor(_module: string) {
         this.m_Module = new ModuleCode(_module);
 
         this.m_ClassMap = new Map<string, ExportClassCode>();
@@ -89,7 +42,48 @@ export class Transcriber {
         this.m_InlineContextMap = new Map<Symbol, InlineContext>();
         this.m_DSLMap = new Map<string, IDSL>();
         this.m_Plugins = new Array<IPlugin>();
-    };
+    }
+
+    /**
+     * A transcriber is just a container, it's a collection of plugins.
+     * For example, to transform local context, we have `draft-plugin-local-context`, to add class method to class, we have `draft-plugin-class`, and `draft-plugin-dsl` for DSL extension support.
+     */
+
+    Transcribe() {
+        this.m_Plugins.forEach(plugin => plugin.Transcribe());
+        return ToString(this.m_Module.m_File, {
+            comments: false,
+        });
+    }
+
+    AddDSL(name: string, dsl: IDSL) {
+        this.m_DSLMap.set(name, dsl);
+    }
+
+    GetDSL(name: string) {
+        return this.m_DSLMap.get(name);
+    }
+
+    GetLocalContext(name: string) {
+        return this.m_ContextMap.get(name);
+    }
+
+    TraverseLocalContext(callback: TraverseLocalContextCallback) {
+        this.m_ContextMap.forEach((context, name) => callback(context, name));
+    }
+
+    TraverseInlineContext(callback: TraverseInlineContextCallback) {
+        this.m_InlineContextMap.forEach(context => callback(context));
+    }
+
+    GetClass(name: string) {
+        return this.m_ClassMap.get(name);
+    }
+
+    TraverseMethod(callback: TraverseMethodCallback) {
+        this.m_MethodMap.forEach((methods, class_name) => callback(methods, class_name));
+    }
+}
 
 export interface IDSL {
     Transcribe?(
@@ -136,20 +130,3 @@ export interface ITranscriber {
 export type TraverseLocalContextCallback = (context: LocalContext, name: string) => void;
 export type TraverseInlineContextCallback = (context: InlineContext) => void;
 export type TraverseMethodCallback = (methods: Array<MethodCode>, class_name: string) => void;
-
-import {
-    Statement,
-    FunctionDeclaration,
-    BlockStatement,
-    Expression,
-    TemplateLiteral,
-} from "@babel/types";
-import { NodePath } from "@babel/traverse";
-
-import { ToString } from "../common/utility";
-
-import { ModuleCode } from "../code-object/module";
-import { ExportClassCode } from "../code-object/export-class";
-import { MethodCode } from "../code-object/method";
-import { LocalContext } from "../code-object/local-context";
-import { InlineContext } from "../code-object/inline-context";

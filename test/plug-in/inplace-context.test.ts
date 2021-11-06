@@ -1,5 +1,4 @@
-import { MakeDefaultTranscriber, IDSL } from "../../src";
-import { InplaceContextPlugin } from "../../src/plug-in/draft-plugin-inplace-context";
+import { MakeDefaultTranscriber, IDSL, InplaceContextPlugin } from "../../src";
 import { NodePath } from "@babel/core";
 import { TemplateLiteral, stringLiteral } from "@babel/types";
 

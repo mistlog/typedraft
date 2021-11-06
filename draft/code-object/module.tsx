@@ -1,3 +1,18 @@
+import {
+    Program,
+    File,
+    ExpressionStatement,
+    ExportNamedDeclaration,
+    FunctionDeclaration,
+} from "@babel/types";
+import { ExportClassCode } from "./export-class";
+import { MethodCode } from "./method";
+import { LocalContext } from "./local-context";
+import { ToFile, ToString } from "../common/utility";
+import traverse, { NodePath, Node, TraverseOptions } from "@babel/traverse";
+import { InlineContext } from "./inline-context";
+import { MatchDSL, __ } from "draft-dsl-match";
+
 /**
  * # Draft
  * A .tsx file is considered as a module and we will transform these 4 types of code, they are collected and then transcibed to "real" code.
@@ -5,15 +20,15 @@
 export class ModuleCode {
     m_File: File;
     m_Path: NodePath<Program>;
-}
 
-export type Draft = Array<ExportClassCode | MethodCode | LocalContext | InlineContext>;
+    constructor(code: string) {
+        this.m_File = ToFile(code);
+    }
 
-/**
- * As we are only interested in the draft part of a module, then we need a way to return this "view" of module code.
- */
-<ModuleCode /> +
-    function ToDraft(this: ModuleCode & IModuleCode) {
+    /**
+     * As we are only interested in the draft part of a module, then we need a way to return this "view" of module code.
+     */
+    ToDraft() {
         /**
          * refresh and update bindings because DSL only transforms code
          */
@@ -49,49 +64,36 @@ export type Draft = Array<ExportClassCode | MethodCode | LocalContext | InlineCo
          * collect draft parts
          */
         this.m_Path.get("body").forEach(path => {
-            //@ts-ignore
-            <AddToDraft />;
+            /**
+             * remove redundant ; before tag, see comment of `ToFile` in utility.ts
+             */
+            if (path.isEmptyStatement()) {
+                path.remove();
+                return;
+            }
+
+            // prettier-ignore
+            const to_add = Λ<ExportClassCode | LocalContext | MethodCode | null>("match")` ${path as NodePath<any>} 
+                ${IsExportClassCode(path)} -> ${(path: NodePath<ExportNamedDeclaration>) => new ExportClassCode(path)}
+                ${IsMethodCode(path)} -> ${(path: NodePath<ExpressionStatement>) => new MethodCode(path)}
+                ${IsLocalContext(path)} -> ${(path: NodePath<FunctionDeclaration>) => new LocalContext(path.scope.parent.getBinding(path.node.id.name))}
+                ${__} -> ${null}
+            `;
+
+            if (to_add) {
+                draft.push(to_add);
+            }
         });
         return draft;
-    };
+    }
 
-export interface IModuleCode {
-    Traverse<S>(visitor: TraverseOptions<S>, state: S): void;
-}
-
-<ModuleCode /> +
-    function Traverse<S>(this: ModuleCode, visitor: TraverseOptions<S>, state: S = null) {
+    Traverse<S>(this: ModuleCode, visitor: TraverseOptions<S>, state: S = null) {
         this.m_File = ToFile(ToString(this.m_File));
         traverse<S>(this.m_File, visitor, null, state);
-    };
-
-/**
- * ## Create draft
- */
-function AddToDraft(path: NodePath<Node>, draft: Draft) {
-    /**
-     * remove redundant ; before tag, see comment of `ToFile` in utility.ts
-     */
-    if (path.isEmptyStatement()) {
-        path.remove();
-        return;
-    }
-
-    const to_add = Λ<ExportClassCode | LocalContext | MethodCode | null>("match")` ${
-        path as NodePath<any>
-    } 
-        ${IsExportClassCode(path)} -> ${(path: NodePath<ExportNamedDeclaration>) =>
-        new ExportClassCode(path)}
-        ${IsMethodCode(path)} -> ${(path: NodePath<ExpressionStatement>) => new MethodCode(path)}
-        ${IsLocalContext(path)} -> ${(path: NodePath<FunctionDeclaration>) =>
-        new LocalContext(path.scope.parent.getBinding(path.node.id.name))}
-        ${__} -> ${null}
-    `;
-
-    if (to_add) {
-        draft.push(to_add);
     }
 }
+
+export type Draft = Array<ExportClassCode | MethodCode | LocalContext | InlineContext>;
 
 export function IsExportClassCode(path: NodePath<any>) {
     return (
@@ -132,26 +134,3 @@ export function IsLocalContext(path: NodePath<any>) {
         });
     return is_local_context;
 }
-
-/**
- * # Trivial
- */
-<ModuleCode /> +
-    function constructor(this: ModuleCode, code: string) {
-        this.m_File = ToFile(code);
-    };
-
-import {
-    Program,
-    File,
-    ExpressionStatement,
-    ExportNamedDeclaration,
-    FunctionDeclaration,
-} from "@babel/types";
-import { ExportClassCode } from "./export-class";
-import { MethodCode } from "./method";
-import { LocalContext } from "./local-context";
-import { ToFile, ToString } from "../common/utility";
-import traverse, { NodePath, Node, TraverseOptions } from "@babel/traverse";
-import { InlineContext } from "./inline-context";
-import { MatchDSL, __ } from "draft-dsl-match";
