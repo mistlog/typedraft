@@ -15,10 +15,10 @@ program.command("help").action(() => {
 
 program.command("dev").action(() => {
     withConfig(config => {
-        config.Targets.forEach(({ src, dest, baseDir }) => {
+        config.Targets.forEach(({ src, dest, baseDir, extension = ".ts" }) => {
             const devConfig: IDevConfig = {
                 rename: {
-                    extension: ".ts",
+                    extension,
                 },
                 transform(path, code) {
                     if (path.endsWith(".tsx")) {
@@ -39,10 +39,10 @@ program.command("dev").action(() => {
 
 program.command("build").action(() => {
     withConfig(config => {
-        config.Targets.forEach(({ src, dest, baseDir }) => {
+        config.Targets.forEach(({ src, dest, baseDir, extension = ".ts" }) => {
             const devConfig: IDevConfig = {
                 rename: {
-                    extension: ".ts",
+                    extension,
                 },
                 transform(path, code) {
                     if (path.endsWith(".tsx")) {
