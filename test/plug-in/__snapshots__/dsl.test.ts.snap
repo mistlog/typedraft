@@ -20,19 +20,16 @@ exports[`inline context: merge 1`] = `
 
 exports[`local context added after dsl resolved 1`] = `
 "export function Main() {
-  if (value === \\"a\\") {
+  MatchDSL(value).with(\\"a\\", () => {
     console.log(\\"value is a\\");
-  }
+  }).run();
 }"
 `;
 
 exports[`nested dsl 1`] = `
 "export function Main() {
   $: {
-    if (value === \\"a\\") {
-      console.log(\\"value is a\\");
-    }
-
+    MatchDSL(value).with(\\"a\\", () => console.log(\\"value is a\\")).run();
     b = value + 1;
   }
 }"
@@ -41,10 +38,7 @@ exports[`nested dsl 1`] = `
 exports[`nested dsl: merge 1`] = `
 "export function Main() {
   $: {
-    if (value === \\"a\\") {
-      console.log(\\"value is a\\");
-    }
-
+    MatchDSL(value).with(\\"a\\", () => console.log(\\"value is a\\")).run();
     b = value + 1;
   }
 }"

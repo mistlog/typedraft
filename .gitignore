@@ -4,16 +4,4 @@ spike.ts
 build
 dist
 *.tgz
-src/code-object/*.ts
-src/core/*.ts
-src/dsl/*.ts
-src/plug-in/*.ts
-
-docs/css
-docs/illustrations/**/build
-docs/illustrations/**/*.png
-docs/js
-docs/src
-docs/cli
-docs/dependencies.json
-docs/*.html
+src/transcript
