@@ -32,8 +32,8 @@
         "build": "draft build && tsc -p tsconfig.build.json",
         "test": "jest --coverage",
         "test:watch": "jest --watch",
-        "format": "prettier --write ./src ./test ./script ./cli ./draft",
-        "format:check": "prettier --check ./src ./test ./script ./cli ./draft"
+        "format": "prettier --write ./src ./test ./cli ./draft",
+        "format:check": "prettier --check ./src ./test ./cli ./draft"
     },
     "author": "mistlog",
     "license": "MIT",
