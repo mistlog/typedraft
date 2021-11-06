@@ -1,6 +1,6 @@
 {
     "name": "typedraft",
-    "version": "0.2.8-beta.0",
+    "version": "0.2.8-beta.1",
     "description": "TypeDraft is a superset of typescript with built-in support for DSL extension and literate programming.",
     "keywords": [
         "literate programming",
