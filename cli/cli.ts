@@ -22,7 +22,12 @@ program.command("dev").action(() => {
                 },
                 transform(path, code) {
                     if (path.endsWith(".tsx")) {
-                        const result = ComposeFile(code, config);
+                        let result = "";
+                        try {
+                            result = ComposeFile(code, config);
+                        } catch (error) {
+                            console.trace(error);
+                        }
                         return result;
                     } else {
                         return code;
